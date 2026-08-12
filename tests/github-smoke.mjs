@@ -8,8 +8,11 @@ assert(required.includes('github.portfolio.scan'), 'Original portfolio prompt mu
 
 const scan = await scanGitHubPortfolio({ username: 'mikelninh' });
 assert.equal(scan.status, 'success');
-assert(scan.summary.count > 0, 'Expected at least one public repository.');
+assert(scan.summary.count > 0, 'Expected at least one repository.');
 assert(scan.data.repos.some((repo) => repo.fullName === 'mikelninh/council'), 'Expected the live scan to include mikelninh/council.');
 assert(['public-only', 'public-fallback', 'authenticated'].includes(scan.summary.scope));
+assert(scan.summary.readmeCount > 0, 'Expected the portfolio scan to inspect at least one README.');
+const council = scan.data.repos.find((repo) => repo.fullName === 'mikelninh/council');
+assert(council?.readmeFound, 'Expected the Council README to be inspected.');
 
-console.log(`GitHub smoke: ${scan.summary.count} repos; scope=${scan.summary.scope}; council found=yes`);
+console.log(`GitHub smoke: ${scan.summary.count} repos; scope=${scan.summary.scope}; READMEs=${scan.summary.readmeCount}/${scan.summary.inspectableCount}; council found=yes`);

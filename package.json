@@ -1,9 +1,9 @@
 {
   "name": "council",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "type": "module",
-  "description": "Council v5 — an evidence-first AI company OS with truthful tool use, real GitHub portfolio scans, execution traces, and human-controlled action.",
+  "description": "Council v5.1 — an evidence-first AI company OS with authenticated private GitHub portfolio scans, README inspection, execution traces, and human-controlled action.",
   "scripts": {
     "start": "node server.mjs",
     "check": "node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check public/app.js",
