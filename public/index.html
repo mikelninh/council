@@ -3,117 +3,174 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#f4efe6" />
-  <title>Council v3 — your AI team</title>
+  <meta name="theme-color" content="#f4efe7" />
+  <title>Council — Company OS</title>
+  <meta name="description" content="Council v4 — an AI-native company operating system." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
-  <main class="app-shell">
+  <div class="noise"></div>
+  <div class="app-shell">
     <aside class="sidebar">
       <div class="brand-row">
         <div class="brand-mark">✦</div>
-        <div><div class="brand">Council</div><div class="brand-sub">your thinking team</div></div>
-        <span class="version-pill">v3</span>
+        <div>
+          <strong>COUNCIL</strong>
+          <span>company os · v4</span>
+        </div>
       </div>
 
-      <section class="sidebar-section rooms-section">
-        <div class="section-heading"><span>Rooms</span><button id="addRoom" class="icon-btn" title="New room">＋</button></div>
-        <div id="roomList" class="room-list"></div>
-      </section>
+      <div class="company-switcher">
+        <div class="company-avatar">C</div>
+        <div>
+          <strong id="companyNameSide">Council Labs</strong>
+          <span>Company #001</span>
+        </div>
+        <button id="editCompany" class="icon-btn" title="Edit company">•••</button>
+      </div>
 
-      <section class="sidebar-section team-section">
-        <div class="section-heading"><span>Your team</span><button id="addAgent" class="icon-btn" title="Add agent">＋</button></div>
-        <div id="agentList" class="agent-list"></div>
-      </section>
+      <nav class="main-nav" aria-label="Company navigation">
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span><b>Executive</b><em id="navDecisionCount">0</em></button>
+        <button class="nav-item" data-view="chat"><span>◌</span><b>Company chat</b><em id="navChatCount">0</em></button>
+        <button class="nav-item" data-view="projects"><span>◇</span><b>Projects</b><em id="navProjectCount">0</em></button>
+        <button class="nav-item" data-view="decisions"><span>◆</span><b>Decisions</b><em id="navDecisionCount2">0</em></button>
+        <button class="nav-item" data-view="team"><span>◎</span><b>Team</b><em id="navTeamCount">0</em></button>
+        <button class="nav-item" data-view="memory"><span>⌁</span><b>Company memory</b><em id="navMemoryCount">0</em></button>
+      </nav>
 
-      <section class="sidebar-section brief-section">
-        <div class="section-heading"><span>Room brief</span><span class="tiny">shared by all</span></div>
-        <textarea id="councilGoal" class="goal-box" rows="4" placeholder="What is this room trying to accomplish?"></textarea>
-      </section>
+      <div class="sidebar-section">
+        <div class="section-label"><span>PROJECT ROOMS</span><button id="addProjectMini">＋</button></div>
+        <div id="projectRoomList" class="room-list"></div>
+      </div>
 
-      <div class="status-card">
-        <span id="statusDot" class="status-dot"></span>
-        <div><strong id="statusLabel">Checking…</strong><small id="modelLabel"></small></div>
+      <div class="sidebar-bottom">
+        <div class="connection-pill" id="connectionPill"><i></i><span>Checking AI…</span></div>
+        <p>External side effects stay human-approved in v4.</p>
       </div>
     </aside>
 
-    <section class="main-panel">
+    <main class="main-stage">
       <header class="topbar">
-        <div>
-          <div id="roomEyebrow" class="eyebrow"># main-room</div>
-          <h1 id="roomTitle">The Round Table</h1>
+        <div class="topbar-title">
+          <span id="viewEyebrow">FOUNDER DESK</span>
+          <h1 id="viewTitle">Good afternoon, Michael.</h1>
         </div>
         <div class="topbar-actions">
-          <div class="mode-switch" role="group" aria-label="Council mode">
-            <button class="mode-btn active" data-mode="orchestrated">✦ Smart</button>
-            <button class="mode-btn" data-mode="roundtable">◌ Everyone</button>
-          </div>
-          <button id="clearChat" class="ghost-btn">Clear chat</button>
+          <div class="mode-pill" id="companyMode"><span>Founder mode</span><i>human in control</i></div>
+          <button class="ghost-btn" id="openChatBtn">Ask Council</button>
+          <button class="primary-btn" id="runCycleBtn"><span>✦</span> Run company cycle</button>
         </div>
       </header>
 
-      <div id="chat" class="chat"></div>
+      <section id="view-dashboard" class="view active">
+        <div class="executive-grid">
+          <section class="hero-brief card">
+            <div class="hero-topline"><span class="eyebrow">COMPANY #001 · COUNCIL LABS</span><span id="cycleStamp">No cycle run yet</span></div>
+            <div class="hero-copy">
+              <h2>Build the company<br/>that builds the work.</h2>
+              <p id="companyMissionText">Council exists to turn ambitious ideas into evidence, decisions and useful things — without losing humanity along the way.</p>
+            </div>
+            <div class="hero-bottom">
+              <div class="focus-block"><span>Current focus</span><strong id="currentFocus">Ship Company OS v4</strong></div>
+              <button class="text-btn" id="editFocus">Change focus →</button>
+            </div>
+          </section>
 
-      <div class="composer-wrap">
-        <div id="mentionTray" class="mention-tray hidden"></div>
-        <div id="selectedHint" class="selected-hint"></div>
-        <form id="composer" class="composer">
-          <textarea id="messageInput" rows="1" placeholder="Ask the Council… try @Critic, @Builder, or @Scientist" aria-label="Message Council"></textarea>
-          <button id="sendButton" class="send-btn" type="submit"><span>Send</span><span class="send-arrow">↗</span></button>
-        </form>
-        <div class="composer-footer"><span>Enter to send · Shift+Enter for newline · @ to invite directly</span><span id="roomStats"></span></div>
-      </div>
-    </section>
+          <section class="metric-card card">
+            <span>Needs you</span><strong id="metricDecisions">0</strong><small>founder decisions</small>
+          </section>
+          <section class="metric-card card">
+            <span>In motion</span><strong id="metricTasks">0</strong><small>open missions</small>
+          </section>
+          <section class="metric-card card">
+            <span>Portfolio</span><strong id="metricProjects">0</strong><small>active projects</small>
+          </section>
 
-    <aside class="insight-panel">
-      <div class="insight-tabs" role="tablist">
-        <button class="insight-tab active" data-panel="map">Map</button>
-        <button class="insight-tab" data-panel="memory">Memory</button>
-        <button class="insight-tab" data-panel="tasks">Tasks</button>
-      </div>
+          <section class="briefing card span-2">
+            <div class="card-head"><div><span class="eyebrow">CHIEF OF STAFF</span><h3>Founder briefing</h3></div><button class="small-btn" id="refreshBriefing">Run fresh briefing</button></div>
+            <div id="founderBriefing" class="briefing-body"></div>
+          </section>
 
-      <section id="panel-map" class="insight-view">
-        <div class="insight-head"><div><div class="eyebrow">Live room</div><h2>Debate map</h2></div><span id="turnCount" class="turn-pill">0 voices</span></div>
-        <div class="map-card"><svg id="debateMap" viewBox="0 0 280 280" aria-label="Council debate map"></svg></div>
-        <div class="legend"><span><i class="legend-line solid"></i> summoned</span><span><i class="legend-line dotted"></i> mentioned</span></div>
-        <section class="insight-section">
-          <div class="section-heading no-pad"><span>Room pulse</span><span class="tiny">last turn</span></div>
-          <div id="roomPulse" class="room-pulse"></div>
-        </section>
+          <section class="decision-rail card">
+            <div class="card-head"><div><span class="eyebrow">YOUR CALL</span><h3>Decisions</h3></div><button class="text-btn" data-go="decisions">View all →</button></div>
+            <div id="dashboardDecisions" class="decision-list compact"></div>
+          </section>
+
+          <section class="portfolio card span-2">
+            <div class="card-head"><div><span class="eyebrow">PORTFOLIO</span><h3>What the company is building</h3></div><button class="small-btn" id="addProject">＋ New project</button></div>
+            <div id="dashboardProjects" class="project-table"></div>
+          </section>
+
+          <section class="activity card">
+            <div class="card-head"><div><span class="eyebrow">COMPANY PULSE</span><h3>Latest activity</h3></div></div>
+            <div id="activityFeed" class="activity-feed"></div>
+          </section>
+        </div>
       </section>
 
-      <section id="panel-memory" class="insight-view hidden">
-        <div class="insight-head"><div><div class="eyebrow">Persistent context</div><h2>Agent memory</h2></div><span id="memoryCount" class="turn-pill">0 notes</span></div>
-        <p class="panel-copy">Each agent remembers useful room-specific decisions and constraints. Memories stay in this browser and are sent back only when that agent speaks.</p>
-        <div id="memoryList" class="memory-list"></div>
+      <section id="view-chat" class="view">
+        <div class="chat-layout">
+          <section class="chat-panel card">
+            <div class="chat-head">
+              <div><span class="eyebrow" id="chatRoomEyebrow"># HQ</span><h3 id="chatRoomTitle">Company HQ</h3></div>
+              <div class="segmented"><button data-mode="orchestrated" class="active">✦ Smart</button><button data-mode="roundtable">◌ Everyone</button></div>
+            </div>
+            <div id="chat" class="chat-stream"></div>
+            <form id="composer" class="composer">
+              <div id="mentionTray" class="mention-tray hidden"></div>
+              <textarea id="messageInput" rows="1" placeholder="Ask the company…  @Chief of Staff, what needs my attention?"></textarea>
+              <div class="composer-bottom">
+                <span>Enter to send · Shift+Enter for line break · @ to invite</span>
+                <button type="submit" class="send-btn">↑</button>
+              </div>
+            </form>
+          </section>
+
+          <aside class="company-context">
+            <section class="context-card card">
+              <span class="eyebrow">ROOM MISSION</span>
+              <textarea id="roomGoal"></textarea>
+            </section>
+            <section class="context-card card">
+              <div class="card-head"><div><span class="eyebrow">MISSION QUEUE</span><h3>Open work</h3></div><button id="addTask" class="icon-btn">＋</button></div>
+              <div id="taskList" class="task-list"></div>
+            </section>
+            <section class="context-card card">
+              <div class="card-head"><div><span class="eyebrow">ROOM MEMORY</span><h3>What we carry</h3></div></div>
+              <div id="roomMemory" class="memory-mini"></div>
+            </section>
+          </aside>
+        </div>
       </section>
 
-      <section id="panel-tasks" class="insight-view hidden">
-        <div class="insight-head"><div><div class="eyebrow">From talk to work</div><h2>Mission queue</h2></div><button id="addTask" class="small-btn">＋ Task</button></div>
-        <p class="panel-copy">Agents can propose concrete actions during a discussion. Keep, complete, or remove them here.</p>
-        <div id="taskList" class="task-list"></div>
+      <section id="view-projects" class="view">
+        <div class="page-head"><div><span class="eyebrow">PORTFOLIO</span><h2>Projects are where strategy becomes evidence.</h2><p>Each project gets an owner, a room, milestones and a visible definition of done.</p></div><button id="addProjectPage" class="primary-btn">＋ New project</button></div>
+        <div id="projectGrid" class="project-grid"></div>
       </section>
-    </aside>
-  </main>
 
-  <dialog id="agentDialog" class="agent-dialog">
-    <form id="agentForm" method="dialog">
-      <div class="dialog-head"><div><div class="eyebrow">Team member</div><h2 id="dialogTitle">Edit agent</h2></div><button type="button" id="closeDialog" class="icon-btn">×</button></div>
-      <input type="hidden" id="agentId" />
-      <div class="form-grid avatar-name"><label>Avatar<input id="agentAvatar" maxlength="4" /></label><label>Name<input id="agentName" required /></label></div>
-      <label>Role<input id="agentRole" required /></label>
-      <div class="form-grid two">
-        <label>Model<input id="agentModel" list="modelOptions" placeholder="inherit" /></label>
-        <label>Reasoning<select id="agentReasoning"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></label>
-      </div>
-      <datalist id="modelOptions"><option value="inherit"></option><option value="gpt-5"></option><option value="gpt-5-mini"></option><option value="gpt-5-nano"></option><option value="gpt-4.1"></option></datalist>
-      <label class="tool-toggle"><input id="agentWeb" type="checkbox" /><span><strong>Live web research</strong><small>Let this agent use OpenAI web search when fresh public information helps.</small></span></label>
-      <label>Operating prompt<textarea id="agentPrompt" rows="7" required></textarea></label>
-      <label>Boldness <div class="range-row"><input id="agentTemperature" type="range" min="0" max="1" step="0.1" /><span id="tempValue"></span></div></label>
-      <div class="dialog-actions"><button type="button" id="deleteAgent" class="danger-btn">Remove</button><div class="spacer"></div><button type="button" id="cancelAgent" class="secondary-btn">Cancel</button><button type="submit" class="primary-btn">Save agent</button></div>
-    </form>
-  </dialog>
+      <section id="view-decisions" class="view">
+        <div class="page-head"><div><span class="eyebrow">FOUNDER QUEUE</span><h2>Only decisions that need a human should reach you.</h2><p>Everything else should be researched, challenged and prepared before it lands here.</p></div><button id="addDecision" class="primary-btn">＋ Add decision</button></div>
+        <div id="decisionBoard" class="decision-board"></div>
+      </section>
+
+      <section id="view-team" class="view">
+        <div class="page-head"><div><span class="eyebrow">ORGANISATION</span><h2>A small company of distinct minds.</h2><p>Roles are editable. Permission levels are explicit. In v4, external actions still require human approval.</p></div><button id="addAgent" class="primary-btn">＋ Hire agent</button></div>
+        <div class="org-chart" id="orgChart"></div>
+        <div id="teamGrid" class="team-grid"></div>
+      </section>
+
+      <section id="view-memory" class="view">
+        <div class="page-head"><div><span class="eyebrow">INSTITUTIONAL MEMORY</span><h2>The company should remember why, not just what.</h2><p>Mission, principles, decisions and lessons survive individual chats and project rooms.</p></div><button id="addCompanyMemory" class="primary-btn">＋ Remember</button></div>
+        <div id="companyMemoryGrid" class="memory-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden" aria-hidden="true"><div class="modal-backdrop" data-close-modal></div><div class="modal-card"><button class="modal-close" data-close-modal>×</button><div id="modalBody"></div></div></div>
+  <div id="toast" class="toast hidden"></div>
 
   <script src="/app.js" type="module"></script>
 </body>
