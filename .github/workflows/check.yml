@@ -11,3 +11,14 @@ jobs:
         with:
           node-version: 20
       - run: npm run check
+
+  github-tool-smoke:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Exercise truthful GitHub portfolio adapter
+        run: node tests/github-smoke.mjs
