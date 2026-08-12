@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#f4efe7" />
-  <title>Council — Company OS</title>
-  <meta name="description" content="Council v4 — an AI-native company operating system." />
+  <meta name="theme-color" content="#f3eee5" />
+  <title>Council v5 — Truth & Tools</title>
+  <meta name="description" content="Council v5 — an evidence-first AI company operating system." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
@@ -17,49 +17,38 @@
     <aside class="sidebar">
       <div class="brand-row">
         <div class="brand-mark">✦</div>
-        <div>
-          <strong>COUNCIL</strong>
-          <span>company os · v4</span>
-        </div>
+        <div><strong>COUNCIL</strong><span>company os · v5</span></div>
       </div>
 
-      <div class="company-switcher">
+      <div class="company-card">
         <div class="company-avatar">C</div>
-        <div>
-          <strong id="companyNameSide">Council Labs</strong>
-          <span>Company #001</span>
-        </div>
-        <button id="editCompany" class="icon-btn" title="Edit company">•••</button>
+        <div><strong id="companyNameSide">Council Labs</strong><span>Company #001</span></div>
+        <i class="truth-dot"></i>
       </div>
 
       <nav class="main-nav" aria-label="Company navigation">
-        <button class="nav-item active" data-view="dashboard"><span>⌂</span><b>Executive</b><em id="navDecisionCount">0</em></button>
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span><b>Executive</b><em id="navTruth">—</em></button>
+        <button class="nav-item" data-view="portfolio"><span>◫</span><b>GitHub portfolio</b><em id="navRepoCount">—</em></button>
         <button class="nav-item" data-view="chat"><span>◌</span><b>Company chat</b><em id="navChatCount">0</em></button>
-        <button class="nav-item" data-view="projects"><span>◇</span><b>Projects</b><em id="navProjectCount">0</em></button>
-        <button class="nav-item" data-view="decisions"><span>◆</span><b>Decisions</b><em id="navDecisionCount2">0</em></button>
         <button class="nav-item" data-view="team"><span>◎</span><b>Team</b><em id="navTeamCount">0</em></button>
-        <button class="nav-item" data-view="memory"><span>⌁</span><b>Company memory</b><em id="navMemoryCount">0</em></button>
+        <button class="nav-item" data-view="memory"><span>⌁</span><b>Memory</b><em id="navMemoryCount">0</em></button>
       </nav>
 
       <div class="sidebar-section">
-        <div class="section-label"><span>PROJECT ROOMS</span><button id="addProjectMini">＋</button></div>
-        <div id="projectRoomList" class="room-list"></div>
+        <div class="section-label">REALITY LAYER</div>
+        <div class="system-mini" id="systemMini"></div>
       </div>
 
       <div class="sidebar-bottom">
-        <div class="connection-pill" id="connectionPill"><i></i><span>Checking AI…</span></div>
-        <p>External side effects stay human-approved in v4.</p>
+        <div class="founder-control"><i></i><div><strong>Founder control</strong><span>external side effects require approval</span></div></div>
       </div>
     </aside>
 
     <main class="main-stage">
       <header class="topbar">
-        <div class="topbar-title">
-          <span id="viewEyebrow">FOUNDER DESK</span>
-          <h1 id="viewTitle">Good afternoon, Michael.</h1>
-        </div>
+        <div class="topbar-title"><span id="viewEyebrow">FOUNDER DESK</span><h1 id="viewTitle">Good afternoon.</h1></div>
         <div class="topbar-actions">
-          <div class="mode-pill" id="companyMode"><span>Founder mode</span><i>human in control</i></div>
+          <button class="ghost-btn" id="scanTopBtn">⌕ Scan GitHub</button>
           <button class="ghost-btn" id="openChatBtn">Ask Council</button>
           <button class="primary-btn" id="runCycleBtn"><span>✦</span> Run company cycle</button>
         </div>
@@ -67,111 +56,106 @@
 
       <section id="view-dashboard" class="view active">
         <div class="executive-grid">
-          <section class="hero-brief card">
-            <div class="hero-topline"><span class="eyebrow">COMPANY #001 · COUNCIL LABS</span><span id="cycleStamp">No cycle run yet</span></div>
+          <section class="hero card">
+            <div class="hero-top"><span class="eyebrow">COUNCIL v5 · TRUTH & TOOLS</span><span id="lastCycleLabel">No company cycle yet</span></div>
             <div class="hero-copy">
-              <h2>Build the company<br/>that builds the work.</h2>
-              <p id="companyMissionText">Council exists to turn ambitious ideas into evidence, decisions and useful things — without losing humanity along the way.</p>
+              <h2>Reality before<br/>roleplay.</h2>
+              <p>Agents can discuss anything. They may only claim to have checked something when a real tool trace proves it.</p>
             </div>
-            <div class="hero-bottom">
-              <div class="focus-block"><span>Current focus</span><strong id="currentFocus">Ship Company OS v4</strong></div>
-              <button class="text-btn" id="editFocus">Change focus →</button>
-            </div>
+            <div class="hero-foot"><div><span>Company focus</span><strong id="companyFocus">Turn evidence into useful work</strong></div><button class="text-btn" id="editFocusBtn">Change focus →</button></div>
           </section>
 
-          <section class="metric-card card">
-            <span>Needs you</span><strong id="metricDecisions">0</strong><small>founder decisions</small>
-          </section>
-          <section class="metric-card card">
-            <span>In motion</span><strong id="metricTasks">0</strong><small>open missions</small>
-          </section>
-          <section class="metric-card card">
-            <span>Portfolio</span><strong id="metricProjects">0</strong><small>active projects</small>
+          <section class="metric card"><span>GitHub</span><strong id="metricRepos">—</strong><small id="metricReposNote">not scanned</small></section>
+          <section class="metric card"><span>Active 90d</span><strong id="metricActive">—</strong><small>repos with recent pushes</small></section>
+          <section class="metric card"><span>Open missions</span><strong id="metricTasks">0</strong><small>internal tasks</small></section>
+
+          <section class="card truth-panel span-2">
+            <div class="card-head"><div><span class="eyebrow">REALITY LAYER</span><h3>What Council can actually see</h3></div><button class="small-btn" id="refreshStatusBtn">Refresh</button></div>
+            <div id="truthGrid" class="truth-grid"></div>
           </section>
 
-          <section class="briefing card span-2">
-            <div class="card-head"><div><span class="eyebrow">CHIEF OF STAFF</span><h3>Founder briefing</h3></div><button class="small-btn" id="refreshBriefing">Run fresh briefing</button></div>
+          <section class="card briefing span-2">
+            <div class="card-head"><div><span class="eyebrow">CHIEF OF STAFF</span><h3>Founder briefing</h3></div><button class="small-btn" id="briefingBtn">Run fresh cycle</button></div>
             <div id="founderBriefing" class="briefing-body"></div>
           </section>
 
-          <section class="decision-rail card">
-            <div class="card-head"><div><span class="eyebrow">YOUR CALL</span><h3>Decisions</h3></div><button class="text-btn" data-go="decisions">View all →</button></div>
-            <div id="dashboardDecisions" class="decision-list compact"></div>
+          <section class="card contract span-2">
+            <div class="card-head"><div><span class="eyebrow">COMPANY CONTRACT</span><h3>Four rules v5 does not break</h3></div></div>
+            <div class="contract-grid">
+              <div><span>01</span><b>Use the tool</b><p>If reality is required, fetch it before reasoning.</p></div>
+              <div><span>02</span><b>Show the trace</b><p>Tool scope, result and failures remain visible.</p></div>
+              <div><span>03</span><b>Reject fake completion</b><p>The Orchestrator fails the evidence gate when proof is missing.</p></div>
+              <div><span>04</span><b>Act carefully</b><p>Consequential external actions stay human-approved.</p></div>
+            </div>
           </section>
 
-          <section class="portfolio card span-2">
-            <div class="card-head"><div><span class="eyebrow">PORTFOLIO</span><h3>What the company is building</h3></div><button class="small-btn" id="addProject">＋ New project</button></div>
-            <div id="dashboardProjects" class="project-table"></div>
-          </section>
-
-          <section class="activity card">
+          <section class="card activity">
             <div class="card-head"><div><span class="eyebrow">COMPANY PULSE</span><h3>Latest activity</h3></div></div>
             <div id="activityFeed" class="activity-feed"></div>
           </section>
         </div>
       </section>
 
+      <section id="view-portfolio" class="view">
+        <div class="page-head portfolio-head">
+          <div><span class="eyebrow">LIVE GITHUB PORTFOLIO</span><h2>See what actually exists before choosing what matters.</h2><p>Repository metadata is evidence of activity and technical shape — not proof of impact or willingness to pay. Council keeps that distinction visible.</p></div>
+          <div class="scan-box"><label>GitHub user<input id="githubUsername" value="mikelninh" /></label><button class="primary-btn" id="scanPortfolioBtn">⌕ Scan repositories</button></div>
+        </div>
+        <div id="portfolioSummary" class="portfolio-summary"></div>
+        <div class="portfolio-actions hidden" id="portfolioActions">
+          <div class="portfolio-filter"><input id="repoFilter" placeholder="Filter repositories…"/><select id="repoSort"><option value="recent">Most recent</option><option value="stars">Most stars</option><option value="name">Name</option></select></div>
+          <button class="primary-btn" id="rankPortfolioBtn">✦ Rank impact + monetization</button>
+        </div>
+        <div id="repoGrid" class="repo-grid"></div>
+      </section>
+
       <section id="view-chat" class="view">
         <div class="chat-layout">
           <section class="chat-panel card">
             <div class="chat-head">
-              <div><span class="eyebrow" id="chatRoomEyebrow"># HQ</span><h3 id="chatRoomTitle">Company HQ</h3></div>
+              <div><span class="eyebrow">COMPANY ROOM</span><h3>Evidence-first Council</h3></div>
               <div class="segmented"><button data-mode="orchestrated" class="active">✦ Smart</button><button data-mode="roundtable">◌ Everyone</button></div>
             </div>
             <div id="chat" class="chat-stream"></div>
             <form id="composer" class="composer">
               <div id="mentionTray" class="mention-tray hidden"></div>
-              <textarea id="messageInput" rows="1" placeholder="Ask the company…  @Chief of Staff, what needs my attention?"></textarea>
-              <div class="composer-bottom">
-                <span>Enter to send · Shift+Enter for line break · @ to invite</span>
-                <button type="submit" class="send-btn">↑</button>
-              </div>
+              <textarea id="messageInput" rows="1" placeholder="Ask Council… e.g. check all my GitHub projects and rank impact + monetization"></textarea>
+              <div class="composer-bottom"><span>Enter to send · @ to invite · real-world checks create visible tool traces</span><button type="submit" class="send-btn">↑</button></div>
             </form>
           </section>
 
-          <aside class="company-context">
-            <section class="context-card card">
-              <span class="eyebrow">ROOM MISSION</span>
-              <textarea id="roomGoal"></textarea>
+          <aside class="trace-rail">
+            <section class="card context-card">
+              <div class="card-head"><div><span class="eyebrow">EVIDENCE GATE</span><h3>Last run</h3></div></div>
+              <div id="evidenceGateCard"></div>
             </section>
-            <section class="context-card card">
-              <div class="card-head"><div><span class="eyebrow">MISSION QUEUE</span><h3>Open work</h3></div><button id="addTask" class="icon-btn">＋</button></div>
-              <div id="taskList" class="task-list"></div>
+            <section class="card context-card">
+              <div class="card-head"><div><span class="eyebrow">MISSION QUEUE</span><h3>Internal work</h3></div><button id="addTaskBtn" class="icon-btn">＋</button></div>
+              <div id="taskList"></div>
             </section>
-            <section class="context-card card">
-              <div class="card-head"><div><span class="eyebrow">ROOM MEMORY</span><h3>What we carry</h3></div></div>
-              <div id="roomMemory" class="memory-mini"></div>
+            <section class="card context-card">
+              <div class="card-head"><div><span class="eyebrow">ROOM MEMORY</span><h3>Durable context</h3></div></div>
+              <div id="roomMemory"></div>
             </section>
           </aside>
         </div>
       </section>
 
-      <section id="view-projects" class="view">
-        <div class="page-head"><div><span class="eyebrow">PORTFOLIO</span><h2>Projects are where strategy becomes evidence.</h2><p>Each project gets an owner, a room, milestones and a visible definition of done.</p></div><button id="addProjectPage" class="primary-btn">＋ New project</button></div>
-        <div id="projectGrid" class="project-grid"></div>
-      </section>
-
-      <section id="view-decisions" class="view">
-        <div class="page-head"><div><span class="eyebrow">FOUNDER QUEUE</span><h2>Only decisions that need a human should reach you.</h2><p>Everything else should be researched, challenged and prepared before it lands here.</p></div><button id="addDecision" class="primary-btn">＋ Add decision</button></div>
-        <div id="decisionBoard" class="decision-board"></div>
-      </section>
-
       <section id="view-team" class="view">
-        <div class="page-head"><div><span class="eyebrow">ORGANISATION</span><h2>A small company of distinct minds.</h2><p>Roles are editable. Permission levels are explicit. In v4, external actions still require human approval.</p></div><button id="addAgent" class="primary-btn">＋ Hire agent</button></div>
-        <div class="org-chart" id="orgChart"></div>
+        <div class="page-head"><div><span class="eyebrow">ORGANISATION</span><h2>Distinct roles, explicit authority.</h2><p>Specialists should enter because they add unique value, not because more voices look impressive.</p></div></div>
+        <div id="orgChart" class="org-chart"></div>
         <div id="teamGrid" class="team-grid"></div>
       </section>
 
       <section id="view-memory" class="view">
-        <div class="page-head"><div><span class="eyebrow">INSTITUTIONAL MEMORY</span><h2>The company should remember why, not just what.</h2><p>Mission, principles, decisions and lessons survive individual chats and project rooms.</p></div><button id="addCompanyMemory" class="primary-btn">＋ Remember</button></div>
-        <div id="companyMemoryGrid" class="memory-grid"></div>
+        <div class="page-head"><div><span class="eyebrow">INSTITUTIONAL MEMORY</span><h2>Remember decisions and lessons — not stale dashboards.</h2><p>Live system state is refreshed from tools. Memory is reserved for durable context.</p></div><button class="primary-btn" id="addMemoryBtn">＋ Remember</button></div>
+        <div id="memoryGrid" class="memory-grid"></div>
       </section>
     </main>
   </div>
 
-  <div id="modal" class="modal hidden" aria-hidden="true"><div class="modal-backdrop" data-close-modal></div><div class="modal-card"><button class="modal-close" data-close-modal>×</button><div id="modalBody"></div></div></div>
+  <div id="modal" class="modal hidden"><div class="modal-backdrop" data-close-modal></div><div class="modal-card"><button class="modal-close" data-close-modal>×</button><div id="modalBody"></div></div></div>
   <div id="toast" class="toast hidden"></div>
-
   <script src="/app.js" type="module"></script>
 </body>
 </html>
