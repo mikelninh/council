@@ -1,10 +1,10 @@
-# Council v5 ✦ — Truth & Tools
+# Council v5.1 ✦ — Private Portfolio
 
 Council is an **evidence-first AI company operating system**. The first company running on it is Council itself: **Council Labs, Company #001**.
 
-v4 proved the company shell: roles, memory, tasks, projects and a founder dashboard. v5 fixes the important weakness: agents are no longer allowed to sound as if they performed external work when they did not.
+v4 proved the company shell: roles, memory, tasks, projects and a founder dashboard. v5 added truthful tools and evidence gates. v5.1 makes the GitHub portfolio useful for the founder's real work: **owned public + private repositories, with README inspection rather than metadata-only pretending**.
 
-## v5 product contract
+## Product contract
 
 **TOOLS → STATE → ACTION → VERIFICATION**
 
@@ -16,15 +16,15 @@ v4 proved the company shell: roles, memory, tasks, projects and a founder dashbo
 - Expert routing is task-aware: GitHub + monetization routes to Builder / Capital / Humanist / Critic instead of inviting decorative roles.
 - Consequential external side effects remain human-approved.
 
-## Real GitHub Portfolio Scan
+## GitHub Portfolio Scan
 
 A request such as:
 
 > Check all my GitHub projects and tell me which we should work on together for highest impact and monetizability.
 
-now triggers `github.portfolio.scan` before the agents speak.
+triggers `github.portfolio.scan` before the agents speak.
 
-The scan records:
+The scan records every owned repository it can access and then inspects the README of every non-empty, non-archived repository. Evidence includes:
 
 - repository name and description
 - public/private scope
@@ -32,14 +32,25 @@ The scan records:
 - stars, forks and open issues
 - push recency
 - portfolio activity over 30 / 90 days
+- a bounded README excerpt for product purpose, capabilities and positioning
+- explicit README coverage so Council cannot imply it inspected files it never opened
 
-Repository metadata is treated as **evidence of activity and technical shape**, not proof of impact or willingness to pay. The agents must label market and impact conclusions as hypotheses until better evidence exists.
+Repository metadata and README text are **evidence of what has been built**, not proof of impact or willingness to pay. Market and impact conclusions remain hypotheses until supported by users, pilots or revenue.
 
 ### Public vs private repositories
 
-GitHub scanning works immediately without credentials for public repositories.
+Without credentials, Council scans public repositories only.
 
-To include private repositories, set a server-side `GITHUB_TOKEN` with the minimum read access needed for repository metadata. Never expose that token to the browser or commit it to GitHub.
+To include private repositories, set a separate server-side `GITHUB_TOKEN` using a fine-grained GitHub token with access to the repositories you want Council to inspect and only the permissions it needs:
+
+- Metadata: read
+- Contents: read
+
+Council does not need GitHub write permission for portfolio analysis.
+
+**Security:** a deployment that can read private repositories must itself be private. On Vercel Hobby, the recommended setup is to put `GITHUB_TOKEN` in the **Preview** environment only and enable **Vercel Authentication / Standard Deployment Protection**. Keep Production public-only unless the production domain is separately protected.
+
+Never expose `GITHUB_TOKEN` to browser code or commit it to GitHub.
 
 ## Reality layer
 
@@ -47,7 +58,8 @@ To include private repositories, set a server-side `GITHUB_TOKEN` with the minim
 
 - OpenAI live/demo state
 - GitHub public vs authenticated mode
-- whether private repository metadata is available
+- whether private repositories are available
+- whether deep README inspection is enabled
 - whether Council is running on Vercel
 - whether a Vercel management token is connected
 
@@ -55,7 +67,7 @@ The dashboard deliberately avoids copying stale deployment/project status into l
 
 ## Agent execution
 
-Council still supports agent-to-agent coordination using hidden controls:
+Council supports agent-to-agent coordination using hidden controls:
 
 - `[[SUMMON:critic]]`
 - `[[REMEMBER:durable room-specific note]]`
@@ -94,12 +106,12 @@ For Vercel, set secrets in Project Settings → Environment Variables. The brows
 ## API surface
 
 - `GET /api/status` — truthful runtime/capability state
-- `GET /api/portfolio?username=...` — live GitHub portfolio metadata
+- `GET /api/portfolio?username=...` — live GitHub portfolio + README evidence
 - `POST /api/council` — evidence-gated multi-agent execution
 
 ## Company cycle
 
-The v5 company cycle no longer starts from hard-coded progress percentages. It receives the current client-side founder focus and internal tasks, then refreshes external state through server tools it can actually access. Systems that are not connected must remain explicitly unknown.
+The company cycle no longer starts from hard-coded progress percentages. It receives the current client-side founder focus and internal tasks, then refreshes external state through server tools it can actually access. Systems that are not connected remain explicitly unknown.
 
 ## Repo Factory
 
