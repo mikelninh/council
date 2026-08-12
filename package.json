@@ -1,0 +1,12 @@
+{
+  "name": "council",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "A customisable multi-agent group chat with rooms, persistent agent memory, live web research, task creation, orchestration and a visible debate map.",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check lib/council.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check public/app.js"
+  },
+  "engines": { "node": ">=20" }
+}
