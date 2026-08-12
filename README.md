@@ -1,24 +1,68 @@
-# Council v4 ✦ — Company OS
+# Council v5 ✦ — Truth & Tools
 
-Council is evolving from a multi-agent group chat into an **AI-native company operating system**. The first company running on it is Council itself: **Council Labs, Company #001**.
+Council is an **evidence-first AI company operating system**. The first company running on it is Council itself: **Council Labs, Company #001**.
 
-The founder sets direction. A Chief of Staff routes work. Specialist agents research, build, challenge and propose tasks. Projects get rooms and owners. Decisions that truly require a human rise to a founder queue. Durable lessons become company memory.
+v4 proved the company shell: roles, memory, tasks, projects and a founder dashboard. v5 fixes the important weakness: agents are no longer allowed to sound as if they performed external work when they did not.
 
-## v4: Company OS
+## v5 product contract
 
-- Executive founder dashboard: focus, decisions, open missions, portfolio and company pulse
-- Council Labs seeded as Company #001, with Council v4 as its first product
-- Chief of Staff, Builder, Designer, Scientist, Critic, Humanist, Capital, Operator and Growth agents
-- Editable team roles, prompts, model overrides, reasoning and web-research access
-- Explicit authority levels: Observe → Recommend → Act with approval → Autonomous
-- Human approval remains the default for consequential external side effects in v4
-- Portfolio with project owners, progress, health, milestones and dedicated project rooms
-- Founder decision queue with agent recommendations and decisions written into company memory
-- Institutional memory: mission, principles, decisions and lessons
-- Company cycle: feed the current projects, founder decisions and open missions back into the agent loop for a fresh operating review
-- Existing v3 collaboration engine remains: smart routing, `@mentions`, agent-to-agent summons, web research, room memory and agent-created tasks
-- Demo mode without an API key; live OpenAI mode with server-side credentials
-- Six-agent hard cap per turn to prevent runaway loops and control cost
+**TOOLS → STATE → ACTION → VERIFICATION**
+
+- If a request needs reality, Council runs the relevant tool before agents reason.
+- External checks appear as visible tool traces with status, scope and duration.
+- The Orchestrator enforces an evidence gate and refuses to declare completion when required proof is missing.
+- Empty model outputs are retried once and then shown as execution failures — never replaced with “I have no useful contribution yet.”
+- Hidden coordination controls are parsed server-side and never intentionally shown as prose.
+- Expert routing is task-aware: GitHub + monetization routes to Builder / Capital / Humanist / Critic instead of inviting decorative roles.
+- Consequential external side effects remain human-approved.
+
+## Real GitHub Portfolio Scan
+
+A request such as:
+
+> Check all my GitHub projects and tell me which we should work on together for highest impact and monetizability.
+
+now triggers `github.portfolio.scan` before the agents speak.
+
+The scan records:
+
+- repository name and description
+- public/private scope
+- language and topics
+- stars, forks and open issues
+- push recency
+- portfolio activity over 30 / 90 days
+
+Repository metadata is treated as **evidence of activity and technical shape**, not proof of impact or willingness to pay. The agents must label market and impact conclusions as hypotheses until better evidence exists.
+
+### Public vs private repositories
+
+GitHub scanning works immediately without credentials for public repositories.
+
+To include private repositories, set a server-side `GITHUB_TOKEN` with the minimum read access needed for repository metadata. Never expose that token to the browser or commit it to GitHub.
+
+## Reality layer
+
+`/api/status` reports what Council can actually see:
+
+- OpenAI live/demo state
+- GitHub public vs authenticated mode
+- whether private repository metadata is available
+- whether Council is running on Vercel
+- whether a Vercel management token is connected
+
+The dashboard deliberately avoids copying stale deployment/project status into long-lived browser state.
+
+## Agent execution
+
+Council still supports agent-to-agent coordination using hidden controls:
+
+- `[[SUMMON:critic]]`
+- `[[REMEMBER:durable room-specific note]]`
+- `[[TASK:short title|builder|high]]`
+- `[[SKIP]]` when an agent has no distinct contribution
+
+The server strips these controls from visible replies.
 
 ## Run locally
 
@@ -32,7 +76,7 @@ Open `http://localhost:3030`.
 
 On Windows, `START_COUNCIL.bat` launches the local server.
 
-## Enable live AI
+## Environment
 
 Create `.env.local` next to `package.json`:
 
@@ -40,46 +84,41 @@ Create `.env.local` next to `package.json`:
 OPENAI_API_KEY=your_key_here
 OPENAI_MODEL=gpt-5
 OPENAI_ORCHESTRATOR_MODEL=gpt-5
+GITHUB_USERNAME=mikelninh
+GITHUB_TOKEN=
+COUNCIL_REPO=mikelninh/council
 ```
 
-Never commit `.env.local`.
+For Vercel, set secrets in Project Settings → Environment Variables. The browser never receives `OPENAI_API_KEY` or `GITHUB_TOKEN`.
 
-For Vercel, add `OPENAI_API_KEY` to the project environment variables and redeploy. The browser never receives the API key.
+## API surface
 
-## Company operating loop
+- `GET /api/status` — truthful runtime/capability state
+- `GET /api/portfolio?username=...` — live GitHub portfolio metadata
+- `POST /api/council` — evidence-gated multi-agent execution
+
+## Company cycle
+
+The v5 company cycle no longer starts from hard-coded progress percentages. It receives the current client-side founder focus and internal tasks, then refreshes external state through server tools it can actually access. Systems that are not connected must remain explicitly unknown.
+
+## Repo Factory
+
+The repository still contains the owner-gated GitHub Actions **Repo Factory**. An owner-authored `[create-repo] ...` issue can create an approved repository using the `REPO_FACTORY_TOKEN` secret.
+
+The longer-term loop is:
 
 ```text
 Founder direction
       ↓
-Chief of Staff
+truthful tool reads
       ↓
-company snapshot → projects / decisions / missions / memory
+Chief of Staff routes specialists
       ↓
-relevant specialists enter the room
+evidence → debate → decision
       ↓
-research · challenge · build · assign
+internal task / human approval
       ↓
-internal tasks + durable memory
+external action
       ↓
-Founder briefing
-      ↓
-only consequential decisions return to the human
+verification trace
 ```
-
-## Agent collaboration
-
-Agents can emit hidden control tokens that the server parses and removes before display:
-
-- `[[SUMMON:critic]]`
-- `[[REMEMBER:durable room-specific note]]`
-- `[[TASK:short title|builder|high]]`
-
-This keeps coordination explicit and inspectable instead of burying it inside an opaque loop.
-
-## Persistence
-
-v4 deliberately keeps company state, rooms, tasks and memory in browser-local storage so the prototype has no database dependency. A multi-user version should move company state, permissions, audit trails and shared memory to a persistent backend.
-
-## Repo Factory
-
-The repository also contains a secure GitHub Actions **Repo Factory**. An owner-authored `[create-repo] ...` issue can create a new repository using the `REPO_FACTORY_TOKEN` secret. This gives Council a path toward spawning approved projects into real GitHub repositories while keeping repository creation behind an explicit control surface.
