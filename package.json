@@ -1,12 +1,12 @@
 {
   "name": "council",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
-  "description": "Council v4 — an AI-native company operating system with projects, founder decisions, company memory, agent collaboration and safe authority levels.",
+  "description": "Council v5 — an evidence-first AI company OS with truthful tool use, real GitHub portfolio scans, execution traces, and human-controlled action.",
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check lib/council.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check public/app.js",
+    "check": "node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check public/app.js",
     "build": "npm run check"
   },
   "engines": { "node": ">=20" }
