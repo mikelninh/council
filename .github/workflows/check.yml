@@ -11,6 +11,8 @@ jobs:
         with:
           node-version: 20
       - run: npm run check
+      - name: Exercise deterministic decision-quality contract
+        run: npm run test:decision
 
   github-tool-smoke:
     if: github.event_name == 'pull_request'
