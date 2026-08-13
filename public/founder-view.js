@@ -11,6 +11,29 @@
     return text.length > max ? `${text.slice(0, max - 1).trim()}…` : text;
   };
 
+  function installFounderChrome() {
+    document.title = 'Council v5.3 — Founder View';
+    if (!document.querySelector('link[data-founder-css]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/founder.css';
+      link.dataset.founderCss = 'true';
+      document.head.appendChild(link);
+    }
+    const brandVersion = document.querySelector('.brand-row span');
+    if (brandVersion) brandVersion.textContent = 'company os · v5.3';
+    const heroEyebrow = document.querySelector('.hero .hero-top .eyebrow');
+    if (heroEyebrow) heroEyebrow.textContent = 'COUNCIL v5.3 · FOUNDER VIEW';
+    const heroTitle = document.querySelector('.hero-copy h2');
+    if (heroTitle) heroTitle.innerHTML = 'One decision.<br/>Everything else is audit.';
+    const heroCopy = document.querySelector('.hero-copy p');
+    if (heroCopy) heroCopy.textContent = 'Council can think in detail. You see the answer first, then open the reasoning only when you want it.';
+    const chatTitle = document.querySelector('.chat-head h3');
+    if (chatTitle) chatTitle.textContent = 'Founder view';
+    const composerHint = document.querySelector('.composer-bottom span');
+    if (composerHint) composerHint.textContent = 'Enter to send · Council thinks deeply, founder view stays concise';
+  }
+
   function auditAgent(agent = {}) {
     const status = agent.status === 'failed' ? 'failed' : agent.status === 'skipped' ? 'skipped' : 'spoke';
     const body = agent.status === 'failed'
@@ -23,9 +46,9 @@
   }
 
   function auditTools(data = {}) {
-    const runs = data.toolRuns || [];
-    if (!runs.length) return '<p class="fv-audit-empty">No external tools were required.</p>';
-    return runs.map((run) => {
+    const toolRuns = data.toolRuns || [];
+    if (!toolRuns.length) return '<p class="fv-audit-empty">No external tools were required.</p>';
+    return toolRuns.map((run) => {
       const ok = run.status === 'success';
       let detail = run.error || '';
       if (run.tool === 'github.portfolio.scan' && ok) {
@@ -102,6 +125,7 @@
   }
 
   function upgradeFounderResults() {
+    installFounderChrome();
     const chat = document.querySelector('#chat');
     if (!chat) return;
     chat.querySelectorAll('.message.orchestrator:not([data-founder-upgraded])').forEach((article) => {
@@ -160,6 +184,7 @@
 
   const observer = new MutationObserver(() => queueMicrotask(upgradeFounderResults));
   const start = () => {
+    installFounderChrome();
     observer.observe(document.documentElement, { childList:true, subtree:true });
     upgradeFounderResults();
   };
