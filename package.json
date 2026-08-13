@@ -1,13 +1,14 @@
 {
   "name": "council",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": true,
   "type": "module",
-  "description": "Council v5.2 — evidence-graded decision quality with venture clustering, forced red-team challenge, Chief resolution, confidence and falsification tests.",
+  "description": "Council v5.3 — a decision-first Founder View with visual outcomes and full reasoning available on demand in the audit log.",
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check public/app.js && node --check tests/decision-quality.mjs",
+    "check": "node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs",
     "test:decision": "node tests/decision-quality.mjs",
+    "test:founder": "node tests/founder-view.mjs",
     "build": "npm run check"
   },
   "engines": { "node": ">=20" }

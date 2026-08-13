@@ -3,7 +3,10 @@
   "buildCommand": "npm run check",
   "rewrites": [
     { "source": "/", "destination": "/public/index.html" },
-    { "source": "/app.js", "destination": "/public/app.js" },
+    { "source": "/app.js", "destination": "/public/app-v53.js" },
+    { "source": "/app-core.js", "destination": "/public/app.js" },
+    { "source": "/founder-view.js", "destination": "/public/founder-view.js" },
+    { "source": "/founder.css", "destination": "/public/founder.css" },
     { "source": "/styles.css", "destination": "/public/styles.css" }
   ]
 }
