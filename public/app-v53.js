@@ -1,2 +1,2 @@
 import './founder-view.js';
-import './app.js';
+import './app-core.js';
