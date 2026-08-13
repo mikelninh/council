@@ -4,12 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#f3eee5" />
-  <title>Council v5.2 — Decision Quality</title>
-  <meta name="description" content="Council v5.2 — an evidence-first AI company operating system for falsifiable decisions." />
+  <title>Council v5.3 — Founder View</title>
+  <meta name="description" content="Council v5.3 — one decision by default, full evidence and agent reasoning on demand." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/founder.css?v=5.3.1" />
 </head>
 <body>
   <div class="noise"></div>
@@ -17,7 +18,7 @@
     <aside class="sidebar">
       <div class="brand-row">
         <div class="brand-mark">✦</div>
-        <div><strong>COUNCIL</strong><span>company os · v5.2</span></div>
+        <div><strong>COUNCIL</strong><span>company os · v5.3</span></div>
       </div>
 
       <div class="company-card">
@@ -57,10 +58,10 @@
       <section id="view-dashboard" class="view active">
         <div class="executive-grid">
           <section class="hero card">
-            <div class="hero-top"><span class="eyebrow">COUNCIL v5.2 · DECISION QUALITY</span><span id="lastCycleLabel">No company cycle yet</span></div>
+            <div class="hero-top"><span class="eyebrow">COUNCIL v5.3 · FOUNDER VIEW</span><span id="lastCycleLabel">No company cycle yet</span></div>
             <div class="hero-copy">
-              <h2>Truth is not enough.<br/>Choose well.</h2>
-              <p>Grade the evidence. Cluster the real ventures. Force disagreement. Make one falsifiable decision.</p>
+              <h2>One decision.<br/>Everything else is audit.</h2>
+              <p>Council can think in depth. You should see the recommendation, confidence, next move and what would change our mind — then open the reasoning only when you want it.</p>
             </div>
             <div class="hero-foot"><div><span>Company focus</span><strong id="companyFocus">Turn evidence into useful work</strong></div><button class="text-btn" id="editFocusBtn">Change focus →</button></div>
           </section>
@@ -80,7 +81,7 @@
           </section>
 
           <section class="card contract span-2">
-            <div class="card-head"><div><span class="eyebrow">DECISION CONTRACT</span><h3>Five rules v5.2 does not break</h3></div></div>
+            <div class="card-head"><div><span class="eyebrow">DECISION CONTRACT</span><h3>Five rules Council does not break</h3></div></div>
             <div class="contract-grid">
               <div><span>01</span><b>Grade the evidence</b><p>A = tool-verified, B = repo-asserted, C = externally validated, D = inference.</p></div>
               <div><span>02</span><b>Cluster before ranking</b><p>Related repos become venture families before they compete for priority.</p></div>
@@ -123,14 +124,14 @@
         <div class="chat-layout">
           <section class="chat-panel card">
             <div class="chat-head">
-              <div><span class="eyebrow">COMPANY ROOM</span><h3>Evidence-first Council</h3></div>
+              <div><span class="eyebrow">COMPANY ROOM</span><h3>Decision first · audit on demand</h3></div>
               <div class="segmented"><button data-mode="orchestrated" class="active">✦ Smart</button><button data-mode="roundtable">◌ Everyone</button></div>
             </div>
             <div id="chat" class="chat-stream"></div>
             <form id="composer" class="composer">
               <div id="mentionTray" class="mention-tray hidden"></div>
-              <textarea id="messageInput" rows="1" placeholder="Ask Council… e.g. cluster all my projects, challenge the ranking, and pick one company priority"></textarea>
-              <div class="composer-bottom"><span>Enter to send · @ to invite · real-world checks create visible tool traces</span><button type="submit" class="send-btn">↑</button></div>
+              <textarea id="messageInput" rows="1" placeholder="Ask Council…"></textarea>
+              <div class="composer-bottom"><span>Default: decision card · expand Why this? or Audit log when needed</span><button type="submit" class="send-btn">↑</button></div>
             </form>
           </section>
 
@@ -166,6 +167,6 @@
 
   <div id="modal" class="modal hidden"><div class="modal-backdrop" data-close-modal></div><div class="modal-card"><button class="modal-close" data-close-modal>×</button><div id="modalBody"></div></div></div>
   <div id="toast" class="toast hidden"></div>
-  <script src="/app.js" type="module"></script>
+  <script src="/app-v53.js?v=5.3.1" type="module"></script>
 </body>
 </html>
