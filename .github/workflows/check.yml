@@ -13,6 +13,8 @@ jobs:
       - run: npm run check
       - name: Exercise deterministic decision-quality contract
         run: npm run test:decision
+      - name: Exercise compact founder-view contract
+        run: npm run test:founder
 
   github-tool-smoke:
     if: github.event_name == 'pull_request'
