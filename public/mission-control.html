@@ -2,26 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f2efe8">
-<title>Mission Control — Real Journeys</title><meta name="description" content="A compact visual map of Michael Ninh's core missions using their real named milestones, recent wins and next biggest wins."><link rel="stylesheet" href="./mission-control.css">
+<title>Mission Control — Workflow Map</title><meta name="description" content="A calm workflow map showing who owns the next move, what can continue, what is blocked and where each mission is headed."><link rel="stylesheet" href="./mission-control.css">
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span class="brand-mark">✦</span><b>Mission Control</b><small>v0.8</small></a>
+  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span class="brand-mark">✦</span><b>Mission Control</b><small>v0.9</small></a>
   <div class="top-actions"><span id="syncState">SYNCING</span><button id="refresh" aria-label="Reload snapshot">↻</button></div>
 </header>
 <main>
   <section class="overview">
-    <div><span class="kicker">PORTFOLIO MAP</span><h1>Where everything stands.</h1></div>
-    <div id="portfolioPulse" class="pulse"></div>
+    <div><span class="kicker">WORKFLOW MAP</span><h1>What moves next.</h1></div>
+    <div id="workflowSummary" class="workflow-summary"></div>
   </section>
 
-  <section class="wins-band" aria-labelledby="winsTitle">
-    <div class="band-label"><span>🎉</span><div><b id="winsTitle">Recent wins</b><small>things worth noticing</small></div></div>
-    <div id="winsStrip" class="wins-strip"></div>
-  </section>
+  <nav id="workflowFilters" class="workflow-filters" aria-label="Filter missions by next owner">
+    <button class="active" data-lane="all">ALL <b id="countAll">—</b></button>
+    <button data-lane="your_move">YOUR MOVE <b id="countYou">—</b></button>
+    <button data-lane="can_continue">CAN CONTINUE <b id="countContinue">—</b></button>
+    <button data-lane="blocked">BLOCKED <b id="countBlocked">—</b></button>
+    <button data-lane="needs_contract">NEEDS CONTRACT <b id="countContract">—</b></button>
+  </nav>
+
+  <section class="win-ticker" aria-label="Recent wins"><span>🎉 LATEST</span><div id="winTicker"></div></section>
 
   <section class="missions-section">
-    <div class="section-title"><div><span>CORE MISSIONS</span><b id="coreCount">—</b></div><small>Each rail is the project's actual journey. Open for the full story.</small></div>
+    <div class="section-title"><div><span>CORE MISSIONS</span><b id="coreCount">—</b></div><small>Roadmap = where. Workflow = who moves next.</small></div>
     <div id="coreGrid" class="mission-grid"></div>
   </section>
 
