@@ -1,20 +1,23 @@
 # AGENTS.md — Council / Mission Control
 
 ## Mission
-Give Michael one evidence-first operating view across his portfolio: what is active, what is blocked, what needs him, what agents may safely continue, and what the exact next move is.
+Give Michael one evidence-first AI Chief of Staff across his portfolio: understand where every serious project stands, recommend the highest-leverage next move, safely delegate bounded work, verify the result and return consequential decisions to him.
 
 ## Start here
 1. Read `README.md`.
 2. Read `.harness/project.json`.
-3. Read `.harness/active-task.json` and `.harness/HANDOFF.md`.
-4. For portfolio state, re-open GitHub/API evidence rather than relying on chat memory.
+3. Read `.harness/active-task.json`, `.harness/roadmap.json` and `.harness/HANDOFF.md`.
+4. Read `docs/CHIEF_OF_STAFF_V1.md` for recommendation and approval semantics.
+5. Re-open current GitHub/API evidence rather than relying on chat memory.
 
 ## Source-of-truth map
 - Decision runtime: `lib/council.mjs`, `api/council.mjs`
+- Chief recommendation policy: `lib/chief.mjs`
 - GitHub evidence tools: `lib/tools.mjs`
 - Mission Control aggregation: `lib/mission-control.mjs`, `api/mission-control.mjs`
-- GitHub Pages snapshot builder: `scripts/build-pages.mjs`, `docs/MISSION_CONTROL_GITHUB_NATIVE.md`
-- Founder UI: `public/`
+- GitHub Pages snapshot builder: `scripts/build-pages.mjs`
+- Daily home: `public/mission-control.*`
+- Approved mission intake: `.github/workflows/mission-intake.yml`
 - Deterministic tests: `tests/`
 - Current work state: `.harness/`
 - CI truth: `.github/workflows/`
@@ -22,8 +25,10 @@ Give Michael one evidence-first operating view across his portfolio: what is act
 ## Contract before work
 Every substantial task defines goal, sources, outputs, constraints, done criteria, forbidden actions, risk class, retry budget and next owner.
 
+A task may also define `decision_estimate` with impact, urgency, unlock value, effort and confidence on a 1–5 scale. These are explicit judgement inputs, never observed facts.
+
 ## Roles
-- Chief: triage and route.
+- Chief: triage, recommend, route, synthesize and escalate. No specialist production work.
 - Scout: collect current evidence read-only.
 - Builder: make isolated reversible changes.
 - Verifier: independently test claims and artefacts.
@@ -31,20 +36,33 @@ Every substantial task defines goal, sources, outputs, constraints, done criteri
 
 ## Action classes
 - A0 Observe — read/search/analyse. Automatic.
-- A1 Local reversible — draft/test/edit isolated work. Automatic.
-- A2 Shared reversible — branch, PR, preview, issue. Logged; normally automatic.
+- A1 Local reversible — draft/test/edit isolated work. Automatic inside an approved mission.
+- A2 Shared reversible — branch, PR, preview, issue. Logged; normally automatic inside an approved mission.
 - A3 Consequential — deploy, send, publish, spend, write externally. Human approval required.
-- A4 High-impact — destructive production changes, sensitive-data egress, legal/financial commitments. Explicit approval plus stronger verification.
+- A4 High-impact — destructive production changes, sensitive-data egress, legal/financial/clinical commitments. Explicit approval plus stronger verification.
+
+## Chief recommendation rules
+- Prefer a high-leverage unblocked A0–A2 delegation when one exists.
+- Surface human gates and blockers separately even when they are not the primary delegation recommendation.
+- Recommendation factors must be inspectable; never present a heuristic score as objective truth.
+- `roadmap.json` defines direction. `active-task.json` defines current execution. Never infer execution ownership from roadmap prose.
+- If the active task is missing or completed, surface a contract gap rather than inventing work.
+- Owner corrections (`approve`, `edit`, `not now`) outrank repository activity when a future private preference loop is available.
+
+## Approval and runner boundary
+- Public GitHub Pages contains no GitHub write credential and no secret agent credential.
+- `APPROVE & QUEUE` may create a durable mission handoff, not silently perform cross-repo work.
+- Approved mission packets must preserve project, exact mission, risk class, done criteria, constraints, forbidden actions and A0–A2 boundary.
+- `.github/workflows/mission-intake.yml` validates/labels approved handoffs; it does not pretend an authenticated coding-agent runner is connected.
+- A future runner may consume only valid approved mission packets and must still stop at A3/A4.
 
 ## Mission Control rules
-- Portfolio metadata is observed evidence; rankings are inference.
-- Private projects must never silently disappear. In an authenticated/private view they must surface as visible state or an explicit scope limitation; in public GitHub Pages they are deliberately excluded to prevent leakage.
+- Portfolio metadata is observed evidence; rankings and Chief scores are inference.
+- Private projects never silently disappear. Public Pages deliberately excludes private details; authenticated owner views must state their scope.
 - `completed` work must not masquerade as active work.
-- A project requiring human review must surface in **Needs me**.
-- Missing `.harness/` state is visible as `untracked`, not guessed.
-- Mission Control is read-only in v0.2 and remains read-only in v0.3. It may recommend actions; it does not execute cross-repo writes.
-- Public GitHub Pages may publish **public repository state only**. Never leak private repository names, task text, evidence, credentials or metadata into a static snapshot.
-- Browser code must never contain GitHub credentials. Refresh happens in GitHub Actions or the trusted runtime, not by shipping a token to the client.
+- Missing `.harness/` state is visible, not guessed.
+- Public Pages may publish public repository state only.
+- Browser code must never contain GitHub or AI-provider credentials.
 
 ## Verification
 Minimum checks:
@@ -53,12 +71,14 @@ Minimum checks:
 - `npm run test:mission`
 - `npm run test:decision`
 - `npm run test:founder`
+- `npm run test:mission-ui`
+- `npm run test:chief`
 - `npm run build:pages` for GitHub-native release work
 
 Never claim a command passed unless it actually ran and the result is captured.
 
 ## Durable state
-Chat is not the system of record. Keep current work and handoff state in `.harness/`. Re-open current GitHub state before decisions.
+Chat is not the system of record. Keep current work, roadmaps, approvals, receipts and handoffs durable in repositories. Re-open current GitHub state before decisions.
 
 ## Retries
 Default maximum: 3. If the same failure repeats twice, stop and upgrade the harness/test/tool path.
