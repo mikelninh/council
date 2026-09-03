@@ -1,32 +1,39 @@
-# Mission Control v0.8 handoff
+# Mission Control v0.9 handoff
 
 ## Status
 Verified and accepted for merge.
 
 ## What changed
-Mission Control now renders each core mission as its **actual named milestone journey**, not the same generic four-stage rail.
+Mission Control is now a **workflow router**, not only a roadmap viewer.
+
+The roadmap answers **where are we?**. The execution contract answers **who moves next and what exactly happens?**.
+
+Workflow lanes:
+- **YOUR MOVE** — operator/human review or approval is the current gate.
+- **CAN CONTINUE** — chief/scout/builder/verifier owns the next execution step.
+- **BLOCKED** — task or roadmap reports a blocker.
+- **NEEDS CONTRACT** — roadmap exists but execution truth is missing or stale.
 
 Default card grammar:
 
-`last earned → last earned → ● CURRENT → next win → following win`
+`project + workflow lane → real milestone journey → exact NEXT MOVE → recent win`
 
-Examples are sourced from project-owned roadmap labels such as `Citation graph → MCP / APIs → Answer quality → Answer benchmark → Law-firm pilot` or `Clinical context → 500-case holdout → Recall → Holdout recall → Clinician eval`.
-
-The meaningless `Achieved 3` count is gone. The large duplicate NOW panel is gone. Each card keeps one compact NEXT WIN signal and one recent-win line.
+The top of the page is compressed into workflow counts, filter chips and a thin latest-win ticker. All core missions remain visible by default.
 
 ## Durable truth
-Optional compact `label` fields live beside the full milestone `title` in `.harness/roadmap.json`. Full titles remain authoritative; the UI does not invent strategic short names.
+- `.harness/roadmap.json` owns product direction.
+- `.harness/active-task.json` owns current execution, next step and next owner.
+- Mission Control does not infer agent ownership from roadmap prose.
+
+Core execution contracts were refreshed before this UI release so routing is meaningful rather than cosmetic.
 
 ## Verification
-- `Check Council` run `33761242002`: success, including public-safe Pages snapshot build.
-- `harness-contract` run `33761242024`: success.
-- UI regression contract rejects the old generic stage rail and duplicate NOW block.
+- `Check Council` run `33764315145`: success, including syntax, deterministic tests, workflow UI contract and public-safe snapshot build.
+- `harness-contract` run `33764315026`: success.
+- Missing/completed execution contracts are explicitly routed to **NEEDS CONTRACT** rather than guessed.
 
 ## Safety
-Warm-paper / graphite / cobalt visual system remains. Public Pages remains public-only, read-only and browser-credential-free.
-
-## Human check
-Judge whether seven missions now feel visibly different at a glance and whether the named rails communicate enough context without reopening text density.
+Public Pages remains public-only, read-only and browser-credential-free. A3/A4 actions cannot be executed from this surface.
 
 ## Next owner
-Operator — merge PR #18, refresh Pages and verify the live v0.8 route.
+Operator — merge PR #19, refresh GitHub Pages and verify the live v0.9 route.

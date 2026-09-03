@@ -1,0 +1,22 @@
+{
+  "schema": "mikel-harness-receipt-v0.1",
+  "task_id": "mission-control-v0.9-workflow-routing",
+  "verdict": "accepted",
+  "context_sources": ["docs/MISSION_CONTROL_WORKFLOW_ROUTING.md", "public/mission-control.html", "public/mission-control.js", "public/mission-control.css", "scripts/build-pages.mjs"],
+  "tools_used": ["GitHub", "GitHub Actions"],
+  "verification": {
+    "check_council": {"run_id": 33764315145, "conclusion": "success"},
+    "harness_contract": {"run_id": 33764315026, "conclusion": "success"},
+    "snapshot_build": "passed inside Check Council",
+    "ui_contract": "passed inside Check Council",
+    "routing_contract": "active-task.next_owner is execution truth; missing/completed tasks surface NEEDS CONTRACT"
+  },
+  "human_corrections": 0,
+  "retries": 0,
+  "failure_upgrades": [],
+  "external_actions": [{"kind":"open_pull_request","target":"Council #19","risk_class":"A2","approved":true}],
+  "accepted_artifact": "Council PR #19",
+  "rollback_point": "a50f52f625a21e6bcac7d0bb1ea19681602b4f16",
+  "next_owner": "operator",
+  "next_step": "Merge Council PR #19, refresh GitHub Pages and verify the live v0.9 route."
+}
