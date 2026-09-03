@@ -1,0 +1,21 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v1-chief-of-staff",
+  "verdict":"accepted",
+  "context_sources":["lib/chief.mjs","scripts/build-pages.mjs","public/mission-control.html","public/mission-control.js","public/mission-control.css","docs/CHIEF_OF_STAFF_V1.md"],
+  "tools_used":["GitHub","GitHub Actions"],
+  "verification":{
+    "check_council":{"run_id":33767292314,"status":"success","observations":["syntax/check passed","mission-control UI contract passed","Chief recommendation/authority test passed","public-safe snapshot built and verified"]},
+    "harness_contract":{"run_id":33767292193,"status":"success"},
+    "chief_snapshot":{"status":"success","recommendation":"PrüfPilot","score":31.7,"delegatable_missions":5},
+    "public_snapshot":{"status":"success","projects":18,"core_missions":7}
+  },
+  "human_corrections":0,
+  "retries":1,
+  "failure_upgrades":["Harness caught three legacy Mission Control invariants missing from the rewritten AGENTS contract; exact invariants were restored rather than weakening the harness."],
+  "external_actions":[{"kind":"pull_request","target":"Council #20","risk_class":"A2"}],
+  "accepted_artifact":"Council PR #20",
+  "rollback_point":"1431c05d164e3e2e6884c06bbc9dddb726daad2d",
+  "next_owner":"operator",
+  "next_step":"Merge Council PR #20, refresh GitHub Pages and verify the live v1.0 route before judging visual taste and recommendation usefulness."
+}

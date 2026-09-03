@@ -1,25 +1,35 @@
 {
   "schema": "mikel-harness-task-v0.1",
-  "task_id": "mission-control-v0.9-workflow-routing",
+  "task_id": "mission-control-v1-chief-of-staff",
   "status": "completed",
-  "goal": "Turn Mission Control from a visual portfolio map into a calm workflow router that shows who owns the next move, what can continue without Michael, what is blocked, and the exact next action for each core mission.",
-  "sources": ["docs/MISSION_CONTROL_WORKFLOW_ROUTING.md", "public/mission-control.html", "public/mission-control.js", "public/mission-control.css", "scripts/build-pages.mjs", ".harness/roadmap.json"],
-  "outputs": ["workflow lanes", "exact next-move signals", "lane filters", "compact latest-win ticker", "workflow routing regression tests"],
-  "constraints": ["Keep all core missions visible by default.", "Do not infer agent ownership from roadmap prose.", "Use active-task.next_owner as execution truth.", "Keep public Pages read-only and private-safe."],
-  "done_when": ["Every core project displays a workflow lane.", "Exact next move comes from the active execution contract.", "User can scan/filter YOUR MOVE, CAN CONTINUE and BLOCKED without losing the roadmap.", "Latest wins remain visible but compact.", "CI protects routing truth and visual density."],
-  "forbidden": ["Autonomous A3/A4 actions", "UI-invented ownership", "Information wall", "Private metadata publication"],
+  "goal": "Turn Mission Control into a beautiful daily Chief-of-Staff home that recommends the highest-leverage bounded mission, explains the judgment, lets Michael review/edit/approve it and creates a durable agent handoff without embedding browser credentials.",
+  "sources": ["lib/chief.mjs", "scripts/build-pages.mjs", "public/mission-control.html", "public/mission-control.js", "public/mission-control.css", ".harness/roadmap.json", "docs/CHIEF_OF_STAFF_V1.md"],
+  "outputs": ["Chief recommendation engine", "premium daily-home UI", "inspectable leverage factors", "review/edit/approve flow", "GitHub mission handoff", "Chief regression tests"],
+  "constraints": ["Recommendation estimates must be explicit and inspectable.", "Prefer a safe A0-A2 delegation when available.", "Keep all core missions accessible without making them the first visual priority.", "No GitHub write token in public browser code.", "A3/A4 always stop for explicit human approval."],
+  "done_when": ["One Chief recommendation is visually dominant and evidence-linked.", "All core missions remain compactly visible.", "Recommendation ranking is deterministic and tested.", "Approval creates a durable GitHub mission packet.", "UI explicitly states the public Pages runner boundary.", "CI and fresh Pages deployment pass."],
+  "forbidden": ["Autonomous A3/A4 actions", "Black-box priority claims", "Browser credentials", "Private metadata publication", "Pretending a static page launched an agent when it only created a handoff"],
   "risk_class": "A2",
   "approval_required": false,
   "max_retries": 3,
   "current_step": "verified_for_merge",
   "evidence": [
-    {"kind":"ci","workflow":"Check Council","run_id":33764315145,"status":"success"},
-    {"kind":"ci","workflow":"harness-contract","run_id":33764315026,"status":"success"},
-    {"kind":"build","command":"npm run build:pages","status":"success_via_Check_Council"},
-    {"kind":"routing","observation":"workflow ownership is sourced from active-task.next_owner; stale execution truth becomes NEEDS CONTRACT"}
+    {"kind":"ci","workflow":"Check Council","run_id":33767292314,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33767292193,"status":"success"},
+    {"kind":"build","status":"success","observation":"18 projects · 7 core missions · 5 delegatable · recommendation PrüfPilot"},
+    {"kind":"chief","status":"success","observation":"Chief snapshot recommendation PrüfPilot scored 31.7"}
   ],
-  "failures": [],
-  "uncertainties": ["Final workflow usefulness is still a human judgement after live deployment."],
+  "failures": [{"kind":"harness_invariant","resolution":"Restored exact legacy Mission Control read-only/private-scope/untracked invariants after the harness correctly rejected the first AGENTS rewrite."}],
+  "uncertainties": ["Whether the new visual direction feels pleasurable enough remains a human taste judgment after live deployment.", "An authenticated agent runner is not yet connected to the public GitHub Pages approval handoff."],
   "next_owner": "operator",
-  "next_step": "Merge Council PR #19, refresh GitHub Pages and verify the live v0.9 route."
+  "next_step": "Merge PR #20, refresh GitHub Pages and verify the live v1.0 route.",
+  "decision_estimate": {
+    "scale": "1-5",
+    "impact": 4,
+    "urgency": 2,
+    "unlock_value": 4,
+    "effort": 4,
+    "confidence": 5,
+    "rationale": "This improves the operating system itself, but current product-proof missions should outrank Mission Control once v1 is shipped.",
+    "source": "chief_estimate_v1"
+  }
 }

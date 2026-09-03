@@ -1,28 +1,28 @@
 {
   "schema": "mikel-harness-roadmap-v0.1",
   "project": "Council / Mission Control",
-  "north_star": "Give Michael one calm, trustworthy place that can answer for every serious project: why it exists, how far it has come, what matters now and what the smartest next win is.",
+  "north_star": "Give Michael one calm, trustworthy AI Chief of Staff that understands every serious project, recommends the highest-leverage next move, safely delegates bounded work and returns verified results without stealing human authority.",
   "achieved": [
     {"title": "GitHub-native public Mission Control with no Vercel dependency", "label": "GitHub-native", "evidence": ["docs/MISSION_CONTROL_GITHUB_NATIVE.md", "scripts/build-pages.mjs"]},
     {"title": "Durable roadmap truth standardized across all seven core public missions", "label": "7/7 roadmaps", "evidence": ["docs/HARNESS_ROADMAP_SCHEMA.md", "docs/MISSION_CONTROL_PORTFOLIO_MAP.md"]},
-    {"title": "Compact warm-paper visual map with progressive disclosure", "label": "Visual map", "evidence": ["docs/MISSION_CONTROL_VISUAL_MAP.md", "public/mission-control.css"]}
+    {"title": "Real named project journeys plus explicit workflow ownership and exact next moves", "label": "Workflow map", "evidence": ["docs/MISSION_CONTROL_REAL_JOURNEYS.md", "docs/MISSION_CONTROL_WORKFLOW_ROUTING.md"]}
   ],
   "current": {
-    "title": "Make every project rail tell its real named milestone journey",
-    "label": "Real journeys",
+    "title": "Launch the Chief-of-Staff recommendation and approval loop",
+    "label": "Chief v1",
     "status": "active",
-    "outcome": "Replace generic stage labels and achievement counts with project-owned compact milestone names while keeping the full roadmap behind expansion."
+    "outcome": "Make the daily home recommendation-first: one explainable highest-leverage move, compact mission context, explicit review/edit/approval and a durable bounded agent handoff."
   },
   "next": [
-    {"title": "Add a private owner view for private projects and personal priorities", "label": "Private owner view", "why": "The public Pages view intentionally excludes private project details."},
-    {"title": "Add safe A0–A2 continuation from the cockpit", "label": "Safe continuation", "why": "The eventual payoff is not only seeing the work but safely resuming scouts, builders and verifiers from explicit contracts."},
-    {"title": "Show cross-project dependencies and reusable proof layers", "label": "Dependencies", "why": "The portfolio becomes more useful when shared infrastructure and blockers are visible across missions."}
+    {"title": "Connect an authenticated A0-A2 agent runner to approved mission queue items", "label": "Agent runner", "why": "The public Pages approval handoff is safe and durable, but static browser code must not hold credentials or pretend to execute agents."},
+    {"title": "Add a private owner view for private projects, applications and personal priorities", "label": "Private owner view", "why": "The public Pages view intentionally excludes private project details and therefore cannot yet rank Michael's whole life/work portfolio."},
+    {"title": "Learn priority corrections from approve, edit and not-now decisions", "label": "Preference loop", "why": "Chief recommendations should improve from explicit owner feedback rather than repository activity alone."}
   ],
   "later": [
-    {"title": "Learn portfolio priorities from explicit owner intent rather than repository activity alone.", "label": "Owner priorities"},
-    {"title": "Surface reusable proof and infrastructure across projects.", "label": "Shared proof"},
-    {"title": "Keep A3/A4 consequential actions behind explicit human approval.", "label": "Approval gates"}
+    {"title": "Show cross-project dependencies, reusable proof and shared infrastructure.", "label": "Dependencies"},
+    {"title": "Return verified PRs, receipts and before/after evidence directly into the daily home.", "label": "Result loop"},
+    {"title": "Keep A3/A4 consequential actions behind explicit human approval forever.", "label": "Approval gates"}
   ],
-  "sources": ["AGENTS.md", "docs/MISSION_CONTROL_GITHUB_NATIVE.md", "docs/MISSION_CONTROL_PORTFOLIO_MAP.md", "docs/MISSION_CONTROL_VISUAL_MAP.md", "docs/MISSION_CONTROL_REAL_JOURNEYS.md"],
+  "sources": ["AGENTS.md", "docs/MISSION_CONTROL_GITHUB_NATIVE.md", "docs/MISSION_CONTROL_WORKFLOW_ROUTING.md", "docs/CHIEF_OF_STAFF_V1.md", "lib/chief.mjs"],
   "updated_at": "2026-09-03"
 }

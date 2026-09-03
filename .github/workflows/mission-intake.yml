@@ -1,0 +1,37 @@
+name: Mission approval intake
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  intake:
+    if: startsWith(github.event.issue.title, '[Mission]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate explicit approval packet
+        id: validate
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          set -euo pipefail
+          printf '%s\n' "$BODY" | grep -q '^APPROVAL: approved$'
+          printf '%s\n' "$BODY" | grep -q '^PROJECT:'
+          printf '%s\n' "$BODY" | grep -q '^RISK_CLASS:'
+          printf '%s\n' "$BODY" | grep -q '^### Approved mission$'
+          printf '%s\n' "$BODY" | grep -q 'A0–A2'
+
+      - name: Mark durable mission handoff
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+          gh label create mission-approved --repo "$GITHUB_REPOSITORY" --color 315EFB --description "Human-approved Mission Control handoff" --force
+          gh label create agent-handoff --repo "$GITHUB_REPOSITORY" --color EEF2FF --description "Ready for a bounded authenticated agent runner" --force
+          gh issue edit "$NUMBER" --repo "$GITHUB_REPOSITORY" --add-label mission-approved --add-label agent-handoff
+          gh issue comment "$NUMBER" --repo "$GITHUB_REPOSITORY" --body $'✦ **Mission Control accepted this approval packet.**\n\nThe approved mission is now durable and machine-readable. **Runner status in v1.0: handoff ready; authenticated agent runner not connected yet.** A future runner may consume this item only within the recorded A0–A2 boundary. A3/A4 actions must stop for explicit human approval.'

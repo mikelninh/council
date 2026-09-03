@@ -1,44 +1,49 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f2efe8">
-<title>Mission Control — Workflow Map</title><meta name="description" content="A calm workflow map showing who owns the next move, what can continue, what is blocked and where each mission is headed."><link rel="stylesheet" href="./mission-control.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4f1ea">
+<title>Mission Control — Chief of Staff</title>
+<meta name="description" content="A calm AI Chief of Staff that recommends the highest-leverage next move, keeps every mission in context and prepares bounded agent work for approval.">
+<link rel="stylesheet" href="./mission-control.css">
 </head>
 <body>
+<div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
 <header class="topbar">
-  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span class="brand-mark">✦</span><b>Mission Control</b><small>v0.9</small></a>
-  <div class="top-actions"><span id="syncState">SYNCING</span><button id="refresh" aria-label="Reload snapshot">↻</button></div>
+  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span class="brand-mark">✦</span><span><b>Mission Control</b><small>Chief of Staff · v1.0</small></span></a>
+  <div class="top-actions"><span id="syncState">SYNCING</span><span id="clock"></span><button id="refresh" aria-label="Reload snapshot">↻</button></div>
 </header>
+
 <main>
-  <section class="overview">
-    <div><span class="kicker">WORKFLOW MAP</span><h1>What moves next.</h1></div>
-    <div id="workflowSummary" class="workflow-summary"></div>
+  <section class="welcome">
+    <p id="dayLabel" class="eyebrow">TODAY</p>
+    <h1 id="greeting">Good afternoon.</h1>
+    <p id="dailyLine" class="welcome-line">I’m checking where your attention creates the most leverage.</p>
   </section>
 
-  <nav id="workflowFilters" class="workflow-filters" aria-label="Filter missions by next owner">
-    <button class="active" data-lane="all">ALL <b id="countAll">—</b></button>
-    <button data-lane="your_move">YOUR MOVE <b id="countYou">—</b></button>
-    <button data-lane="can_continue">CAN CONTINUE <b id="countContinue">—</b></button>
-    <button data-lane="blocked">BLOCKED <b id="countBlocked">—</b></button>
-    <button data-lane="needs_contract">NEEDS CONTRACT <b id="countContract">—</b></button>
-  </nav>
+  <section id="chiefCard" class="chief-card loading" aria-live="polite"></section>
 
-  <section class="win-ticker" aria-label="Recent wins"><span>🎉 LATEST</span><div id="winTicker"></div></section>
-
-  <section class="missions-section">
-    <div class="section-title"><div><span>CORE MISSIONS</span><b id="coreCount">—</b></div><small>Roadmap = where. Workflow = who moves next.</small></div>
-    <div id="coreGrid" class="mission-grid"></div>
+  <section class="pulse-row" aria-label="Portfolio pulse">
+    <button class="pulse-card attention" data-focus="your_move"><span class="pulse-icon">◌</span><div><small>NEEDS YOU</small><strong id="pulseYou">—</strong><p id="pulseYouText">human gates</p></div><i>→</i></button>
+    <button class="pulse-card agents" data-focus="can_continue"><span class="pulse-icon">✦</span><div><small>AGENTS READY</small><strong id="pulseAgents">—</strong><p id="pulseAgentsText">safe missions</p></div><i>→</i></button>
+    <button class="pulse-card blockers" data-focus="blocked"><span class="pulse-icon">◇</span><div><small>BLOCKED</small><strong id="pulseBlocked">—</strong><p id="pulseBlockedText">proof gates</p></div><i>→</i></button>
+    <div class="pulse-card wins"><span class="pulse-icon">✓</span><div><small>LATEST WIN</small><strong id="latestWinProject">—</strong><p id="latestWinText">loading recent progress</p></div></div>
   </section>
 
-  <details id="otherDetails" class="drawer">
-    <summary><span>Other active experiments</span><small id="otherCount">—</small><i>⌄</i></summary><div id="otherProjects" class="other-list"></div>
-  </details>
-  <details id="quietDetails" class="drawer">
-    <summary><span>Quiet / completed</span><small id="quietCount">—</small><i>⌄</i></summary><div id="quietProjects" class="other-list"></div>
-  </details>
-  <details id="systemDetails" class="drawer muted-drawer">
-    <summary><span>System + evidence</span><small>snapshot details</small><i>⌄</i></summary><div id="systemBody" class="system-body"></div>
-  </details>
+  <section class="missions-section" id="missions">
+    <div class="section-heading"><div><p class="eyebrow">YOUR MISSIONS</p><h2>Everything stays in view.</h2></div><div class="section-tools"><button class="filter active" data-lane="all">All</button><button class="filter" data-lane="your_move">You</button><button class="filter" data-lane="can_continue">Agents</button><button class="filter" data-lane="blocked">Blocked</button></div></div>
+    <div id="missionGrid" class="mission-grid"></div>
+  </section>
+
+  <details id="otherDetails" class="drawer"><summary><span>Other active experiments</span><small id="otherCount">—</small><i>⌄</i></summary><div id="otherProjects" class="other-list"></div></details>
+  <details id="quietDetails" class="drawer"><summary><span>Quiet / completed</span><small id="quietCount">—</small><i>⌄</i></summary><div id="quietProjects" class="other-list"></div></details>
+  <details id="systemDetails" class="drawer system-drawer"><summary><span>Evidence + system</span><small>why you can trust this view</small><i>⌄</i></summary><div id="systemBody" class="system-body"></div></details>
 </main>
+
+<dialog id="missionDialog" class="sheet"><button class="sheet-close" data-close="missionDialog" aria-label="Close">×</button><div id="missionDialogBody"></div></dialog>
+<dialog id="approvalDialog" class="approval-dialog"><button class="sheet-close" data-close="approvalDialog" aria-label="Close">×</button><div id="approvalBody"></div></dialog>
+
 <script src="./mission-control.js" defer></script>
-</body></html>
+</body>
+</html>
