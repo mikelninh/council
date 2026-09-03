@@ -1,27 +1,26 @@
-# Mission Control v0.3 handoff
+# Mission Control v0.4 handoff
 
 ## Status
 Verified and accepted for merge.
 
 ## Current step
-Merge Council PR #13, then wire the existing personal-site Pages workflow.
+Merge Council PR #14; the existing Pages workflow will publish it on its next run.
 
-## Evidence
-- `Check Council` run `33749050809`: success, including the real public-safe snapshot build.
-- `harness-contract` run `33749050802`: success.
-- The first harness attempt correctly failed because v0.3 wording had accidentally removed two existing invariants; those invariants were restored rather than weakening the checker.
+## Information architecture
+1. **NOW** — one visually dominant project/action.
+2. **NEXT UP** — at most three compact rows.
+3. **Everything else** — collapsed portfolio grouped by operational state.
+4. **System details** — collapsed evidence/scope/debug information.
+
+## Verification evidence
+- `Check Council` run `33751284606`: success.
+- `harness-contract` run `33751284506`: success.
+- GitHub adapter smoke: success.
+- Static Pages snapshot build: success.
+- Founder-first UI regression test: success.
 
 ## What changed
-- Static GitHub Pages snapshot builder.
-- Relative snapshot-first UI with live API fallback.
-- Public-safe privacy boundary: private repository details are excluded from Pages.
-- No browser GitHub credentials.
-- No Vercel requirement for the public cockpit.
-
-## Decisions
-- Keep Council as the engine/source contract.
-- Use the already-enabled `mikelninh.github.io` Pages pipeline as the view host.
-- Preserve authenticated/private scope as a separate future lane instead of leaking it into a public static site.
+The information model was not reduced. Its hierarchy was. The default view now optimizes for the next decision rather than system observability.
 
 ## Next owner
-Operator — merge PR #13, then deploy through personal-site PR #65 and verify the live `/mission-control/` route.
+Operator — merge and verify the live `/mission-control/` route.

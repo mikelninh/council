@@ -1,18 +1,38 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080a0f">
-<title>Mission Control — Council</title><meta name="description" content="One GitHub-native operating view across Michael Ninh's public project portfolio."><link rel="stylesheet" href="./mission-control.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090b10">
+<title>Mission Control — Focus</title><meta name="description" content="A founder-first view of what matters now across Michael Ninh's public project portfolio."><link rel="stylesheet" href="./mission-control.css">
 </head>
 <body>
-<div class="grain"></div>
-<header class="bar"><a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span>✦</span><b>COUNCIL</b><em>MISSION CONTROL / v0.3</em></a><div class="bar-actions"><span id="scope" class="scope">CONNECTING</span><a id="sourceRefresh" class="ghost" style="text-decoration:none" href="https://github.com/mikelninh/council/actions" target="_blank" rel="noreferrer">REFRESH SOURCE ↗</a><button id="refresh" class="ghost">RELOAD</button></div></header>
+<div class="ambient"></div>
+<header class="bar">
+  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span>✦</span><b>MISSION CONTROL</b><em>v0.4 · FOCUS</em></a>
+  <div class="bar-actions"><span id="syncState" class="sync-state">SYNCING</span><button id="refresh" class="icon-button" aria-label="Reload current snapshot">↻</button></div>
+</header>
 <main>
-<section class="hero"><div><p class="eyebrow">GITHUB-NATIVE PORTFOLIO OPERATING SYSTEM</p><h1>Everything that matters.<br><i>One place.</i></h1><p class="sub">A read-only snapshot of what is moving, what is blocked, what needs you, and where the next useful action lives — generated from GitHub evidence, not chat memory.</p></div><div id="generated" class="generated">Loading repository snapshot…</div></section>
-<section id="topMove" class="top-move skeleton"></section>
-<section class="metrics" id="metrics"></section>
-<section class="control-grid"><aside><div class="section-head"><span>NEEDS ME</span><b id="needsCount">—</b></div><div id="needsMe" class="needs-list"></div><div id="warning" class="warning hidden"></div></aside><div class="projects-panel"><div class="section-head"><span>PROJECT RUNWAY</span><div class="filters"><button class="filter active" data-filter="all">ALL</button><button class="filter" data-filter="active">ACTIVE</button><button class="filter" data-filter="blocked">BLOCKED</button><button class="filter" data-filter="untracked">UNTRACKED</button></div></div><div id="projects" class="projects"></div></div></section>
-<section class="legend"><span><i class="dot needs"></i>needs you</span><span><i class="dot blocked"></i>blocked</span><span><i class="dot active"></i>agent runway</span><span><i class="dot idle"></i>quiet/completed</span><p>Public-safe by design. Private repository details are never published to GitHub Pages.</p></section>
+  <section class="intro">
+    <p class="eyebrow">TODAY</p>
+    <h1>What matters <i>now?</i></h1>
+    <p id="statusLine" class="status-line">Reading the portfolio…</p>
+  </section>
+
+  <section id="focusCard" class="focus-card loading" aria-live="polite"></section>
+
+  <section class="next-section">
+    <header class="section-title"><div><span>NEXT UP</span><strong>After the one thing above.</strong></div><small>MAX 3</small></header>
+    <div id="nextUp" class="next-list"></div>
+  </section>
+
+  <details id="portfolioDetails" class="drawer">
+    <summary><div><span>Everything else</span><small id="detailsCount">Loading…</small></div><span class="chevron">⌄</span></summary>
+    <div id="portfolioGroups" class="portfolio-groups"></div>
+  </details>
+
+  <details id="systemDetails" class="drawer system-drawer">
+    <summary><div><span>System details</span><small>Evidence, scope and refresh state</small></div><span class="chevron">⌄</span></summary>
+    <div id="systemBody" class="system-body"></div>
+  </details>
 </main>
 <script src="./mission-control.js" defer></script>
 </body></html>

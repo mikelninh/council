@@ -1,25 +1,25 @@
 {
   "schema":"mikel-harness-task-v0.1",
-  "task_id":"mission-control-v0.3-github-native",
+  "task_id":"mission-control-v0.4-founder-focus",
   "status":"completed",
-  "goal":"Make Mission Control usable without Vercel by generating a public-safe GitHub Pages snapshot and preparing a no-secret delivery path through the existing mikelninh.github.io Pages repository.",
-  "sources":["lib/mission-control.mjs","public/mission-control.html","public/mission-control.js",".github/workflows/check.yml","docs/MISSION_CONTROL_GITHUB_NATIVE.md"],
-  "outputs":["scripts/build-pages.mjs","dist-pages/ contract","public Pages-compatible UI","GitHub-native delivery documentation"],
-  "constraints":["No browser GitHub token.","No private repository details in public Pages.","No Vercel dependency.","Read-only cross-repo operation."],
-  "done_when":["Public-safe snapshot builder exists.","Pages-compatible cockpit is generated.","CI builds and verifies the snapshot.","A Pages-host workflow consumes it from the existing personal-site repository."],
-  "forbidden":["Private metadata publication","Cross-repo mutation from browser","Secret exposure","Autonomous consequential actions"],
+  "goal":"Replace the information-heavy dashboard with a founder-first information architecture that makes one next decision visually obvious while preserving the full portfolio through progressive disclosure.",
+  "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","lib/mission-control.mjs","docs/MISSION_CONTROL_INFORMATION_ARCHITECTURE.md"],
+  "outputs":["single dominant NOW view","bounded three-item NEXT UP queue","collapsed full portfolio","collapsed system/evidence details","UI architecture regression test"],
+  "constraints":["Keep Mission Control read-only.","Keep GitHub Pages public-safe.","Do not remove access to underlying project state.","Default screen must avoid metric walls, filters and project-card grids."],
+  "done_when":["One focus action dominates above the fold.","At most three next items show by default.","All remaining projects are progressively disclosed.","System/evidence details are hidden by default but available.","CI protects the information architecture and Pages build."],
+  "forbidden":["Private metadata publication","Autonomous consequential actions","Dashboard metric wall","Unbounded project cards above the fold"],
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
   "current_step":"verified_for_merge",
   "evidence":[
-    {"kind":"ci","workflow":"Check Council","run_id":33749050809,"status":"success"},
-    {"kind":"ci","workflow":"harness-contract","run_id":33749050802,"status":"success"},
-    {"kind":"build","command":"npm run build:pages","status":"success_via_Check_Council"},
-    {"kind":"privacy","observation":"generated deployment contract requires publicSafe=true, privateDetailsPublished=false and no private project rows"}
+    {"kind":"ci","workflow":"Check Council","run_id":33751284606,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33751284506,"status":"success"},
+    {"kind":"test","command":"npm run test:mission-ui","status":"success_via_Check_Council"},
+    {"kind":"build","command":"npm run build:pages","status":"success_via_Check_Council"}
   ],
-  "failures":[{"kind":"harness","run_id":33748975073,"resolution":"Preserved the exact v0.2 read-only and private-scope invariants while extending them for v0.3 public-safe Pages."}],
+  "failures":[],
   "uncertainties":[],
   "next_owner":"operator",
-  "next_step":"Merge Council PR #13, then merge the prepared mikelninh.github.io Pages workflow PR #65 and verify the first live deployment."
+  "next_step":"Merge Council PR #14 and verify the next GitHub Pages deployment serves the founder-first focus view."
 }
