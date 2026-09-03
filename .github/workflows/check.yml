@@ -18,6 +18,8 @@ jobs:
         run: npm run test:founder
       - name: Exercise deterministic Mission Control state contract
         run: npm run test:mission
+      - name: Protect founder-first Mission Control information architecture
+        run: npm run test:mission-ui
 
   github-tool-smoke:
     if: github.event_name == 'pull_request'
@@ -35,7 +37,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_USERNAME: mikelninh
-          MISSION_CONTROL_REFRESH_URL: https://github.com/mikelninh/mikelninh.github.io/actions/workflows/mission-control.yml
+          MISSION_CONTROL_REFRESH_URL: https://github.com/mikelninh/mikelninh.github.io/actions/workflows/pages.yml
         run: npm run build:pages
       - name: Verify generated cockpit artefacts
         run: test -s dist-pages/mission-control/index.html && test -s dist-pages/mission-control/mission-control.json && test -s dist-pages/mission-control/mission-control.js

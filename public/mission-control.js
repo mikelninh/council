@@ -1,15 +1,71 @@
-const $=(s)=>document.querySelector(s);let data=null;let filter='all';
+const $=(s)=>document.querySelector(s);let data=null;
 const esc=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const age=(d)=>d===null||d===undefined?'—':d===0?'today':`${d}d ago`;
-function metric(value,label){return `<div class="metric"><strong>${esc(value)}</strong><span>${esc(label)}</span></div>`}
-function renderMetrics(){const s=data.summary,p=data.portfolio;$('#metrics').innerHTML=[metric(p?.publicCount??p?.count??'—','PUBLIC REPOS'),metric(s.deepTracked,'DEEP TRACKED'),metric(`${s.harnessCoverage}%`,'HARNESS COVERAGE'),metric(s.needsYou,'NEEDS ME'),metric(s.blocked,'BLOCKED'),metric(s.untracked,'UNTRACKED')].join('')}
-function renderTop(){const t=data.topMove;const el=$('#topMove');el.classList.remove('skeleton');if(!t){el.innerHTML='<div><div class="top-label">TOP MOVE</div><h2>No urgent operational gate detected.</h2><p>Pick the next project deliberately rather than manufacturing urgency.</p></div>';return}const link=t.repo?`https://github.com/${encodeURI(t.repo)}`:'#';el.innerHTML=`<div><div class="top-label">TOP MOVE · ${esc(t.state.replaceAll('_',' '))}</div><h2>${esc(t.project)}</h2><p>${esc(t.nextStep||t.reason)}</p></div>${t.repo?`<a href="${link}" target="_blank" rel="noreferrer">OPEN PROJECT ↗</a>`:''}`}
-function needCard(p){const next=p.nextStep||p.currentTask||p.reason;return `<article class="need-card"><strong>${esc(p.name)}</strong><small>${esc(p.state.replaceAll('_',' '))}${p.riskClass?` · ${esc(p.riskClass)}`:''}</small><p>${esc(next)}</p>${p.repo?`<a href="https://github.com/${encodeURI(p.repo)}" target="_blank" rel="noreferrer">OPEN ↗</a>`:''}</article>`}
-function renderNeeds(){const list=data.needsYou||[];$('#needsCount').textContent=list.length;$('#needsMe').innerHTML=list.length?list.map(needCard).join(''):'<div class="empty">Nothing currently asks for your judgement. A rare and beautiful moment.</div>';const w=$('#warning');if(data.warning){w.textContent=data.warning;w.classList.remove('hidden')}else w.classList.add('hidden')}
-function visible(p){if(filter==='all')return true;if(filter==='active')return ['active','needs_you'].includes(p.state);return p.state===filter}
-function projectCard(p){const chips=[`<span class="chip ${esc(p.state)}">${esc(p.state.replaceAll('_',' '))}</span>`,p.harnessed?'<span class="chip">HARNESS ✓</span>':'<span class="chip">NO HARNESS</span>'].join('');const title=p.repo?`<a href="https://github.com/${encodeURI(p.repo)}" target="_blank" rel="noreferrer">${esc(p.name)}</a>`:esc(p.name);return `<article class="project"><div class="project-top"><div><h3>${title}</h3><div class="project-meta">${esc(p.repo||'OUTSIDE CURRENT SCOPE')} · ${esc(age(p.daysSincePush))}</div></div></div><div class="chips">${chips}</div><div class="project-task">${esc(p.currentTask||p.reason)}</div><div class="next"><span>NEXT</span>${esc(p.nextStep||'Define the next explicit task contract.')}</div></article>`}
-function renderProjects(){const rows=(data.projects||[]).filter(visible);$('#projects').innerHTML=rows.length?rows.map(projectCard).join(''):'<div class="empty">No projects match this filter.</div>'}
-function render(){const scope=$('#scope');scope.textContent=(data.scope||'unknown').replaceAll('-',' ').toUpperCase();scope.classList.toggle('authenticated',data.scope==='authenticated');$('#generated').textContent=`Snapshot source state ${new Date(data.generatedAt).toLocaleString()} · ${String(data.mode||'snapshot').replaceAll('_',' ')}`;if(data.refresh?.workflowUrl)$('#sourceRefresh').href=data.refresh.workflowUrl;renderTop();renderMetrics();renderNeeds();renderProjects()}
+const humanState=(state='')=>({needs_you:'NEEDS YOU',blocked:'BLOCKED',active:'MOVING',untracked:'SETUP NEEDED',idle:'QUIET',completed:'DONE',hidden:'HIDDEN'}[state]||String(state).replaceAll('_',' ').toUpperCase());
+const projectUrl=(p)=>p?.repo?`https://github.com/${encodeURI(p.repo)}`:'';
+const actionFor=(p)=>p?.nextStep||p?.currentTask||p?.reason||'Define the next explicit move.';
+const isActionable=(p)=>p&&p.state!=='completed'&&p.state!=='hidden';
+
+function chooseFocus(projects=[]){
+  const rows=projects.filter(isActionable);
+  const first=(state)=>rows.find(p=>p.state===state);
+  return first('needs_you')||first('blocked')||first('active')||first('untracked')||rows[0]||projects.find(p=>p.state==='completed')||null;
+}
+
+function statusSentence(){
+  const s=data.summary||{};
+  if(s.needsYou>0)return `${s.needsYou} ${s.needsYou===1?'thing needs':'things need'} your judgement.`;
+  if(s.blocked>0)return `${s.blocked} ${s.blocked===1?'project is':'projects are'} blocked. Nothing else deserves equal visual weight.`;
+  const moving=(data.projects||[]).filter(p=>p.state==='active').length;
+  if(moving>0)return `${moving} ${moving===1?'project is':'projects are'} moving. You only need the next decision.`;
+  return 'Nothing urgent is asking for you. Pick deliberately.';
+}
+
+function renderFocus(){
+  const focus=chooseFocus(data.projects||[]);const el=$('#focusCard');el.classList.remove('loading','offline');
+  if(!focus){el.innerHTML='<div class="focus-kicker">NOW</div><h2 class="focus-action">No project state is available yet.</h2>';return;}
+  const state=humanState(focus.state);const action=actionFor(focus);const link=projectUrl(focus);
+  const reason=focus.reason||focus.currentTask||'This is the highest operational priority visible in the current evidence.';
+  el.innerHTML=`<div class="focus-top"><div class="focus-kicker">NOW · ${esc(state)}</div><div class="focus-index">01</div></div><div class="focus-project">${esc(focus.name)}</div><h2 class="focus-action">${esc(action)}</h2><div class="focus-bottom"><div class="focus-meta"><div class="focus-state">WHY THIS IS HERE</div><p class="focus-reason">${esc(reason)}</p></div><div class="focus-actions">${link?`<a class="primary" href="${link}" target="_blank" rel="noreferrer">OPEN PROJECT ↗</a>`:''}<a class="secondary" href="#portfolioDetails">SEE CONTEXT</a></div></div>`;
+}
+
+function queueCandidates(){
+  const projects=data.projects||[];const focus=chooseFocus(projects);
+  const rows=projects.filter(p=>p!==focus&&isActionable(p));
+  return rows.slice(0,3);
+}
+function renderNext(){
+  const rows=queueCandidates();
+  $('#nextUp').innerHTML=rows.length?rows.map((p,i)=>{const href=projectUrl(p);const content=`<span class="queue-index">0${i+2}</span><span class="queue-main"><strong>${esc(p.name)}</strong><span class="queue-state ${esc(p.state)}">${esc(humanState(p.state))}</span></span><span class="queue-copy">${esc(actionFor(p))}</span><span class="queue-arrow">↗</span>`;return href?`<a class="queue-row" href="${href}" target="_blank" rel="noreferrer">${content}</a>`:`<div class="queue-row">${content}</div>`}).join(''):'<div class="empty">No second priority needs your attention right now.</div>';
+}
+
+function groupProjects(){
+  const groups=[['needs_you','Needs you'],['blocked','Blocked'],['active','Moving'],['untracked','Setup needed'],['idle','Quiet'],['completed','Done']];
+  return groups.map(([state,label])=>({state,label,rows:(data.projects||[]).filter(p=>p.state===state)})).filter(g=>g.rows.length);
+}
+function renderPortfolio(){
+  const projects=data.projects||[];const detailsCount=$('#detailsCount');detailsCount.textContent=`${projects.length} projects · hidden until you ask`;
+  $('#portfolioGroups').innerHTML=groupProjects().map(g=>`<section class="group"><h3 class="group-title">${esc(g.label.toUpperCase())} · ${g.rows.length}</h3>${g.rows.map(p=>{const href=projectUrl(p);const row=`<strong>${esc(p.name)}</strong><span class="portfolio-copy">${esc(actionFor(p))}</span><span class="portfolio-state ${esc(p.state)}">${esc(humanState(p.state))}</span>`;return href?`<a class="portfolio-row" href="${href}" target="_blank" rel="noreferrer">${row}</a>`:`<div class="portfolio-row">${row}</div>`}).join('')}</section>`).join('')||'<div class="empty">No project state available.</div>';
+}
+
+function renderSystem(){
+  const s=data.summary||{},p=data.portfolio||{};const generated=data.generatedAt?new Date(data.generatedAt).toLocaleString():'unknown';
+  const items=[['SNAPSHOT',generated],['SCOPE',String(data.scope||'unknown').replaceAll('_',' ')],['PUBLIC REPOS',p.publicCount??p.count??'—'],['HARNESS',`${s.harnessed??0}/${s.deepTracked??0} deeply tracked`],['MODE',String(data.mode||'snapshot').replaceAll('_',' ')],['SAFETY',data.safety?.publicSafe?'public-safe · private details excluded':'runtime policy']];
+  if(data.warning)items.push(['LIMITATION',data.warning]);
+  $('#systemBody').innerHTML=items.map(([k,v])=>`<div class="system-item"><span class="system-key">${esc(k)}</span><div class="system-value ${k==='LIMITATION'?'warning':''}">${esc(v)}</div></div>`).join('');
+}
+
+function render(){
+  $('#statusLine').textContent=statusSentence();
+  $('#syncState').textContent='SNAPSHOT READY';
+  renderFocus();renderNext();renderPortfolio();renderSystem();
+  if(data.refresh?.workflowUrl){const refresh=$('#systemDetails summary');refresh.title='Source refresh is available in GitHub Actions';}
+}
+
 async function getJson(url){const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw new Error(`HTTP ${res.status}`);return res.json()}
-async function load(){const button=$('#refresh');button.disabled=true;button.textContent='RELOADING';try{try{data=await getJson(`./mission-control.json?ts=${Date.now()}`)}catch{data=await getJson('/api/mission-control')}render()}catch(error){$('#topMove').classList.remove('skeleton');$('#topMove').innerHTML=`<div><div class="top-label">MISSION CONTROL OFFLINE</div><h2>Could not read portfolio state.</h2><p>${esc(error.message)}</p></div>`;$('#projects').innerHTML='<div class="empty">Open the GitHub refresh workflow and inspect the latest run.</div>'}finally{button.disabled=false;button.textContent='RELOAD'}}
-document.addEventListener('click',e=>{const b=e.target.closest('.filter');if(!b)return;filter=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));if(data)renderProjects()});$('#refresh').addEventListener('click',load);load();
+async function load(){
+  const button=$('#refresh');button.disabled=true;$('#syncState').textContent='SYNCING';
+  try{try{data=await getJson(`./mission-control.json?ts=${Date.now()}`)}catch{data=await getJson('/api/mission-control')}render()}
+  catch(error){const el=$('#focusCard');el.classList.remove('loading');el.classList.add('offline');el.innerHTML=`<div class="focus-kicker">MISSION CONTROL OFFLINE</div><div class="focus-project">Could not read portfolio state.</div><h2 class="focus-action">Check the latest GitHub Pages workflow.</h2><div class="focus-bottom"><p class="focus-reason">${esc(error.message)}</p></div>`;$('#syncState').textContent='OFFLINE';$('#nextUp').innerHTML='';$('#detailsCount').textContent='Unavailable';}
+  finally{button.disabled=false}
+}
+$('#refresh').addEventListener('click',load);load();

@@ -1,16 +1,17 @@
 {
   "name":"council",
-  "version":"0.7.0",
+  "version":"0.8.0",
   "private":true,
   "type":"module",
-  "description":"Council Mission Control v0.3 — GitHub-native evidence-first portfolio operating system with static Pages snapshots.",
+  "description":"Council Mission Control v0.4 — founder-first focus view over GitHub-native evidence snapshots.",
   "scripts":{
     "start":"node server.mjs",
-    "check":"node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check lib/mission-control.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check api/mission-control.mjs && node --check scripts/build-pages.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check public/mission-control.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs && node --check tests/mission-control.mjs",
+    "check":"node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check lib/mission-control.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check api/mission-control.mjs && node --check scripts/build-pages.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check public/mission-control.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs && node --check tests/mission-control.mjs && node --check tests/mission-control-ui.mjs",
     "test:decision":"node tests/decision-quality.mjs",
     "test:founder":"node tests/founder-view.mjs",
     "test:mission":"node tests/mission-control.mjs",
-    "test":"npm run test:decision && npm run test:founder && npm run test:mission",
+    "test:mission-ui":"node tests/mission-control-ui.mjs",
+    "test":"npm run test:decision && npm run test:founder && npm run test:mission && npm run test:mission-ui",
     "build:pages":"node scripts/build-pages.mjs",
     "build":"npm run check"
   },
