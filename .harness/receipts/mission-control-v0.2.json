@@ -1,0 +1,15 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v0.2",
+  "verdict":"accepted",
+  "context_sources":["README.md","lib/tools.mjs","server.mjs","public/","tests/"],
+  "verification":{"implementation_commit":"cd7a164e90c56a7396a0b22fb934725dd5f6ef37","check_council":{"run_id":33745959915,"conclusion":"success"},"harness_contract":{"run_id":33745960014,"conclusion":"success"}},
+  "human_corrections":0,
+  "retries":0,
+  "external_actions":[{"kind":"open_pull_request","target":"#12","risk_class":"A2","approved":true}],
+  "accepted_artifact":"PR #12",
+  "rollback_point":"86a55e38712fcf698c6ea18f7edfde16a7bd9f69",
+  "remaining_limitations":["Private runtime coverage depends on Council GITHUB_TOKEN; incomplete scope is surfaced visibly."],
+  "next_owner":"operator",
+  "next_step":"Merge PR #12."
+}
