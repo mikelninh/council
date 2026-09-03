@@ -3,25 +3,26 @@
   "project": "Council / Mission Control",
   "north_star": "Give Michael one calm, trustworthy place that can answer for every serious project: why it exists, how far it has come, what matters now and what the smartest next win is.",
   "achieved": [
-    {"title": "GitHub-native public Mission Control with no Vercel dependency", "evidence": ["docs/MISSION_CONTROL_GITHUB_NATIVE.md", "scripts/build-pages.mjs"]},
-    {"title": "Founder-first focus architecture and project-story view", "evidence": ["docs/MISSION_CONTROL_INFORMATION_ARCHITECTURE.md", "docs/MISSION_CONTROL_PROJECT_STORIES.md"]},
-    {"title": "Public-safe evidence snapshots with private-detail exclusion", "evidence": ["scripts/build-pages.mjs", "AGENTS.md"]}
+    {"title": "GitHub-native public Mission Control with no Vercel dependency", "label": "GitHub-native", "evidence": ["docs/MISSION_CONTROL_GITHUB_NATIVE.md", "scripts/build-pages.mjs"]},
+    {"title": "Durable roadmap truth standardized across all seven core public missions", "label": "7/7 roadmaps", "evidence": ["docs/HARNESS_ROADMAP_SCHEMA.md", "docs/MISSION_CONTROL_PORTFOLIO_MAP.md"]},
+    {"title": "Compact warm-paper visual map with progressive disclosure", "label": "Visual map", "evidence": ["docs/MISSION_CONTROL_VISUAL_MAP.md", "public/mission-control.css"]}
   ],
   "current": {
-    "title": "Turn the dashboard into a roadmap-native portfolio map",
+    "title": "Make every project rail tell its real named milestone journey",
+    "label": "Real journeys",
     "status": "active",
-    "outcome": "Make all core missions understandable in seconds through North Star, achieved milestones, NOW, next wins and later — with details progressively disclosed."
+    "outcome": "Replace generic stage labels and achievement counts with project-owned compact milestone names while keeping the full roadmap behind expansion."
   },
   "next": [
-    {"title": "Reach durable roadmap coverage for every core mission", "why": "Mission Control should read explicit project truth instead of reconstructing strategy from scattered docs."},
-    {"title": "Add a private owner view for private projects and personal priorities", "why": "The public Pages view intentionally excludes private project details."},
-    {"title": "Add safe A0–A2 continuation from the cockpit", "why": "The eventual payoff is not only seeing the work but safely resuming scouts, builders and verifiers from explicit contracts."}
+    {"title": "Add a private owner view for private projects and personal priorities", "label": "Private owner view", "why": "The public Pages view intentionally excludes private project details."},
+    {"title": "Add safe A0–A2 continuation from the cockpit", "label": "Safe continuation", "why": "The eventual payoff is not only seeing the work but safely resuming scouts, builders and verifiers from explicit contracts."},
+    {"title": "Show cross-project dependencies and reusable proof layers", "label": "Dependencies", "why": "The portfolio becomes more useful when shared infrastructure and blockers are visible across missions."}
   ],
   "later": [
-    "Learn portfolio priorities from explicit owner intent rather than repository activity alone.",
-    "Show cross-project dependencies and reusable proof layers.",
-    "Keep A3/A4 consequential actions behind explicit human approval."
+    {"title": "Learn portfolio priorities from explicit owner intent rather than repository activity alone.", "label": "Owner priorities"},
+    {"title": "Surface reusable proof and infrastructure across projects.", "label": "Shared proof"},
+    {"title": "Keep A3/A4 consequential actions behind explicit human approval.", "label": "Approval gates"}
   ],
-  "sources": ["AGENTS.md", "docs/MISSION_CONTROL_GITHUB_NATIVE.md", "docs/MISSION_CONTROL_INFORMATION_ARCHITECTURE.md", "docs/MISSION_CONTROL_PROJECT_STORIES.md"],
+  "sources": ["AGENTS.md", "docs/MISSION_CONTROL_GITHUB_NATIVE.md", "docs/MISSION_CONTROL_PORTFOLIO_MAP.md", "docs/MISSION_CONTROL_VISUAL_MAP.md", "docs/MISSION_CONTROL_REAL_JOURNEYS.md"],
   "updated_at": "2026-09-03"
 }
