@@ -1,26 +1,24 @@
 # Mission Control v1.1 automatic runner handoff
 
 ## Status
-Ready for independent verification.
+Released and verified.
 
-## Current step
-Run Council CI on `mission-control-v1.1-runner`, including runner contract tests and public-safe snapshot build.
+## What is now true
+Mission Control v1.1 can accept an owner-approved A0–A2 mission packet, validate it fail-closed, dispatch through the authenticated GitHub runner lane, reconcile runner state, and surface compact status back in the daily home. The browser remains credential-free and A3/A4 actions remain human-gated.
 
 ## Evidence
-- First manual runner trace already proved the desired execution sequence on PrüfPilot: approval → Scout → Builder → Verifier → PR → receipt.
-- v1.1 encodes that handoff in `lib/mission-runner.mjs`, `scripts/mission-dispatch.mjs` and `scripts/mission-watch.mjs`.
-- Intake now requires the GitHub event sender to equal the repository owner before any dispatch path exists.
+- Council PR #25 merged at `fe184b9f401ab3770d7deee7df7e22e766829105`.
+- `Check Council` run `33781765627`: success, including the explicit bounded mission-runner contract test and public Pages snapshot build.
+- `harness-contract` run `33781765667`: success.
+- Release preflight Issue #26 passed through the production intake in `RUNNER_MODE: dry-run`.
+- Production intake run `33781875109`: success.
+- Issue #26 was automatically labelled `mission-approved` and `runner-ready`, then closed as completed without launching a coding agent.
 
-## Decisions
-- Use GitHub Copilot cloud agent as the first authenticated coding-agent runtime rather than inventing a second hosted agent service.
-- Keep the public browser read-only; GitHub Actions owns credentials.
-- Use a dedicated `MISSION_RUNNER_TOKEN`, with temporary fallback to existing `REPO_FACTORY_TOKEN` during migration.
-- Do not spend a coding-agent session for infrastructure smoke testing; use `RUNNER_MODE: dry-run` after merge.
+## Safety boundary
+The release preflight deliberately did **not** consume a coding-agent session. The first real end-to-end proof therefore remains the next explicitly approved A0–A2 mission. The agent may prepare branch/PR/evidence work but may not merge, deploy, send, spend or cross a sensitive-data boundary.
 
-## Open risks
-- Copilot cloud-agent assignment is account/policy dependent and cannot be proven by static CI alone.
-- The watcher relies on GitHub issue/PR linkage and has a conservative fallback search; unusual agent PR metadata may require another reconciliation adapter.
-- Private-repo runner status remains outside the public Pages snapshot until a private owner view exists.
+## Remaining uncertainty
+GitHub Copilot cloud-agent assignment is still account/policy dependent for a real mission. If the first assignment is rejected, Mission Control must surface `runner-blocked` rather than simulate progress.
 
 ## Next owner
-Verifier — accept only if syntax, unit tests, harness invariants and the public Pages snapshot all pass. Operator then performs the no-agent dry-run preflight.
+Chief — refresh the live Mission Control snapshot and recommend the next highest-leverage bounded mission. Michael reviews/edits/approves that exact mission; approval becomes the first real automatic runner test.
