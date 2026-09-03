@@ -1,0 +1,20 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v1.1-automatic-runner",
+  "verdict":"accepted",
+  "context_sources":["docs/MISSION_RUNNER_V1_1.md","lib/mission-runner.mjs","scripts/mission-dispatch.mjs","scripts/mission-watch.mjs",".github/workflows/mission-intake.yml",".github/workflows/mission-watch.yml","public/mission-control.js"],
+  "verification":{
+    "merged_pr":25,
+    "merge_sha":"fe184b9f401ab3770d7deee7df7e22e766829105",
+    "check_council":{"run_id":33781765627,"conclusion":"success"},
+    "harness":{"run_id":33781765667,"conclusion":"success"},
+    "dry_run_preflight":{"issue":26,"workflow_run_id":33781875109,"conclusion":"success","runner_ready":true,"coding_agent_launched":false}
+  },
+  "authority":{"automatic_ceiling":"A2","a3_a4":"explicit human approval required","browser_credentials":false,"auto_merge":false},
+  "failure_upgrades":["Added explicit runner regression test to CI after noticing the initial workflow only executed the older test list."],
+  "accepted_artifact":"Mission Control v1.1 automatic bounded runner",
+  "rollback_point":"fc80d3e613f58c76c661d9c787b348f0fc1043e4",
+  "remaining_uncertainty":"The first real coding-agent assignment is intentionally pending an explicit owner-approved mission.",
+  "next_owner":"chief",
+  "next_step":"Refresh live Pages and select the next bounded mission for explicit owner approval."
+}
