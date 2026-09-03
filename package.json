@@ -1,15 +1,17 @@
 {
-  "name": "council",
-  "version": "0.5.3",
-  "private": true,
-  "type": "module",
-  "description": "Council v5.3 — a decision-first Founder View with visual outcomes and full reasoning available on demand in the audit log.",
-  "scripts": {
-    "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs",
-    "test:decision": "node tests/decision-quality.mjs",
-    "test:founder": "node tests/founder-view.mjs",
-    "build": "npm run check"
+  "name":"council",
+  "version":"0.6.0",
+  "private":true,
+  "type":"module",
+  "description":"Council Mission Control v0.2 — evidence-first portfolio operating system with decision room on demand.",
+  "scripts":{
+    "start":"node server.mjs",
+    "check":"node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check lib/mission-control.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check api/mission-control.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check public/mission-control.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs && node --check tests/mission-control.mjs",
+    "test:decision":"node tests/decision-quality.mjs",
+    "test:founder":"node tests/founder-view.mjs",
+    "test:mission":"node tests/mission-control.mjs",
+    "test":"npm run test:decision && npm run test:founder && npm run test:mission",
+    "build":"npm run check"
   },
-  "engines": { "node": ">=20" }
+  "engines":{"node":">=20"}
 }

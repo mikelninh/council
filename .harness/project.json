@@ -1,0 +1,38 @@
+{
+  "schema": "mikel-harness-project-v0.1",
+  "project": {
+    "name": "Council / Mission Control",
+    "repository": "mikelninh/council",
+    "purpose": "Evidence-first portfolio operating system and multi-agent decision layer."
+  },
+  "sources_of_truth": [
+    {"area":"decision_runtime","paths":["lib/council.mjs","api/council.mjs"]},
+    {"area":"portfolio_evidence","paths":["lib/tools.mjs","lib/mission-control.mjs"]},
+    {"area":"ui","paths":["public/"]},
+    {"area":"verification","paths":["tests/",".github/workflows/"]},
+    {"area":"work_state","paths":[".harness/"]}
+  ],
+  "roles": ["chief","scout","builder","verifier","operator"],
+  "commands": {
+    "harness_check": ["node scripts/harness-check.mjs"],
+    "quick_verification": ["npm run check","npm run test:mission"],
+    "full_verification": ["npm run test:decision","npm run test:founder"]
+  },
+  "sensors": {
+    "portfolio": ["GitHub metadata","harness state","scope visibility","recency"],
+    "work_state": ["status","human gate","failures","uncertainties","next owner","next step"],
+    "ui": ["deterministic DOM contract","responsive CSS","explicit loading/error states"],
+    "trust": ["observed-vs-inferred separation","read-only v0.2","private-scope warning"]
+  },
+  "action_policy": {
+    "A0":{"meaning":"observe","approval_required":false},
+    "A1":{"meaning":"local_reversible","approval_required":false},
+    "A2":{"meaning":"shared_reversible","approval_required":false},
+    "A3":{"meaning":"consequential","approval_required":true},
+    "A4":{"meaning":"high_impact","approval_required":true}
+  },
+  "retry_policy":{"max_retries":3,"escalate_on_same_failure":2},
+  "receipt_dir":".harness/receipts",
+  "failure_upgrade_required":true,
+  "mission_control":{"version":"0.2","mode":"read_only"}
+}
