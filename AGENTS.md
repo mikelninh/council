@@ -7,24 +7,25 @@ Give Michael one evidence-first AI Chief of Staff across his portfolio: understa
 1. Read `README.md`.
 2. Read `.harness/project.json`.
 3. Read `.harness/active-task.json`, `.harness/roadmap.json` and `.harness/HANDOFF.md`.
-4. Read `docs/CHIEF_OF_STAFF_V1.md` for recommendation and approval semantics.
+4. Read `docs/CHIEF_OF_STAFF_V1.md` and `docs/MISSION_RUNNER_V1_1.md` for recommendation, approval and runner semantics.
 5. Re-open current GitHub/API evidence rather than relying on chat memory.
 
 ## Source-of-truth map
 - Decision runtime: `lib/council.mjs`, `api/council.mjs`
 - Chief recommendation policy: `lib/chief.mjs`
+- Runner packet/status contract: `lib/mission-runner.mjs`
 - GitHub evidence tools: `lib/tools.mjs`
 - Mission Control aggregation: `lib/mission-control.mjs`, `api/mission-control.mjs`
 - GitHub Pages snapshot builder: `scripts/build-pages.mjs`
 - Daily home: `public/mission-control.*`
-- Approved mission intake: `.github/workflows/mission-intake.yml`
+- Approved mission intake + dispatch: `.github/workflows/mission-intake.yml`, `scripts/mission-dispatch.mjs`
+- Runner reconciliation: `.github/workflows/mission-watch.yml`, `scripts/mission-watch.mjs`
 - Deterministic tests: `tests/`
 - Current work state: `.harness/`
 - CI truth: `.github/workflows/`
 
 ## Contract before work
 Every substantial task defines goal, sources, outputs, constraints, done criteria, forbidden actions, risk class, retry budget and next owner.
-
 A task may also define `decision_estimate` with impact, urgency, unlock value, effort and confidence on a 1–5 scale. These are explicit judgement inputs, never observed facts.
 
 ## Roles
@@ -51,10 +52,13 @@ A task may also define `decision_estimate` with impact, urgency, unlock value, e
 
 ## Approval and runner boundary
 - Public GitHub Pages contains no GitHub write credential and no secret agent credential.
-- `APPROVE & QUEUE` may create a durable mission handoff, not silently perform cross-repo work.
+- `APPROVE & QUEUE` opens a durable owner-submitted mission packet; the browser itself never mutates repositories.
 - Approved mission packets must preserve project, exact mission, risk class, done criteria, constraints, forbidden actions and A0–A2 boundary.
-- `.github/workflows/mission-intake.yml` validates/labels approved handoffs; it does not pretend an authenticated coding-agent runner is connected.
-- A future runner may consume only valid approved mission packets and must still stop at A3/A4.
+- `.github/workflows/mission-intake.yml` accepts owner-created/edited `[Mission]` issues only and rejects A3/A4 before dispatch.
+- The authenticated runner may create a target issue and assign GitHub Copilot cloud agent only inside the recorded A0–A2 contract.
+- The coding agent must read `AGENTS.md`, preserve safety/readiness gates, open a PR and stop before merge/deploy/send/spend/sensitive-data actions.
+- `.github/workflows/mission-watch.yml` may reconcile public issue/PR status; it never grants additional authority.
+- Missing runner credentials or policy support must surface as `runner-blocked`, never as fake progress.
 
 ## Mission Control rules
 - Mission Control is read-only in v0.2 and the public v1 Pages experience remains advisory/read-only; approved work leaves the browser through an explicit durable handoff.
@@ -74,12 +78,15 @@ Minimum checks:
 - `npm run test:founder`
 - `npm run test:mission-ui`
 - `npm run test:chief`
+- `npm run test:runner`
 - `npm run build:pages` for GitHub-native release work
-
 Never claim a command passed unless it actually ran and the result is captured.
 
 ## Durable state
 Chat is not the system of record. Keep current work, roadmaps, approvals, receipts and handoffs durable in repositories. Re-open current GitHub state before decisions.
+
+## Failure upgrades
+If dispatch, agent assignment or reconciliation fails, preserve the approved packet, mark the exact runner failure, and improve the contract/tool path rather than bypassing a gate.
 
 ## Retries
 Default maximum: 3. If the same failure repeats twice, stop and upgrade the harness/test/tool path.

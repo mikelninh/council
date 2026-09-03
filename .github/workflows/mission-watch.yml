@@ -1,0 +1,28 @@
+name: Mission runner watch
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: mission-runner-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Reconcile agent issues and pull requests
+        env:
+          SOURCE_TOKEN: ${{ github.token }}
+          MISSION_RUNNER_TOKEN: ${{ secrets.MISSION_RUNNER_TOKEN || secrets.REPO_FACTORY_TOKEN }}
+        run: node scripts/mission-watch.mjs
