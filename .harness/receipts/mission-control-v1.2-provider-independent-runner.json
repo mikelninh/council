@@ -1,0 +1,16 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v1.2-provider-independent-runner",
+  "status":"accepted_implementation",
+  "scope":"Provider-neutral dispatch contract, self-hosted worker queue, local aider+Ollama adapter, repository-owned verification, receipt/PR handoff and provider-neutral daily UI.",
+  "evidence":[
+    {"kind":"pull_request","repo":"mikelninh/council","pr":29,"status":"open_verified"},
+    {"kind":"ci","workflow":"Check Council","run_id":33816810555,"status":"success","checks":["syntax","decision quality","founder view","Mission Control state","v1.2 UI contract","Chief contract","provider-independent runner contract","GitHub smoke","public snapshot build"]},
+    {"kind":"ci","workflow":"harness-contract","run_id":33816810580,"status":"success"},
+    {"kind":"failure_upgrade","source":"mikelninh/council#28","target":"mikelninh/digital-worker-factory#41","from":"required GitHub Copilot cloud-agent assignment","to":"replaceable self-hosted/default worker backend"}
+  ],
+  "authority":{"automatic_ceiling":"A2","merge":false,"deploy":false,"external_send":false,"spend":false,"sensitive_data":false},
+  "remaining_gate":"Register one owner-controlled self-hosted GitHub runner labelled mission-control, install/start Ollama and Aider, configure MISSION_LOCAL_MODEL, then retry Council #28 against Digital Worker Factory #41.",
+  "rollback":"Revert PR #29 before merge or revert its merge commit after merge; v1.1 durable mission issues remain intact.",
+  "accepted_at":"2026-09-04T00:00:00+02:00"
+}
