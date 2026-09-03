@@ -14,12 +14,13 @@
   "current_step":"local_runner_setup_gate",
   "evidence":[
     {"kind":"failure_upgrade","source_issue":28,"target_issue":"mikelninh/digital-worker-factory#41","failure":"GitHub Copilot cloud-agent assignment requires unavailable paid capability","decision":"make providers replaceable; preserve GitHub as state/evidence layer"},
-    {"kind":"ci","workflow":"Check Council","run_id":33816810555,"status":"success"},
-    {"kind":"ci","workflow":"harness-contract","run_id":33816810580,"status":"success"},
+    {"kind":"merge","pr":29,"sha":"9d855f660d02a339fa2c64873a33ff38fb55817c","status":"merged"},
+    {"kind":"ci","workflow":"Check Council","run_id":33816881343,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33816881408,"status":"success"},
     {"kind":"receipt","path":".harness/receipts/mission-control-v1.2-provider-independent-runner.json","status":"accepted_implementation"}
   ],
   "failures":[],
   "uncertainties":["A real local-model mission has not yet executed end-to-end because no owner-controlled self-hosted runner is registered and online.","Local model choice must be configured to match available hardware; Mission Control deliberately will not guess an oversized model."],
   "next_owner":"operator",
-  "next_step":"Register an owner-controlled self-hosted GitHub runner for Council with the mission-control label, install/start Ollama and Aider, configure MISSION_LOCAL_MODEL, then retry the already-approved Council #28 mission against Digital Worker Factory #41."
+  "next_step":"Register an owner-controlled self-hosted GitHub runner for Council with the mission-control label, install/start Ollama and Aider, configure MISSION_LOCAL_MODEL, then let the already-approved Council #28 mission resume against Digital Worker Factory #41."
 }
