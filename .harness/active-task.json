@@ -1,26 +1,26 @@
 {
   "schema":"mikel-harness-task-v0.1",
-  "task_id":"mission-control-v0.6-portfolio-map",
+  "task_id":"mission-control-v0.7-visual-map",
   "status":"completed",
-  "goal":"Make the portfolio beautiful and immediately legible by turning each core project into a roadmap-native visual journey: North Star → achieved → NOW → next biggest win → later.",
-  "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","scripts/build-pages.mjs","docs/HARNESS_ROADMAP_SCHEMA.md","docs/MISSION_CONTROL_PORTFOLIO_MAP.md"],
-  "outputs":["roadmap-native core mission cards","portfolio orientation pulse","recent-win strip","ACHIEVED/NOW/NEXT/LATER journey rail","progressive detail",".harness/roadmap.json contract","7/7 core roadmap standardization"],
-  "constraints":["Keep all core missions visible together.","Keep secondary experiments accessible without equal visual weight.","Keep Mission Control read-only.","Keep GitHub Pages public-safe.","Never present derived roadmap guesses as durable truth."],
-  "done_when":["Seven core missions have durable roadmap contracts.","Core projects are understandable without opening detail.","The next biggest win is obvious per project.","Recent wins are celebrated.","Secondary and quiet projects use progressive disclosure.","CI builds a public-safe snapshot and protects the information hierarchy."],
-  "forbidden":["Private metadata publication","Autonomous consequential actions","Invented roadmap claims","Unbounded metric wall","Artificial top-three cap"],
+  "goal":"Make Mission Control dramatically more visual and compact: communicate each core mission through symbol, roadmap position, one current milestone, one next win and one recent win before any prose.",
+  "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","docs/MISSION_CONTROL_VISUAL_MAP.md",".harness/roadmap.json"],
+  "outputs":["warm-paper visual system","3-column compact mission grid","visual roadmap rails","single-line NOW/NEXT/WIN summaries","progressive detail layer","visual-density regression contract"],
+  "constraints":["Keep all core missions visible together.","Preserve roadmap truth.","Keep secondary work accessible.","Keep Mission Control read-only and public-safe.","Use restrained semantic color rather than decorative multi-color UI."],
+  "done_when":["Default screen can be scanned without reading paragraphs.","Core missions fit more compactly on desktop.","Roadmap position is visually obvious.","Current milestone and next win are one-line dominant signals.","Legacy cyan/violet dashboard palette is removed.","CI protects the visual hierarchy."],
+  "forbidden":["Information wall","Paragraph-heavy default cards","Decorative rainbow palette","Private metadata publication","Autonomous consequential actions"],
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
   "current_step":"verified_for_merge",
   "evidence":[
-    {"kind":"ci","workflow":"Check Council","run_id":33755541735,"status":"success"},
-    {"kind":"ci","workflow":"harness-contract","run_id":33755541682,"status":"success"},
-    {"kind":"build","command":"npm run build:pages","status":"success","observation":"18 projects · 7 core missions · 7/7 roadmap-native"},
+    {"kind":"ci","workflow":"Check Council","run_id":33756835412,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33756835352,"status":"success"},
     {"kind":"test","command":"npm run test:mission-ui","status":"success"},
-    {"kind":"roadmap_coverage","projects":["TrustReady","Digital Worker Factory","PrüfPilot","CareOS","GitLaw","Citizen Agents","Council / Mission Control"],"status":"7/7"}
+    {"kind":"build","command":"npm run build:pages","status":"success"},
+    {"kind":"design_contract","observation":"warm paper + graphite + cobalt; compact 3-column roadmap-first core mission tiles"}
   ],
   "failures":[],
-  "uncertainties":["Public Pages intentionally still excludes private projects; the private owner view remains a later mission."],
+  "uncertainties":["Final aesthetic preference remains human judgement; this release intentionally makes a strong visual direction change rather than claiming universal taste."],
   "next_owner":"operator",
-  "next_step":"Merge PR #16 and verify the fresh GitHub Pages deployment serves v0.6."
+  "next_step":"Merge PR #17, refresh GitHub Pages and verify the live v0.7 route."
 }

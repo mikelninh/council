@@ -1,46 +1,38 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080b10">
-<title>Mission Control — Portfolio Map</title><meta name="description" content="A calm roadmap-native overview of Michael Ninh's core projects: North Star, progress, current milestone, recent wins and next biggest wins."><link rel="stylesheet" href="./mission-control.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f2efe8">
+<title>Mission Control — Visual Map</title><meta name="description" content="A compact visual map of Michael Ninh's core missions, roadmap position, recent wins and next biggest wins."><link rel="stylesheet" href="./mission-control.css">
 </head>
 <body>
-<div class="ambient"></div>
-<header class="bar">
-  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span>✦</span><b>MISSION CONTROL</b><em>v0.6 · PORTFOLIO MAP</em></a>
-  <div class="bar-actions"><span id="syncState" class="sync-state">SYNCING</span><button id="refresh" class="icon-button" aria-label="Reload current snapshot">↻</button></div>
+<header class="topbar">
+  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span class="brand-mark">✦</span><b>Mission Control</b><small>v0.7</small></a>
+  <div class="top-actions"><span id="syncState">SYNCING</span><button id="refresh" aria-label="Reload snapshot">↻</button></div>
 </header>
 <main>
-  <section class="hero">
-    <p class="eyebrow">THE PORTFOLIO</p>
-    <h1>Your projects.<br><i>One plot.</i></h1>
-    <p id="statusLine" class="status-line">Recovering the purpose, progress and next move of every core mission…</p>
-    <div id="portfolioPulse" class="pulse" aria-live="polite"></div>
+  <section class="overview">
+    <div><span class="kicker">PORTFOLIO MAP</span><h1>Where everything stands.</h1></div>
+    <div id="portfolioPulse" class="pulse"></div>
   </section>
 
-  <section class="wins-section">
-    <header class="section-head compact"><div><span>RECENT WINS</span><strong>Pause long enough to notice what shipped.</strong></div></header>
+  <section class="wins-band" aria-labelledby="winsTitle">
+    <div class="band-label"><span>🎉</span><div><b id="winsTitle">Recent wins</b><small>things worth noticing</small></div></div>
     <div id="winsStrip" class="wins-strip"></div>
   </section>
 
-  <section class="core-section">
-    <header class="section-head"><div><span>CORE MISSIONS</span><strong>Why it exists → how far we came → NOW → smartest next win.</strong></div><small id="coreCount">—</small></header>
+  <section class="missions-section">
+    <div class="section-title"><div><span>CORE MISSIONS</span><b id="coreCount">—</b></div><small>Open a mission only when you want the full story.</small></div>
     <div id="coreGrid" class="mission-grid"></div>
   </section>
 
   <details id="otherDetails" class="drawer">
-    <summary><div><span>Other active experiments</span><small id="otherCount">Visible, but not equal foreground</small></div><span class="chevron">⌄</span></summary>
-    <div id="otherProjects" class="other-list"></div>
+    <summary><span>Other active experiments</span><small id="otherCount">—</small><i>⌄</i></summary><div id="otherProjects" class="other-list"></div>
   </details>
-
   <details id="quietDetails" class="drawer">
-    <summary><div><span>Quiet / completed</span><small id="quietCount">Context without noise</small></div><span class="chevron">⌄</span></summary>
-    <div id="quietProjects" class="other-list"></div>
+    <summary><span>Quiet / completed</span><small id="quietCount">—</small><i>⌄</i></summary><div id="quietProjects" class="other-list"></div>
   </details>
-
-  <details id="systemDetails" class="drawer system-drawer">
-    <summary><div><span>System details</span><small>Evidence coverage, scope and refresh state</small></div><span class="chevron">⌄</span></summary>
-    <div id="systemBody" class="system-body"></div>
+  <details id="systemDetails" class="drawer muted-drawer">
+    <summary><span>System + evidence</span><small>snapshot details</small><i>⌄</i></summary><div id="systemBody" class="system-body"></div>
   </details>
 </main>
 <script src="./mission-control.js" defer></script>
