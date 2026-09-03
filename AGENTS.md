@@ -57,10 +57,11 @@ A task may also define `decision_estimate` with impact, urgency, unlock value, e
 - A future runner may consume only valid approved mission packets and must still stop at A3/A4.
 
 ## Mission Control rules
+- Mission Control is read-only in v0.2 and the public v1 Pages experience remains advisory/read-only; approved work leaves the browser through an explicit durable handoff.
 - Portfolio metadata is observed evidence; rankings and Chief scores are inference.
-- Private projects never silently disappear. Public Pages deliberately excludes private details; authenticated owner views must state their scope.
+- Private projects must never silently disappear. Public Pages deliberately excludes private details; authenticated owner views must state their scope.
 - `completed` work must not masquerade as active work.
-- Missing `.harness/` state is visible, not guessed.
+- Missing `.harness/` state is visible as `untracked`, not guessed.
 - Public Pages may publish public repository state only.
 - Browser code must never contain GitHub or AI-provider credentials.
 
