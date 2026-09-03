@@ -1,0 +1,16 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v1-chief-of-staff",
+  "verdict":"pending_verification",
+  "context_sources":["lib/chief.mjs","scripts/build-pages.mjs","public/mission-control.html","public/mission-control.js","public/mission-control.css","docs/CHIEF_OF_STAFF_V1.md"],
+  "tools_used":["GitHub","GitHub Actions"],
+  "verification":{},
+  "human_corrections":0,
+  "retries":0,
+  "failure_upgrades":[],
+  "external_actions":[],
+  "accepted_artifact":null,
+  "rollback_point":"1431c05d164e3e2e6884c06bbc9dddb726daad2d",
+  "next_owner":"verifier",
+  "next_step":"Run Council CI, Chief regression tests, harness contract and the public-safe Pages snapshot build."
+}
