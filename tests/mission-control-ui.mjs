@@ -10,5 +10,5 @@ assert.doesNotMatch(html,/id="focusCard"/,'one artificial focus card must not do
 assert.doesNotMatch(html,/MAX 3/,'project visibility must not be capped at three');
 for(const phrase of ['PURPOSE','CURRENT GOAL','RECENT WIN','NEXT BIG WINS','ROADMAP'])assert.ok(js.includes(phrase),`project story missing ${phrase}`);
 assert.match(js,/brief\(p\)\.achievements/,'recent achievements must be rendered from evidence snapshot');
-assert.match(js,/brief\(p\)\.roadmap/,'roadmap must be rendered from evidence snapshot');
+assert.match(js,/road=b\.roadmap/,'roadmap must be rendered from the per-project evidence brief');
 console.log('MISSION CONTROL UI PASS: concurrent project stories preserve purpose, state, celebration, roadmap and next wins.');
