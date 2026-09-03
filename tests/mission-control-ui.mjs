@@ -1,29 +1,36 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-const html=fs.readFileSync(new URL('../public/mission-control.html',import.meta.url),'utf8');const js=fs.readFileSync(new URL('../public/mission-control.js',import.meta.url),'utf8');const css=fs.readFileSync(new URL('../public/mission-control.css',import.meta.url),'utf8');const build=fs.readFileSync(new URL('../scripts/build-pages.mjs',import.meta.url),'utf8');
-assert.match(html,/id="workflowSummary"/,'workflow ownership summary must stay visible');
-assert.match(html,/id="workflowFilters"/,'workflow lane filters must stay available');
-assert.match(html,/data-lane="your_move"/,'YOUR MOVE filter must exist');
-assert.match(html,/data-lane="can_continue"/,'CAN CONTINUE filter must exist');
-assert.match(html,/data-lane="blocked"/,'BLOCKED filter must exist');
-assert.match(html,/data-lane="needs_contract"/,'NEEDS CONTRACT filter must exist');
-assert.match(html,/id="winTicker"/,'recent wins must remain visible but compact');
-assert.match(html,/id="coreGrid"/,'core missions must stay visible together');
-assert.match(html,/v0\.9/,'the shipped experience must identify v0.9');
-assert.match(html,/<details[^>]*id="otherDetails"/,'secondary experiments must stay progressively disclosed');
-assert.match(html,/<details[^>]*id="quietDetails"/,'quiet history must stay progressively disclosed');
-assert.ok(js.includes('journeyItems'),'real named project journeys must remain');
-assert.ok(js.includes('workflow-badge'),'cards must render workflow ownership');
-assert.ok(js.includes('NEXT MOVE'),'exact execution action must replace generic next-win-only workflow');
-assert.ok(js.includes('activeLane'),'workflow filters must not require a second dashboard');
-assert.doesNotMatch(js,/const nodes=\[\['done','ACHIEVED'/,'generic stage rail must not return');
-assert.doesNotMatch(js,/NEXT WIN/,'default card should route the exact execution move rather than duplicate roadmap next-win copy');
-assert.match(css,/--cobalt:#315efb/,'restrained cobalt palette must remain');
-assert.match(css,/--paper:#f2efe8/,'warm paper background must remain');
+const html=fs.readFileSync(new URL('../public/mission-control.html',import.meta.url),'utf8');
+const js=fs.readFileSync(new URL('../public/mission-control.js',import.meta.url),'utf8');
+const css=fs.readFileSync(new URL('../public/mission-control.css',import.meta.url),'utf8');
+const build=fs.readFileSync(new URL('../scripts/build-pages.mjs',import.meta.url),'utf8');
+
+assert.match(html,/Chief of Staff · v1\.0/,'daily home must identify the v1 Chief experience');
+assert.match(html,/id="chiefCard"/,'one primary Chief recommendation must dominate the daily home');
+assert.match(html,/id="missionGrid"/,'all core missions must remain available below the decision surface');
+assert.match(html,/id="approvalDialog"/,'recommendations must have an explicit review/approval surface');
+assert.match(html,/id="missionDialog"/,'project depth must use progressive disclosure rather than default text walls');
+assert.match(html,/LATEST WIN/,'celebration must remain part of the daily experience');
+assert.match(html,/<details[^>]*id="otherDetails"/,'secondary experiments must remain progressively disclosed');
+assert.match(html,/<details[^>]*id="quietDetails"/,'quiet history must remain progressively disclosed');
+
+assert.ok(js.includes('MY RECOMMENDATION'),'Chief recommendation must be visually explicit');
+assert.ok(js.includes('REVIEW MISSION'),'recommendation must be reviewable before approval');
+assert.ok(js.includes('APPROVE & QUEUE'),'approval must create a durable mission handoff instead of pretending to execute anonymously');
+assert.ok(js.includes('mission-control-last-approval'),'browser may remember local approval state without exposing credentials');
+assert.ok(js.includes('issues/new'),'public Pages approval must hand off to GitHub rather than embedding a write token');
+assert.ok(js.includes('A0–A2'),'approval UI must explain bounded execution authority');
+assert.doesNotMatch(js,/const nodes=\[\['done','ACHIEVED'/,'generic roadmap stage skeleton must not return');
+
+assert.match(css,/--cobalt:#315efb/,'restrained cobalt accent must remain');
+assert.match(css,/--paper:#f4f1ea/,'premium warm-paper foundation must remain');
+assert.match(css,/\.chief-card/,'Chief recommendation needs a distinct visual surface');
+assert.match(css,/\.mission-tile/,'project overview must remain compact and scan-first');
 assert.doesNotMatch(css,/--cyan:|--violet:/,'legacy cyber palette must not return');
-assert.match(build,/function deriveWorkflow/,'snapshot builder must route workflow from execution truth');
-assert.match(build,/task\?\.next_owner/,'workflow ownership must come from active-task.json');
-assert.match(build,/missing-or-completed-task/,'missing or stale execution truth must surface as NEEDS CONTRACT');
-assert.match(build,/experienceVersion:'0\.9'/,'snapshot must expose v0.9 experience');
-assert.match(build,/workflow ownership is not inferred from roadmap prose/,'builder must explicitly preserve the no-inference ownership boundary');
-console.log('MISSION CONTROL UI PASS: v0.9 routes exact next moves by execution owner while preserving real project journeys, celebrations and compact visual hierarchy.');
+
+assert.match(build,/buildChiefBrief/,'snapshot builder must run the Chief recommendation engine');
+assert.match(build,/decision_estimate/,'Chief scoring must come from explicit inspectable estimates');
+assert.match(build,/experienceVersion:'1\.0'/,'snapshot must expose v1.0 experience');
+assert.match(build,/no authenticated agent runner is embedded in the public browser/,'static Pages boundary must remain explicit');
+
+console.log('MISSION CONTROL UI PASS: v1 is a calm Chief-of-Staff decision surface with progressive project context and explicit bounded approval handoff.');
