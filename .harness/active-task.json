@@ -1,25 +1,25 @@
 {
   "schema":"mikel-harness-task-v0.1",
-  "task_id":"mission-control-v0.4-founder-focus",
+  "task_id":"mission-control-v0.5-project-stories",
   "status":"completed",
-  "goal":"Replace the information-heavy dashboard with a founder-first information architecture that makes one next decision visually obvious while preserving the full portfolio through progressive disclosure.",
-  "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","lib/mission-control.mjs","docs/MISSION_CONTROL_INFORMATION_ARCHITECTURE.md"],
-  "outputs":["single dominant NOW view","bounded three-item NEXT UP queue","collapsed full portfolio","collapsed system/evidence details","UI architecture regression test"],
-  "constraints":["Keep Mission Control read-only.","Keep GitHub Pages public-safe.","Do not remove access to underlying project state.","Default screen must avoid metric walls, filters and project-card grids."],
-  "done_when":["One focus action dominates above the fold.","At most three next items show by default.","All remaining projects are progressively disclosed.","System/evidence details are hidden by default but available.","CI protects the information architecture and Pages build."],
-  "forbidden":["Private metadata publication","Autonomous consequential actions","Dashboard metric wall","Unbounded project cards above the fold"],
+  "goal":"Make multiple concurrent projects understandable at a glance by showing each project's purpose, current state, current/next goal, recent achievements, roadmap and next biggest wins without returning to dashboard information overload.",
+  "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","scripts/build-pages.mjs","docs/MISSION_CONTROL_PROJECT_STORIES.md"],
+  "outputs":["project story cards","in-motion and on-deck lanes","recent-win celebration strip","repository-derived roadmap summaries","recent commit achievements","next-big-win extraction","UI regression contract"],
+  "constraints":["Keep all genuinely concurrent projects visible.","Keep Mission Control read-only.","Keep GitHub Pages public-safe.","Do not invent roadmap facts when repository sources are missing.","Do not expose private project metadata."],
+  "done_when":["Every visible project explains purpose and current state.","Recent achievements are visible and celebrated.","Next big wins are explicit.","Roadmap details are available from repository-owned evidence.","No arbitrary top-three project cap remains.","CI builds the enriched snapshot and protects the project-story IA."],
+  "forbidden":["Private metadata publication","Autonomous consequential actions","Invented roadmap claims","Metric wall","Artificial single-project focus"],
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
   "current_step":"verified_for_merge",
   "evidence":[
-    {"kind":"ci","workflow":"Check Council","run_id":33751284606,"status":"success"},
-    {"kind":"ci","workflow":"harness-contract","run_id":33751284506,"status":"success"},
-    {"kind":"test","command":"npm run test:mission-ui","status":"success_via_Check_Council"},
-    {"kind":"build","command":"npm run build:pages","status":"success_via_Check_Council"}
+    {"kind":"ci","workflow":"Check Council","run_id":33752487886,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33752487657,"status":"success"},
+    {"kind":"build","command":"npm run build:pages","status":"success","observation":"18 project stories · 5 explicit roadmaps · 18 projects with recent wins"},
+    {"kind":"test","command":"npm run test:mission-ui","status":"success"}
   ],
-  "failures":[],
-  "uncertainties":[],
+  "failures":[{"kind":"ui_test","run_id":33752430902,"resolution":"Corrected an overly specific roadmap assertion to match the actual per-project brief access path; implementation and snapshot build were already passing."}],
+  "uncertainties":["Only 5 of 18 currently selected public projects expose an explicit roadmap section that the evidence parser can safely recognize; missing roadmap coverage is shown rather than guessed."],
   "next_owner":"operator",
-  "next_step":"Merge Council PR #14 and verify the next GitHub Pages deployment serves the founder-first focus view."
+  "next_step":"Merge PR #15 and verify the next GitHub Pages deployment serves the project-story experience."
 }

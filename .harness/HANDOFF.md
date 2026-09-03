@@ -1,26 +1,24 @@
-# Mission Control v0.4 handoff
+# Mission Control v0.5 handoff
 
 ## Status
 Verified and accepted for merge.
 
-## Current step
-Merge Council PR #14; the existing Pages workflow will publish it on its next run.
-
-## Information architecture
-1. **NOW** — one visually dominant project/action.
-2. **NEXT UP** — at most three compact rows.
-3. **Everything else** — collapsed portfolio grouped by operational state.
-4. **System details** — collapsed evidence/scope/debug information.
-
-## Verification evidence
-- `Check Council` run `33751284606`: success.
-- `harness-contract` run `33751284506`: success.
-- GitHub adapter smoke: success.
-- Static Pages snapshot build: success.
-- Founder-first UI regression test: success.
-
 ## What changed
-The information model was not reduced. Its hierarchy was. The default view now optimizes for the next decision rather than system observability.
+Mission Control now treats each concurrent project as a compact story rather than forcing one artificial priority or hiding everything after three items.
+
+Each card shows purpose, current/next goal, current state, a recent win, next big wins, and expandable achievement/roadmap history. Projects are grouped into In motion, On deck, and Quiet/completed.
+
+## Verification
+- `Check Council` run `33752487886`: success.
+- `harness-contract` run `33752487657`: success.
+- Real Pages snapshot build: 18 project stories, 5 explicit roadmaps, all 18 with recent commit achievements.
+- UI contract protects concurrent project visibility, celebration, purpose, next wins and roadmap/history disclosure.
+
+## Important limitation
+Roadmap coverage is evidence-limited. Only explicit roadmap/next/milestone sections in repository-owned Markdown are surfaced. Missing roadmap data is visible rather than inferred as fact.
+
+## Safety
+Public Pages remains public-only. Private project names/tasks/evidence are not emitted. Browser code receives no GitHub credential.
 
 ## Next owner
-Operator — merge and verify the live `/mission-control/` route.
+Operator — merge PR #15 and verify the next public Pages refresh.
