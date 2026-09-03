@@ -1,7 +1,7 @@
 {
   "schema": "mikel-harness-task-v0.1",
   "task_id": "mission-control-v0.9-workflow-routing",
-  "status": "in_progress",
+  "status": "completed",
   "goal": "Turn Mission Control from a visual portfolio map into a calm workflow router that shows who owns the next move, what can continue without Michael, what is blocked, and the exact next action for each core mission.",
   "sources": ["docs/MISSION_CONTROL_WORKFLOW_ROUTING.md", "public/mission-control.html", "public/mission-control.js", "public/mission-control.css", "scripts/build-pages.mjs", ".harness/roadmap.json"],
   "outputs": ["workflow lanes", "exact next-move signals", "lane filters", "compact latest-win ticker", "workflow routing regression tests"],
@@ -11,10 +11,15 @@
   "risk_class": "A2",
   "approval_required": false,
   "max_retries": 3,
-  "current_step": "verify_workflow_router",
-  "evidence": [],
+  "current_step": "verified_for_merge",
+  "evidence": [
+    {"kind":"ci","workflow":"Check Council","run_id":33764315145,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33764315026,"status":"success"},
+    {"kind":"build","command":"npm run build:pages","status":"success_via_Check_Council"},
+    {"kind":"routing","observation":"workflow ownership is sourced from active-task.next_owner; stale execution truth becomes NEEDS CONTRACT"}
+  ],
   "failures": [],
-  "uncertainties": [],
-  "next_owner": "verifier",
-  "next_step": "Run the workflow-routing UI contract and real public snapshot build; accept only if ownership comes from active-task.json and the default view stays compact."
+  "uncertainties": ["Final workflow usefulness is still a human judgement after live deployment."],
+  "next_owner": "operator",
+  "next_step": "Merge Council PR #19, refresh GitHub Pages and verify the live v0.9 route."
 }
