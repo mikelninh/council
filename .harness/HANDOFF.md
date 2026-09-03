@@ -1,33 +1,32 @@
-# Mission Control v0.7 handoff
+# Mission Control v0.8 handoff
 
 ## Status
 Verified and accepted for merge.
 
 ## What changed
-Mission Control now prioritizes **visual scanning over reading**.
+Mission Control now renders each core mission as its **actual named milestone journey**, not the same generic four-stage rail.
 
-The dark multi-accent dashboard language is gone. The default surface uses warm paper, graphite text, white cards and one cobalt accent. Core missions render in a compact 3-column desktop grid.
+Default card grammar:
 
-Each mission defaults to only:
-- visual project symbol + state
-- four-stage roadmap rail
-- one-line NOW milestone
-- one-line NEXT WIN
-- one recent win marker
+`last earned → last earned → ● CURRENT → next win → following win`
 
-North Star, achieved milestones, next-three, later horizon and repository evidence stay behind expansion.
+Examples are sourced from project-owned roadmap labels such as `Citation graph → MCP / APIs → Answer quality → Answer benchmark → Law-firm pilot` or `Clinical context → 500-case holdout → Recall → Holdout recall → Clinician eval`.
+
+The meaningless `Achieved 3` count is gone. The large duplicate NOW panel is gone. Each card keeps one compact NEXT WIN signal and one recent-win line.
+
+## Durable truth
+Optional compact `label` fields live beside the full milestone `title` in `.harness/roadmap.json`. Full titles remain authoritative; the UI does not invent strategic short names.
 
 ## Verification
-- `Check Council` run `33756835412`: success.
-- `harness-contract` run `33756835352`: success.
-- Public Pages snapshot build passed.
-- UI regression test protects visual roadmap hierarchy, restrained palette and progressive disclosure.
+- `Check Council` run `33761242002`: success, including public-safe Pages snapshot build.
+- `harness-contract` run `33761242024`: success.
+- UI regression contract rejects the old generic stage rail and duplicate NOW block.
 
 ## Safety
-Roadmap truth, public-only Pages scope, read-only behavior and browser credential boundaries are unchanged.
+Warm-paper / graphite / cobalt visual system remains. Public Pages remains public-only, read-only and browser-credential-free.
 
 ## Human check
-Taste cannot be proven by CI. The live v0.7 should be judged on: can all seven core missions be scanned quickly, does the cobalt/paper palette feel calmer, and is any remaining text still competing with the roadmap graphic?
+Judge whether seven missions now feel visibly different at a glance and whether the named rails communicate enough context without reopening text density.
 
 ## Next owner
-Operator — merge PR #17, trigger the Pages refresh and verify the public route.
+Operator — merge PR #18, refresh Pages and verify the live v0.8 route.
