@@ -1,0 +1,77 @@
+name: Mission provider worker
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_issue:
+        description: Council source mission issue number
+        required: true
+        type: string
+      target_repo:
+        description: Bound target repository
+        required: true
+        type: string
+      target_issue:
+        description: Bound target runner issue number
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: mission-provider-worker-${{ inputs.source_issue }}
+  cancel-in-progress: false
+
+jobs:
+  worker:
+    runs-on: [self-hosted, mission-control]
+    timeout-minutes: 120
+    steps:
+      - name: Checkout Mission Control
+        uses: actions/checkout@v4
+        with:
+          path: council
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Re-open and validate the approved contract
+        id: plan
+        env:
+          MISSION_RUNNER_TOKEN: ${{ secrets.MISSION_RUNNER_TOKEN || secrets.REPO_FACTORY_TOKEN }}
+          SOURCE_ISSUE: ${{ inputs.source_issue }}
+          TARGET_REPO: ${{ inputs.target_repo }}
+          TARGET_ISSUE: ${{ inputs.target_issue }}
+        run: node council/scripts/mission-worker-plan.mjs
+
+      - name: Checkout target repository
+        if: steps.plan.outputs.skip != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.plan.outputs.repository }}
+          ref: ${{ steps.plan.outputs.base_branch }}
+          token: ${{ secrets.MISSION_RUNNER_TOKEN || secrets.REPO_FACTORY_TOKEN }}
+          fetch-depth: 0
+          path: target
+
+      - name: Scout → Builder → Verifier on local provider
+        if: steps.plan.outputs.skip != 'true'
+        working-directory: target
+        env:
+          MISSION_RUNNER_TOKEN: ${{ secrets.MISSION_RUNNER_TOKEN || secrets.REPO_FACTORY_TOKEN }}
+          SOURCE_REPO: ${{ github.repository }}
+          SOURCE_ISSUE: ${{ inputs.source_issue }}
+          TARGET_REPO: ${{ steps.plan.outputs.repository }}
+          TARGET_ISSUE: ${{ steps.plan.outputs.target_issue }}
+          BASE_BRANCH: ${{ steps.plan.outputs.base_branch }}
+          BRANCH_NAME: ${{ steps.plan.outputs.branch }}
+          PROMPT_PATH: ${{ steps.plan.outputs.prompt_path }}
+          PROJECT: ${{ steps.plan.outputs.project }}
+          MISSION_AGENT_BACKEND: ${{ vars.MISSION_AGENT_BACKEND || 'aider-ollama' }}
+          MISSION_LOCAL_MODEL: ${{ vars.MISSION_LOCAL_MODEL }}
+          MISSION_MAX_REPAIRS: ${{ vars.MISSION_MAX_REPAIRS || '1' }}
+        run: node ../council/scripts/mission-local-worker.mjs
