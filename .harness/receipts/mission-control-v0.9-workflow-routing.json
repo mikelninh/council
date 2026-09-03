@@ -1,0 +1,16 @@
+{
+  "schema": "mikel-harness-receipt-v0.1",
+  "task_id": "mission-control-v0.9-workflow-routing",
+  "verdict": "pending_verification",
+  "context_sources": ["docs/MISSION_CONTROL_WORKFLOW_ROUTING.md", "public/mission-control.html", "public/mission-control.js", "public/mission-control.css", "scripts/build-pages.mjs"],
+  "tools_used": ["GitHub", "GitHub Actions"],
+  "verification": {},
+  "human_corrections": 0,
+  "retries": 0,
+  "failure_upgrades": [],
+  "external_actions": [],
+  "accepted_artifact": null,
+  "rollback_point": "a50f52f625a21e6bcac7d0bb1ea19681602b4f16",
+  "next_owner": "verifier",
+  "next_step": "Run CI and public snapshot build, then update this receipt with the verified run IDs."
+}
