@@ -1,0 +1,22 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v0.4-founder-focus",
+  "verdict":"accepted",
+  "context_sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","docs/MISSION_CONTROL_INFORMATION_ARCHITECTURE.md"],
+  "tools_used":["GitHub branch","GitHub pull request","GitHub Actions","static Pages snapshot builder"],
+  "verification":{
+    "implementation_head":"493be04a43622ad456eac31a8b804aea093a90e7",
+    "check_council":{"run_id":33751284606,"conclusion":"success"},
+    "harness":{"run_id":33751284506,"conclusion":"success"},
+    "ui_contract":"passed",
+    "snapshot_build":"passed"
+  },
+  "human_corrections":1,
+  "retries":0,
+  "failure_upgrades":["Added a permanent UI contract preventing metric-wall regression and bounding NEXT UP to three items."],
+  "external_actions":[{"kind":"open_pull_request","target":"Council #14","risk_class":"A2","approved":true}],
+  "accepted_artifact":"Council PR #14",
+  "rollback_point":"f269bb975a2507bfa1fc9ca6fdd036ac39c347ef",
+  "next_owner":"operator",
+  "next_step":"Merge PR #14 and verify GitHub Pages deployment."
+}

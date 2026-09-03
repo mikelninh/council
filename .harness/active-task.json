@@ -1,7 +1,7 @@
 {
   "schema":"mikel-harness-task-v0.1",
   "task_id":"mission-control-v0.4-founder-focus",
-  "status":"ready_for_review",
+  "status":"completed",
   "goal":"Replace the information-heavy dashboard with a founder-first information architecture that makes one next decision visually obvious while preserving the full portfolio through progressive disclosure.",
   "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","lib/mission-control.mjs","docs/MISSION_CONTROL_INFORMATION_ARCHITECTURE.md"],
   "outputs":["single dominant NOW view","bounded three-item NEXT UP queue","collapsed full portfolio","collapsed system/evidence details","UI architecture regression test"],
@@ -11,10 +11,15 @@
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
-  "current_step":"awaiting_ci_verification",
-  "evidence":[{"kind":"branch","name":"mission-control-v0.4-focus","status":"created"}],
+  "current_step":"verified_for_merge",
+  "evidence":[
+    {"kind":"ci","workflow":"Check Council","run_id":33751284606,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33751284506,"status":"success"},
+    {"kind":"test","command":"npm run test:mission-ui","status":"success_via_Check_Council"},
+    {"kind":"build","command":"npm run build:pages","status":"success_via_Check_Council"}
+  ],
   "failures":[],
-  "uncertainties":["The public snapshot may still contain many projects; v0.4 intentionally changes presentation, not evidence scope."],
-  "next_owner":"verifier",
-  "next_step":"Run syntax, Mission Control state, information-architecture regression and public Pages snapshot checks before merge."
+  "uncertainties":[],
+  "next_owner":"operator",
+  "next_step":"Merge Council PR #14 and verify the next GitHub Pages deployment serves the founder-first focus view."
 }

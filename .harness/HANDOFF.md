@@ -1,28 +1,26 @@
 # Mission Control v0.4 handoff
 
 ## Status
-Ready for independent verification.
+Verified and accepted for merge.
 
 ## Current step
-Run Council CI on `mission-control-v0.4-focus`.
+Merge Council PR #14; the existing Pages workflow will publish it on its next run.
 
 ## Information architecture
-1. **NOW** — exactly one visually dominant project/action.
+1. **NOW** — one visually dominant project/action.
 2. **NEXT UP** — at most three compact rows.
 3. **Everything else** — collapsed portfolio grouped by operational state.
 4. **System details** — collapsed evidence/scope/debug information.
 
-## What was removed from the default view
-- six-metric wall
-- project-card grid
-- state filter bar
-- separate Needs Me side panel
-- technical metadata competing with the decision
+## Verification evidence
+- `Check Council` run `33751284606`: success.
+- `harness-contract` run `33751284506`: success.
+- GitHub adapter smoke: success.
+- Static Pages snapshot build: success.
+- Founder-first UI regression test: success.
 
-Nothing was deleted from the evidence model; it was moved to the correct hierarchy level.
-
-## Verification target
-CI must prove syntax, state derivation, founder-first UI structure and static GitHub Pages generation still pass.
+## What changed
+The information model was not reduced. Its hierarchy was. The default view now optimizes for the next decision rather than system observability.
 
 ## Next owner
-Verifier.
+Operator — merge and verify the live `/mission-control/` route.
