@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f4f1ea">
 <title>Mission Control — Chief of Staff</title>
-<meta name="description" content="A calm AI Chief of Staff that recommends the highest-leverage next move, keeps every mission in context and runs approved reversible work through a bounded GitHub agent dispatcher.">
+<meta name="description" content="A calm AI Chief of Staff that recommends the highest-leverage next move, keeps every mission in context and routes approved reversible work through replaceable bounded worker backends.">
 <link rel="stylesheet" href="./mission-control.css">
 <style>
 .runner-bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;margin:12px 4px 18px;padding:12px 14px;border:1px solid rgba(24,26,30,.09);border-radius:16px;background:rgba(255,254,250,.58);backdrop-filter:blur(12px)}.runner-sigil{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#edf1ff;color:#315efb;font-size:12px}.runner-copy small{display:block;font:7px var(--mono);letter-spacing:.11em;color:var(--muted)}.runner-copy strong{display:block;margin-top:2px;font-size:11px}.runner-copy p{margin:2px 0 0;color:#7a7c78;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.runner-link{padding:7px 10px;border-radius:10px;background:#ece9e2;color:#4d4f4d;text-decoration:none;font-size:8px;font-weight:700}.runner-bar[data-status="working"] .runner-sigil{animation:runnerPulse 1.9s ease-in-out infinite}.runner-bar[data-status="review"] .runner-sigil{background:#fbf1dd;color:#9d6a18}.runner-bar[data-status="blocked"] .runner-sigil{background:#f9eaea;color:#b64a4a}@keyframes runnerPulse{50%{box-shadow:0 0 0 7px rgba(49,94,251,.08)}}@media(max-width:640px){.runner-bar{margin-top:10px}.runner-copy p{white-space:normal}.runner-link{display:none}}
@@ -14,20 +14,20 @@
 <body>
 <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
 <header class="topbar">
-  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span class="brand-mark">✦</span><span><b>Mission Control</b><small>Chief of Staff · v1.1</small></span></a>
+  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span class="brand-mark">✦</span><span><b>Mission Control</b><small>Chief of Staff · v1.2</small></span></a>
   <div class="top-actions"><span id="syncState">SYNCING</span><span id="clock"></span><button id="refresh" aria-label="Reload snapshot">↻</button></div>
 </header>
 <main>
   <section class="welcome"><p id="dayLabel" class="eyebrow">TODAY</p><h1 id="greeting">Good afternoon.</h1><p id="dailyLine" class="welcome-line">I’m checking where your attention creates the most leverage.</p></section>
   <section id="chiefCard" class="chief-card loading" aria-live="polite"></section>
-  <section id="runnerBar" class="runner-bar" data-status="ready" aria-live="polite"><span class="runner-sigil">✦</span><div class="runner-copy"><small>AGENT RUNNER</small><strong id="runnerHeadline">Checking runner…</strong><p id="runnerText">Approved A0–A2 missions can continue through GitHub.</p></div><a id="runnerLink" class="runner-link" href="https://github.com/mikelninh/council/issues" target="_blank" rel="noreferrer">VIEW ↗</a></section>
+  <section id="runnerBar" class="runner-bar" data-status="ready" aria-live="polite"><span class="runner-sigil">✦</span><div class="runner-copy"><small>WORKER FABRIC</small><strong id="runnerHeadline">Checking workers…</strong><p id="runnerText">Approved A0–A2 missions can continue through replaceable providers.</p></div><a id="runnerLink" class="runner-link" href="https://github.com/mikelninh/council/issues" target="_blank" rel="noreferrer">VIEW ↗</a></section>
   <section class="pulse-row" aria-label="Portfolio pulse">
     <button class="pulse-card attention" data-focus="your_move"><span class="pulse-icon">◌</span><div><small>NEEDS YOU</small><strong id="pulseYou">—</strong><p id="pulseYouText">human gates</p></div><i>→</i></button>
-    <button class="pulse-card agents" data-focus="can_continue"><span class="pulse-icon">✦</span><div><small>AGENTS READY</small><strong id="pulseAgents">—</strong><p id="pulseAgentsText">safe missions</p></div><i>→</i></button>
+    <button class="pulse-card agents" data-focus="can_continue"><span class="pulse-icon">✦</span><div><small>CAN CONTINUE</small><strong id="pulseAgents">—</strong><p id="pulseAgentsText">safe missions</p></div><i>→</i></button>
     <button class="pulse-card blockers" data-focus="blocked"><span class="pulse-icon">◇</span><div><small>BLOCKED</small><strong id="pulseBlocked">—</strong><p id="pulseBlockedText">proof gates</p></div><i>→</i></button>
     <div class="pulse-card wins"><span class="pulse-icon">✓</span><div><small>LATEST WIN</small><strong id="latestWinProject">—</strong><p id="latestWinText">loading recent progress</p></div></div>
   </section>
-  <section class="missions-section" id="missions"><div class="section-heading"><div><p class="eyebrow">YOUR MISSIONS</p><h2>Everything stays in view.</h2></div><div class="section-tools"><button class="filter active" data-lane="all">All</button><button class="filter" data-lane="your_move">You</button><button class="filter" data-lane="can_continue">Agents</button><button class="filter" data-lane="blocked">Blocked</button></div></div><div id="missionGrid" class="mission-grid"></div></section>
+  <section class="missions-section" id="missions"><div class="section-heading"><div><p class="eyebrow">YOUR MISSIONS</p><h2>Everything stays in view.</h2></div><div class="section-tools"><button class="filter active" data-lane="all">All</button><button class="filter" data-lane="your_move">You</button><button class="filter" data-lane="can_continue">Continue</button><button class="filter" data-lane="blocked">Blocked</button></div></div><div id="missionGrid" class="mission-grid"></div></section>
   <details id="otherDetails" class="drawer"><summary><span>Other active experiments</span><small id="otherCount">—</small><i>⌄</i></summary><div id="otherProjects" class="other-list"></div></details>
   <details id="quietDetails" class="drawer"><summary><span>Quiet / completed</span><small id="quietCount">—</small><i>⌄</i></summary><div id="quietProjects" class="other-list"></div></details>
   <details id="systemDetails" class="drawer system-drawer"><summary><span>Evidence + system</span><small>why you can trust this view</small><i>⌄</i></summary><div id="systemBody" class="system-body"></div></details>
