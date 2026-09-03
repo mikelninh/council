@@ -1,25 +1,26 @@
 {
   "schema":"mikel-harness-task-v0.1",
-  "task_id":"mission-control-v0.5-project-stories",
+  "task_id":"mission-control-v0.6-portfolio-map",
   "status":"completed",
-  "goal":"Make multiple concurrent projects understandable at a glance by showing each project's purpose, current state, current/next goal, recent achievements, roadmap and next biggest wins without returning to dashboard information overload.",
-  "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","scripts/build-pages.mjs","docs/MISSION_CONTROL_PROJECT_STORIES.md"],
-  "outputs":["project story cards","in-motion and on-deck lanes","recent-win celebration strip","repository-derived roadmap summaries","recent commit achievements","next-big-win extraction","UI regression contract"],
-  "constraints":["Keep all genuinely concurrent projects visible.","Keep Mission Control read-only.","Keep GitHub Pages public-safe.","Do not invent roadmap facts when repository sources are missing.","Do not expose private project metadata."],
-  "done_when":["Every visible project explains purpose and current state.","Recent achievements are visible and celebrated.","Next big wins are explicit.","Roadmap details are available from repository-owned evidence.","No arbitrary top-three project cap remains.","CI builds the enriched snapshot and protects the project-story IA."],
-  "forbidden":["Private metadata publication","Autonomous consequential actions","Invented roadmap claims","Metric wall","Artificial single-project focus"],
+  "goal":"Make the portfolio beautiful and immediately legible by turning each core project into a roadmap-native visual journey: North Star → achieved → NOW → next biggest win → later.",
+  "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","scripts/build-pages.mjs","docs/HARNESS_ROADMAP_SCHEMA.md","docs/MISSION_CONTROL_PORTFOLIO_MAP.md"],
+  "outputs":["roadmap-native core mission cards","portfolio orientation pulse","recent-win strip","ACHIEVED/NOW/NEXT/LATER journey rail","progressive detail",".harness/roadmap.json contract","7/7 core roadmap standardization"],
+  "constraints":["Keep all core missions visible together.","Keep secondary experiments accessible without equal visual weight.","Keep Mission Control read-only.","Keep GitHub Pages public-safe.","Never present derived roadmap guesses as durable truth."],
+  "done_when":["Seven core missions have durable roadmap contracts.","Core projects are understandable without opening detail.","The next biggest win is obvious per project.","Recent wins are celebrated.","Secondary and quiet projects use progressive disclosure.","CI builds a public-safe snapshot and protects the information hierarchy."],
+  "forbidden":["Private metadata publication","Autonomous consequential actions","Invented roadmap claims","Unbounded metric wall","Artificial top-three cap"],
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
   "current_step":"verified_for_merge",
   "evidence":[
-    {"kind":"ci","workflow":"Check Council","run_id":33752487886,"status":"success"},
-    {"kind":"ci","workflow":"harness-contract","run_id":33752487657,"status":"success"},
-    {"kind":"build","command":"npm run build:pages","status":"success","observation":"18 project stories · 5 explicit roadmaps · 18 projects with recent wins"},
-    {"kind":"test","command":"npm run test:mission-ui","status":"success"}
+    {"kind":"ci","workflow":"Check Council","run_id":33755541735,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33755541682,"status":"success"},
+    {"kind":"build","command":"npm run build:pages","status":"success","observation":"18 projects · 7 core missions · 7/7 roadmap-native"},
+    {"kind":"test","command":"npm run test:mission-ui","status":"success"},
+    {"kind":"roadmap_coverage","projects":["TrustReady","Digital Worker Factory","PrüfPilot","CareOS","GitLaw","Citizen Agents","Council / Mission Control"],"status":"7/7"}
   ],
-  "failures":[{"kind":"ui_test","run_id":33752430902,"resolution":"Corrected an overly specific roadmap assertion to match the actual per-project brief access path; implementation and snapshot build were already passing."}],
-  "uncertainties":["Only 5 of 18 currently selected public projects expose an explicit roadmap section that the evidence parser can safely recognize; missing roadmap coverage is shown rather than guessed."],
+  "failures":[],
+  "uncertainties":["Public Pages intentionally still excludes private projects; the private owner view remains a later mission."],
   "next_owner":"operator",
-  "next_step":"Merge PR #15 and verify the next GitHub Pages deployment serves the project-story experience."
+  "next_step":"Merge PR #16 and verify the fresh GitHub Pages deployment serves v0.6."
 }
