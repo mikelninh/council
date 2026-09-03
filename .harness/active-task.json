@@ -1,7 +1,7 @@
 {
   "schema":"mikel-harness-task-v0.1",
   "task_id":"mission-control-v0.7-visual-map",
-  "status":"ready_for_review",
+  "status":"completed",
   "goal":"Make Mission Control dramatically more visual and compact: communicate each core mission through symbol, roadmap position, one current milestone, one next win and one recent win before any prose.",
   "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","docs/MISSION_CONTROL_VISUAL_MAP.md",".harness/roadmap.json"],
   "outputs":["warm-paper visual system","3-column compact mission grid","visual roadmap rails","single-line NOW/NEXT/WIN summaries","progressive detail layer","visual-density regression contract"],
@@ -11,10 +11,16 @@
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
-  "current_step":"awaiting_ci_verification",
-  "evidence":[{"kind":"branch","name":"mission-control-v0.7-visual-map","status":"created"}],
+  "current_step":"verified_for_merge",
+  "evidence":[
+    {"kind":"ci","workflow":"Check Council","run_id":33756835412,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33756835352,"status":"success"},
+    {"kind":"test","command":"npm run test:mission-ui","status":"success"},
+    {"kind":"build","command":"npm run build:pages","status":"success"},
+    {"kind":"design_contract","observation":"warm paper + graphite + cobalt; compact 3-column roadmap-first core mission tiles"}
+  ],
   "failures":[],
-  "uncertainties":["Final aesthetic preference is human judgement; CI can protect hierarchy and palette constraints but cannot prove taste."],
-  "next_owner":"verifier",
-  "next_step":"Run Council CI and generated Pages snapshot; merge only if the visual-density and roadmap contracts pass."
+  "uncertainties":["Final aesthetic preference remains human judgement; this release intentionally makes a strong visual direction change rather than claiming universal taste."],
+  "next_owner":"operator",
+  "next_step":"Merge PR #17, refresh GitHub Pages and verify the live v0.7 route."
 }
