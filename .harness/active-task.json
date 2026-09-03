@@ -1,7 +1,7 @@
 {
   "schema":"mikel-harness-task-v0.1",
   "task_id":"mission-control-v0.3-github-native",
-  "status":"ready_for_review",
+  "status":"completed",
   "goal":"Make Mission Control usable without Vercel by generating a public-safe GitHub Pages snapshot and preparing a no-secret delivery path through the existing mikelninh.github.io Pages repository.",
   "sources":["lib/mission-control.mjs","public/mission-control.html","public/mission-control.js",".github/workflows/check.yml","docs/MISSION_CONTROL_GITHUB_NATIVE.md"],
   "outputs":["scripts/build-pages.mjs","dist-pages/ contract","public Pages-compatible UI","GitHub-native delivery documentation"],
@@ -11,10 +11,15 @@
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
-  "current_step":"awaiting_ci_verification",
-  "evidence":[{"kind":"branch","name":"mission-control-v0.3-github-pages","status":"created"}],
-  "failures":[],
-  "uncertainties":["The existing personal-site Pages pipeline must be preserved while adding the Mission Control refresh workflow."],
-  "next_owner":"verifier",
-  "next_step":"Run Council CI, including the real public snapshot build, before merging and wiring the personal-site workflow."
+  "current_step":"verified_for_merge",
+  "evidence":[
+    {"kind":"ci","workflow":"Check Council","run_id":33749050809,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33749050802,"status":"success"},
+    {"kind":"build","command":"npm run build:pages","status":"success_via_Check_Council"},
+    {"kind":"privacy","observation":"generated deployment contract requires publicSafe=true, privateDetailsPublished=false and no private project rows"}
+  ],
+  "failures":[{"kind":"harness","run_id":33748975073,"resolution":"Preserved the exact v0.2 read-only and private-scope invariants while extending them for v0.3 public-safe Pages."}],
+  "uncertainties":[],
+  "next_owner":"operator",
+  "next_step":"Merge Council PR #13, then merge the prepared mikelninh.github.io Pages workflow PR #65 and verify the first live deployment."
 }

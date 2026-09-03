@@ -1,0 +1,21 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v0.3-github-native",
+  "verdict":"accepted",
+  "context_sources":["lib/mission-control.mjs","public/mission-control.html","public/mission-control.js","docs/MISSION_CONTROL_GITHUB_NATIVE.md",".github/workflows/check.yml"],
+  "tools_used":["GitHub branch","GitHub pull request","GitHub Actions","public GitHub API"],
+  "verification":{
+    "implementation_head":"0610ccaa187e35ca1b4c452d6f5530223e860479",
+    "check_council":{"run_id":33749050809,"conclusion":"success"},
+    "harness":{"run_id":33749050802,"conclusion":"success"},
+    "snapshot_build":"passed inside Check Council"
+  },
+  "human_corrections":0,
+  "retries":1,
+  "failure_upgrades":["Restored exact read-only/private-scope invariants after harness caught accidental wording regression."],
+  "external_actions":[{"kind":"open_pull_request","target":"Council #13","risk_class":"A2","approved":true}],
+  "accepted_artifact":"Council PR #13",
+  "rollback_point":"8a9e7c8806a2603478fea44a3af6e973916fa525",
+  "next_owner":"operator",
+  "next_step":"Merge Council #13, then deploy the verified builder from mikelninh.github.io PR #65."
+}
