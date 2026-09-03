@@ -1,7 +1,7 @@
 {
   "schema": "mikel-harness-task-v0.1",
   "task_id": "mission-control-v1-chief-of-staff",
-  "status": "in_progress",
+  "status": "completed",
   "goal": "Turn Mission Control into a beautiful daily Chief-of-Staff home that recommends the highest-leverage bounded mission, explains the judgment, lets Michael review/edit/approve it and creates a durable agent handoff without embedding browser credentials.",
   "sources": ["lib/chief.mjs", "scripts/build-pages.mjs", "public/mission-control.html", "public/mission-control.js", "public/mission-control.css", ".harness/roadmap.json", "docs/CHIEF_OF_STAFF_V1.md"],
   "outputs": ["Chief recommendation engine", "premium daily-home UI", "inspectable leverage factors", "review/edit/approve flow", "GitHub mission handoff", "Chief regression tests"],
@@ -11,12 +11,17 @@
   "risk_class": "A2",
   "approval_required": false,
   "max_retries": 3,
-  "current_step": "build_and_verify_chief_home",
-  "evidence": [],
-  "failures": [],
+  "current_step": "verified_for_merge",
+  "evidence": [
+    {"kind":"ci","workflow":"Check Council","run_id":33767292314,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33767292193,"status":"success"},
+    {"kind":"build","status":"success","observation":"18 projects · 7 core missions · 5 delegatable · recommendation PrüfPilot"},
+    {"kind":"chief","status":"success","observation":"Chief snapshot recommendation PrüfPilot scored 31.7"}
+  ],
+  "failures": [{"kind":"harness_invariant","resolution":"Restored exact legacy Mission Control read-only/private-scope/untracked invariants after the harness correctly rejected the first AGENTS rewrite."}],
   "uncertainties": ["Whether the new visual direction feels pleasurable enough remains a human taste judgment after live deployment.", "An authenticated agent runner is not yet connected to the public GitHub Pages approval handoff."],
-  "next_owner": "builder",
-  "next_step": "Complete the Chief UI, approval queue and tests, then hand the release to the verifier.",
+  "next_owner": "operator",
+  "next_step": "Merge PR #20, refresh GitHub Pages and verify the live v1.0 route.",
   "decision_estimate": {
     "scale": "1-5",
     "impact": 4,
