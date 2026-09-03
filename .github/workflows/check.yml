@@ -22,7 +22,7 @@ jobs:
         run: npm run test:mission-ui
       - name: Exercise Chief recommendation and authority contract
         run: npm run test:chief
-      - name: Exercise bounded automatic mission-runner contract
+      - name: Exercise provider-independent bounded runner contract
         run: npm run test:runner
 
   github-tool-smoke:
@@ -43,9 +43,9 @@ jobs:
           GITHUB_USERNAME: mikelninh
           MISSION_CONTROL_REFRESH_URL: https://github.com/mikelninh/mikelninh.github.io/actions/workflows/pages.yml
         run: npm run build:pages
-      - name: Verify generated cockpit + runner artefacts
+      - name: Verify generated cockpit + worker artefacts
         run: |
           test -s dist-pages/mission-control/index.html
           test -s dist-pages/mission-control/mission-control.json
           test -s dist-pages/mission-control/mission-control.js
-          node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('dist-pages/mission-control/mission-control.json','utf8'));if(d.experienceVersion!=='1.1'||d.chief?.schema!=='council-chief-v1'||!d.chief?.recommendation||d.runner?.schema!=='council-runner-summary-v1'||d.safety?.automaticRiskCeiling!=='A2')process.exit(1);console.log('MISSION CONTROL v1.1 SNAPSHOT PASS:',d.chief.recommendation.project,'runner',d.runner.counts);"
+          node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('dist-pages/mission-control/mission-control.json','utf8'));if(d.experienceVersion!=='1.2'||d.chief?.schema!=='council-chief-v1'||!d.chief?.recommendation||d.runner?.schema!=='council-runner-summary-v1.2'||d.safety?.automaticRiskCeiling!=='A2'||d.safety?.providerIndependent!==true)process.exit(1);console.log('MISSION CONTROL v1.2 SNAPSHOT PASS:',d.chief.recommendation.project,'worker fabric',d.runner.counts);"
