@@ -5,10 +5,13 @@ const js=fs.readFileSync(new URL('../public/mission-control.js',import.meta.url)
 const css=fs.readFileSync(new URL('../public/mission-control.css',import.meta.url),'utf8');
 const build=fs.readFileSync(new URL('../scripts/build-pages.mjs',import.meta.url),'utf8');
 const intake=fs.readFileSync(new URL('../.github/workflows/mission-intake.yml',import.meta.url),'utf8');
+const worker=fs.readFileSync(new URL('../.github/workflows/mission-worker.yml',import.meta.url),'utf8');
 
-assert.match(html,/Chief of Staff · v1\.1/,'daily home must identify the v1.1 Chief experience');
+assert.match(html,/Chief of Staff · v1\.2/,'daily home must identify the v1.2 Chief experience');
+assert.match(html,/WORKER FABRIC/,'daily home must present provider-independent worker state');
+assert.doesNotMatch(html,/AGENT RUNNER|AGENTS READY/,'provider-specific runner language must not dominate the daily home');
 assert.match(html,/id="chiefCard"/,'one primary Chief recommendation must dominate the daily home');
-assert.match(html,/id="runnerBar"/,'automatic runner state must be visible without becoming a dashboard');
+assert.match(html,/id="runnerBar"/,'automatic worker state must be visible without becoming a dashboard');
 assert.match(html,/id="missionGrid"/,'all core missions must remain available below the decision surface');
 assert.match(html,/id="approvalDialog"/,'recommendations must have an explicit review/approval surface');
 assert.match(html,/id="missionDialog"/,'project depth must use progressive disclosure rather than default text walls');
@@ -19,9 +22,12 @@ assert.ok(js.includes('MY RECOMMENDATION'),'Chief recommendation must be visuall
 assert.ok(js.includes('REVIEW MISSION'),'recommendation must be reviewable before approval');
 assert.ok(js.includes('APPROVE & QUEUE'),'approval must create a durable mission handoff');
 assert.ok(js.includes('RUNNER_MODE: auto'),'approval packet must request automatic bounded dispatch');
+assert.ok(js.includes('RUNNER_BACKEND: self-hosted'),'default approval packet must be explicit about the replaceable backend');
 assert.ok(js.includes('mission-control-last-approval'),'browser may remember local approval state without exposing credentials');
 assert.ok(js.includes('issues/new'),'public Pages approval must hand off through GitHub rather than embedding a write token');
 assert.ok(js.includes('A0–A2'),'approval UI must explain bounded execution authority');
+assert.ok(js.includes('providers are replaceable')||js.includes('providers are optional'),'approval copy must make provider independence explicit');
+assert.doesNotMatch(js,/assigns GitHub Copilot cloud agent/,'Copilot must not remain the required/default execution story');
 assert.doesNotMatch(js,/CHIEF_SCORE:/,'raw unbounded heuristic score must not return to the visible approval packet');
 assert.doesNotMatch(js,/const nodes=\[\['done','ACHIEVED'/,'generic roadmap stage skeleton must not return');
 assert.match(css,/--cobalt:#315efb/,'restrained cobalt accent must remain');
@@ -30,7 +36,10 @@ assert.match(css,/\.chief-card/,'Chief recommendation needs a distinct visual su
 assert.match(css,/\.mission-tile/,'project overview must remain compact and scan-first');
 assert.doesNotMatch(css,/--cyan:|--violet:/,'legacy cyber palette must not return');
 assert.match(build,/summarizeMissionIssues/,'snapshot builder must expose durable runner status');
-assert.match(build,/experienceVersion:'1\.1'/,'snapshot must expose v1.1 experience');
+assert.match(build,/experienceVersion:'1\.2'/,'snapshot must expose v1.2 experience');
+assert.match(build,/providerIndependent:true/,'public safety contract must expose provider independence');
 assert.match(intake,/github\.event\.sender\.login == github\.repository_owner/,'only the repository owner may dispatch missions');
 assert.match(intake,/mission-dispatch\.mjs/,'validated approvals must enter the authenticated dispatcher');
-console.log('MISSION CONTROL UI PASS: v1.1 stays calm while exposing bounded automatic runner state and explicit approval.');
+assert.match(worker,/runs-on: \[self-hosted, mission-control\]/,'default worker must run on the owner-controlled self-hosted fabric');
+assert.match(worker,/mission-local-worker\.mjs/,'self-hosted workflow must invoke the bounded local worker adapter');
+console.log('MISSION CONTROL UI PASS: v1.2 stays calm while exposing provider-independent bounded worker state and explicit approval.');

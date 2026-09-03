@@ -42,7 +42,7 @@ jobs:
           gh label create agent-handoff --repo "$GITHUB_REPOSITORY" --color EEF2FF --description "Validated handoff awaiting bounded runner dispatch" --force
           gh issue edit "$NUMBER" --repo "$GITHUB_REPOSITORY" --add-label mission-approved --add-label agent-handoff
 
-      - name: Dispatch bounded coding agent
+      - name: Dispatch bounded worker backend
         env:
           SOURCE_TOKEN: ${{ github.token }}
           MISSION_RUNNER_TOKEN: ${{ secrets.MISSION_RUNNER_TOKEN || secrets.REPO_FACTORY_TOKEN }}

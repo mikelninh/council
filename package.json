@@ -3,10 +3,10 @@
   "version":"1.2.0",
   "private":true,
   "type":"module",
-  "description":"Council Mission Control v1.1 — an evidence-grounded AI Chief of Staff with bounded automatic GitHub coding-agent dispatch.",
+  "description":"Council Mission Control v1.2 — evidence-grounded AI Chief of Staff with provider-independent bounded worker dispatch.",
   "scripts":{
     "start":"node server.mjs",
-    "check":"node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check lib/mission-control.mjs && node --check lib/chief.mjs && node --check lib/mission-runner.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check api/mission-control.mjs && node --check scripts/build-pages.mjs && node --check scripts/mission-dispatch.mjs && node --check scripts/mission-watch.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check public/mission-control.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs && node --check tests/mission-control.mjs && node --check tests/mission-control-ui.mjs && node --check tests/chief.mjs && node --check tests/mission-runner.mjs",
+    "check":"node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check lib/mission-control.mjs && node --check lib/chief.mjs && node --check lib/mission-runner.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check api/mission-control.mjs && node --check scripts/build-pages.mjs && node --check scripts/mission-dispatch.mjs && node --check scripts/mission-worker-plan.mjs && node --check scripts/mission-local-worker.mjs && node --check scripts/mission-watch.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check public/mission-control.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs && node --check tests/mission-control.mjs && node --check tests/mission-control-ui.mjs && node --check tests/chief.mjs && node --check tests/mission-runner.mjs",
     "test:decision":"node tests/decision-quality.mjs",
     "test:founder":"node tests/founder-view.mjs",
     "test:mission":"node tests/mission-control.mjs",

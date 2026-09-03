@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {buildRunnerIssueBody,parseMissionPacket,runnerStatusFromLabels,summarizeMissionIssues,validateMissionPacket} from '../lib/mission-runner.mjs';
+import {buildRunnerIssueBody,buildWorkerInstructions,parseMissionPacket,runnerStatusFromLabels,summarizeMissionIssues,validateMissionPacket} from '../lib/mission-runner.mjs';
 
 const body=`## Mission Control approval
 
@@ -8,6 +8,7 @@ PROJECT: PrüfPilot
 REPOSITORY: mikelninh/pruefpilot
 RISK_CLASS: A2
 RUNNER_MODE: auto
+RUNNER_BACKEND: self-hosted
 SNAPSHOT: 2026-09-03T14:33:26.000Z
 
 ### Approved mission
@@ -34,12 +35,19 @@ assert.equal(packet.project,'PrüfPilot');
 assert.equal(packet.repository,'mikelninh/pruefpilot');
 assert.equal(packet.riskClass,'A2');
 assert.equal(packet.runnerMode,'auto');
+assert.equal(packet.runnerBackend,'self-hosted');
 assert.deepEqual(packet.doneWhen,['Case set exists.','Validator passes.']);
 assert.equal(validateMissionPacket(packet).ok,true);
-assert.match(buildRunnerIssueBody(packet,{sourceRepo:'mikelninh/council',sourceIssueNumber:21,sourceIssueUrl:'https://github.com/mikelninh/council/issues/21'}),/Scout/);
+const runnerBody=buildRunnerIssueBody(packet,{sourceRepo:'mikelninh/council',sourceIssueNumber:21,sourceIssueUrl:'https://github.com/mikelninh/council/issues/21'});
+assert.match(runnerBody,/Scout/);assert.match(runnerBody,/RUNNER_BACKEND: self-hosted/);assert.match(runnerBody,/providers are replaceable/i);
+assert.match(buildWorkerInstructions(packet,{sourceIssueUrl:'https://github.com/mikelninh/council/issues/21'}),/do not merge/i);
 const unsafe={...packet,riskClass:'A3'};assert.equal(validateMissionPacket(unsafe).ok,false,'A3 must never enter automatic runner');
-assert.equal(runnerStatusFromLabels([{name:'agent-running'}]),'working');
-assert.equal(runnerStatusFromLabels([{name:'agent-running'},{name:'agent-review'}]),'review');
-const summary=summarizeMissionIssues([{number:21,title:'[Mission] PrüfPilot',html_url:'https://example/21',body,labels:[{name:'agent-running'}],state:'open',updated_at:'2026-09-03T15:00:00Z'},{number:20,title:'[Mission] GitLaw',html_url:'https://example/20',body:body.replaceAll('PrüfPilot','GitLaw').replace('pruefpilot','gitlaw'),labels:[{name:'mission-complete'}],state:'closed',updated_at:'2026-09-03T14:00:00Z'}]);
-assert.equal(summary.counts.working,1);assert.equal(summary.counts.complete,1);assert.equal(summary.active[0].project,'PrüfPilot');
-console.log('MISSION RUNNER PASS: approval packets are bounded, parseable, status-aware and A3/A4 fail closed.');
+const unknownProvider={...packet,runnerBackend:'mystery-cloud'};assert.equal(validateMissionPacket(unknownProvider).ok,false,'unknown providers must fail closed');
+const legacy=parseMissionPacket(body.replace('RUNNER_BACKEND: self-hosted\n',''),'[Mission] legacy');assert.equal(legacy.runnerBackend,'self-hosted','legacy v1.1 packets must default to self-hosted in v1.2');
+assert.equal(runnerStatusFromLabels([{name:'worker-running'}]),'working');
+assert.equal(runnerStatusFromLabels([{name:'runner-queued'}]),'queued');
+assert.equal(runnerStatusFromLabels([{name:'worker-running'},{name:'worker-review'}]),'review');
+assert.equal(runnerStatusFromLabels([{name:'agent-running'}]),'working','v1.1 label compatibility must remain readable');
+const summary=summarizeMissionIssues([{number:21,title:'[Mission] PrüfPilot',html_url:'https://example/21',body,labels:[{name:'worker-running'}],state:'open',updated_at:'2026-09-03T15:00:00Z'},{number:20,title:'[Mission] GitLaw',html_url:'https://example/20',body:body.replaceAll('PrüfPilot','GitLaw').replace('pruefpilot','gitlaw'),labels:[{name:'mission-complete'}],state:'closed',updated_at:'2026-09-03T14:00:00Z'}]);
+assert.equal(summary.schema,'council-runner-summary-v1.2');assert.equal(summary.counts.working,1);assert.equal(summary.counts.complete,1);assert.equal(summary.active[0].project,'PrüfPilot');assert.equal(summary.active[0].backend,'self-hosted');
+console.log('MISSION RUNNER PASS: provider-neutral approval packets are bounded, status-aware, backward-compatible and A3/A4 fail closed.');
