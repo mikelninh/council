@@ -1,25 +1,20 @@
 {
   "schema":"mikel-harness-task-v0.1",
-  "task_id":"mission-control-v0.2",
-  "status":"completed",
-  "goal":"Turn Council into a read-only Mission Control that exposes active projects, blockers, human gates, harness coverage and the next operational move across the portfolio.",
-  "sources":["README.md","lib/tools.mjs","server.mjs","public/","tests/"],
-  "outputs":["lib/mission-control.mjs","api/mission-control.mjs","public/mission-control.html","public/mission-control.js","public/mission-control.css","tests/mission-control.mjs","AGENTS.md",".harness/"],
-  "constraints":["Read-only cross-repo operation.","Do not hide private-scope limitations.","Do not treat inferred ranking as verified truth.","Do not execute cross-repo writes."],
-  "done_when":["Mission Control API returns portfolio and deep harness state.","Needs-me/blocker/untracked states are deterministic.","Founder dashboard renders these states.","Harness and existing Council tests pass in CI."],
-  "forbidden":["Cross-repo mutation","Deployment","External sends","Secret exposure"],
+  "task_id":"mission-control-v0.3-github-native",
+  "status":"ready_for_review",
+  "goal":"Make Mission Control usable without Vercel by generating a public-safe GitHub Pages snapshot and preparing a no-secret delivery path through the existing mikelninh.github.io Pages repository.",
+  "sources":["lib/mission-control.mjs","public/mission-control.html","public/mission-control.js",".github/workflows/check.yml","docs/MISSION_CONTROL_GITHUB_NATIVE.md"],
+  "outputs":["scripts/build-pages.mjs","dist-pages/ contract","public Pages-compatible UI","GitHub-native delivery documentation"],
+  "constraints":["No browser GitHub token.","No private repository details in public Pages.","No Vercel dependency.","Read-only cross-repo operation."],
+  "done_when":["Public-safe snapshot builder exists.","Pages-compatible cockpit is generated.","CI builds and verifies the snapshot.","A Pages-host workflow consumes it from the existing personal-site repository."],
+  "forbidden":["Private metadata publication","Cross-repo mutation from browser","Secret exposure","Autonomous consequential actions"],
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
-  "current_step":"verified",
-  "evidence":[
-    {"kind":"branch","name":"mission-control-v0.2","status":"created"},
-    {"kind":"ci","workflow":"Check Council","run_id":33745959915,"status":"success"},
-    {"kind":"ci","workflow":"harness-contract","run_id":33745960014,"status":"success"}
-  ],
+  "current_step":"awaiting_ci_verification",
+  "evidence":[{"kind":"branch","name":"mission-control-v0.3-github-pages","status":"created"}],
   "failures":[],
-  "uncertainties":["Live private-repository visibility depends on Council's GITHUB_TOKEN environment variable; the UI fails visibly and reports hidden priority projects when scope is incomplete."],
-  "next_owner":"operator",
-  "next_step":"Merge PR #12. Then use Mission Control as the default portfolio entry point and create a fresh task contract before any cross-repo operator automation.",
-  "receipt":".harness/receipts/mission-control-v0.2.json"
+  "uncertainties":["The existing personal-site Pages pipeline must be preserved while adding the Mission Control refresh workflow."],
+  "next_owner":"verifier",
+  "next_step":"Run Council CI, including the real public snapshot build, before merging and wiring the personal-site workflow."
 }

@@ -1,31 +1,25 @@
-# Mission Control v0.2 handoff
+# Mission Control v0.3 handoff
 
 ## Status
-Verified and accepted for merge.
+Ready for independent verification.
 
 ## Current step
-Merge PR #12.
-
-## Evidence
-- `Check Council` workflow `33745959915`: success.
-- `harness-contract` workflow `33745960014`: success.
-- Mission Control state derivation tests run inside the harness workflow.
-- Existing Council decision/founder tests remain part of the gate.
+Run Council CI on `mission-control-v0.3-github-pages`.
 
 ## What changed
-- Council gains a read-only `/api/mission-control` portfolio aggregator.
-- The dashboard surfaces **Needs me**, blockers, active work and untracked projects.
-- Priority projects are deep-inspected for `.harness/project.json` and `.harness/active-task.json`.
-- Private projects outside runtime GitHub scope are shown as hidden rather than silently omitted.
-- Council itself now uses Harness v0.1.
+- Added a static GitHub Pages snapshot builder.
+- Made the Mission Control UI work from a relative JSON snapshot with live API fallback.
+- Added an explicit public-safe privacy boundary: private repository details are excluded from Pages.
+- Added a no-Vercel delivery design using the already-enabled `mikelninh.github.io` Pages repository.
+- Added CI verification for the generated cockpit artefacts.
 
 ## Decisions
-- Reuse Council rather than create another disconnected repository.
-- Keep v0.2 read-only; recommendations may be automated later, cross-repo actions may not.
-- Operational attention score is explicitly not a business-value score.
+- Do not enable Pages on Council when the existing personal-site repository already has Pages enabled.
+- Keep Council as the engine/source contract and use the personal site as the public view host.
+- Do not solve private-project visibility by leaking credentials or private metadata into static Pages.
 
-## Remaining limitation
-Private repository visibility requires `GITHUB_TOKEN` in the Council runtime. Without it, Mission Control still works but warns and cannot claim full coverage.
+## Open risk
+The personal-site workflow still needs to be installed after Council CI passes.
 
 ## Next owner
-Operator — merge PR #12, then make Mission Control the default starting surface for portfolio work.
+Verifier — accept only if syntax, deterministic tests, GitHub adapter smoke and public snapshot build pass.
