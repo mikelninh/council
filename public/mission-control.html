@@ -2,35 +2,40 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090b10">
-<title>Mission Control — Focus</title><meta name="description" content="A founder-first view of what matters now across Michael Ninh's public project portfolio."><link rel="stylesheet" href="./mission-control.css">
+<title>Mission Control — Project Stories</title><meta name="description" content="A calm portfolio view of purpose, current state, recent wins, roadmaps and next big wins across Michael Ninh's projects."><link rel="stylesheet" href="./mission-control.css">
 </head>
 <body>
 <div class="ambient"></div>
 <header class="bar">
-  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span>✦</span><b>MISSION CONTROL</b><em>v0.4 · FOCUS</em></a>
+  <a class="brand" href="https://github.com/mikelninh/council" target="_blank" rel="noreferrer"><span>✦</span><b>MISSION CONTROL</b><em>v0.5 · PROJECT STORIES</em></a>
   <div class="bar-actions"><span id="syncState" class="sync-state">SYNCING</span><button id="refresh" class="icon-button" aria-label="Reload current snapshot">↻</button></div>
 </header>
 <main>
   <section class="intro">
-    <p class="eyebrow">TODAY</p>
-    <h1>What matters <i>now?</i></h1>
-    <p id="statusLine" class="status-line">Reading the portfolio…</p>
+    <p class="eyebrow">PORTFOLIO</p>
+    <h1>Keep the <i>plot.</i></h1>
+    <p id="statusLine" class="status-line">Reading where every project stands…</p>
   </section>
 
-  <section id="focusCard" class="focus-card loading" aria-live="polite"></section>
+  <section id="celebration" class="celebration loading" aria-live="polite"></section>
 
-  <section class="next-section">
-    <header class="section-title"><div><span>NEXT UP</span><strong>After the one thing above.</strong></div><small>MAX 3</small></header>
-    <div id="nextUp" class="next-list"></div>
+  <section class="lane" id="inMotionSection">
+    <header class="lane-head"><div><span>IN MOTION</span><strong>Projects we are actively carrying.</strong></div><small id="inMotionCount">—</small></header>
+    <div id="inMotion" class="project-board"></div>
   </section>
 
-  <details id="portfolioDetails" class="drawer">
-    <summary><div><span>Everything else</span><small id="detailsCount">Loading…</small></div><span class="chevron">⌄</span></summary>
-    <div id="portfolioGroups" class="portfolio-groups"></div>
+  <section class="lane" id="onDeckSection">
+    <header class="lane-head"><div><span>ON DECK</span><strong>Still warm, but not asking for equal attention.</strong></div><small id="onDeckCount">—</small></header>
+    <div id="onDeck" class="project-board"></div>
+  </section>
+
+  <details id="quietDetails" class="drawer">
+    <summary><div><span>Quiet / completed</span><small id="quietCount">Historical context without visual noise</small></div><span class="chevron">⌄</span></summary>
+    <div id="quietProjects" class="project-board quiet-board"></div>
   </details>
 
   <details id="systemDetails" class="drawer system-drawer">
-    <summary><div><span>System details</span><small>Evidence, scope and refresh state</small></div><span class="chevron">⌄</span></summary>
+    <summary><div><span>System details</span><small>Evidence, coverage, scope and refresh state</small></div><span class="chevron">⌄</span></summary>
     <div id="systemBody" class="system-body"></div>
   </details>
 </main>

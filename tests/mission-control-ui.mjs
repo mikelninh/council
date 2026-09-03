@@ -1,15 +1,14 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-
-const html=fs.readFileSync(new URL('../public/mission-control.html', import.meta.url),'utf8');
-const js=fs.readFileSync(new URL('../public/mission-control.js', import.meta.url),'utf8');
-
-assert.match(html,/id="focusCard"/,'one dominant focus card must exist');
-assert.match(html,/id="nextUp"/,'a compact next-up queue must exist');
-assert.match(html,/<details[^>]*id="portfolioDetails"/,'portfolio detail must be progressive disclosure');
-assert.match(html,/<details[^>]*id="systemDetails"/,'system/debug detail must be progressive disclosure');
-assert.doesNotMatch(html,/id="metrics"/,'metric wall must not return to the default view');
-assert.doesNotMatch(html,/PROJECT RUNWAY/,'dashboard-era project runway language must not return');
-assert.match(js,/slice\(0,3\)/,'default queue must remain intentionally bounded');
-assert.match(js,/detailsCount/,'hidden project count must be explicit rather than silently omitted');
-console.log('MISSION CONTROL UI PASS: founder-first progressive disclosure contract is intact.');
+const html=fs.readFileSync(new URL('../public/mission-control.html',import.meta.url),'utf8');const js=fs.readFileSync(new URL('../public/mission-control.js',import.meta.url),'utf8');
+assert.match(html,/id="celebration"/,'portfolio should visibly celebrate recent achievement');
+assert.match(html,/id="inMotion"/,'all in-motion projects need a visible lane');
+assert.match(html,/id="onDeck"/,'warm concurrent projects need a visible lane');
+assert.match(html,/<details[^>]*id="quietDetails"/,'quiet history should use progressive disclosure');
+assert.match(html,/<details[^>]*id="systemDetails"/,'system evidence should remain progressive disclosure');
+assert.doesNotMatch(html,/id="focusCard"/,'one artificial focus card must not dominate concurrent project reality');
+assert.doesNotMatch(html,/MAX 3/,'project visibility must not be capped at three');
+for(const phrase of ['PURPOSE','CURRENT GOAL','RECENT WIN','NEXT BIG WINS','ROADMAP'])assert.ok(js.includes(phrase),`project story missing ${phrase}`);
+assert.match(js,/brief\(p\)\.achievements/,'recent achievements must be rendered from evidence snapshot');
+assert.match(js,/brief\(p\)\.roadmap/,'roadmap must be rendered from evidence snapshot');
+console.log('MISSION CONTROL UI PASS: concurrent project stories preserve purpose, state, celebration, roadmap and next wins.');
