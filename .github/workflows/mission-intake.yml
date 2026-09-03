@@ -1,4 +1,4 @@
-name: Mission approval intake
+name: Mission approval intake + dispatch
 
 on:
   issues:
@@ -10,28 +10,40 @@ permissions:
 
 jobs:
   intake:
-    if: startsWith(github.event.issue.title, '[Mission]')
+    if: >-
+      github.event.sender.login == github.repository_owner &&
+      startsWith(github.event.issue.title, '[Mission]')
     runs-on: ubuntu-latest
     steps:
-      - name: Validate explicit approval packet
-        id: validate
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate explicit approval envelope
         env:
           BODY: ${{ github.event.issue.body }}
         run: |
           set -euo pipefail
           printf '%s\n' "$BODY" | grep -q '^APPROVAL: approved$'
           printf '%s\n' "$BODY" | grep -q '^PROJECT:'
-          printf '%s\n' "$BODY" | grep -q '^RISK_CLASS:'
+          printf '%s\n' "$BODY" | grep -q '^REPOSITORY:'
+          printf '%s\n' "$BODY" | grep -Eq '^RISK_CLASS: A[0-2]$'
           printf '%s\n' "$BODY" | grep -q '^### Approved mission$'
-          printf '%s\n' "$BODY" | grep -q 'A0–A2'
+          printf '%s\n' "$BODY" | grep -Eq 'A0[–-]A2'
 
-      - name: Mark durable mission handoff
+      - name: Mark durable approved handoff
         env:
           GH_TOKEN: ${{ github.token }}
           NUMBER: ${{ github.event.issue.number }}
         run: |
           set -euo pipefail
           gh label create mission-approved --repo "$GITHUB_REPOSITORY" --color 315EFB --description "Human-approved Mission Control handoff" --force
-          gh label create agent-handoff --repo "$GITHUB_REPOSITORY" --color EEF2FF --description "Ready for a bounded authenticated agent runner" --force
+          gh label create agent-handoff --repo "$GITHUB_REPOSITORY" --color EEF2FF --description "Validated handoff awaiting bounded runner dispatch" --force
           gh issue edit "$NUMBER" --repo "$GITHUB_REPOSITORY" --add-label mission-approved --add-label agent-handoff
-          gh issue comment "$NUMBER" --repo "$GITHUB_REPOSITORY" --body $'✦ **Mission Control accepted this approval packet.**\n\nThe approved mission is now durable and machine-readable. **Runner status in v1.0: handoff ready; authenticated agent runner not connected yet.** A future runner may consume this item only within the recorded A0–A2 boundary. A3/A4 actions must stop for explicit human approval.'
+
+      - name: Dispatch bounded coding agent
+        env:
+          SOURCE_TOKEN: ${{ github.token }}
+          MISSION_RUNNER_TOKEN: ${{ secrets.MISSION_RUNNER_TOKEN || secrets.REPO_FACTORY_TOKEN }}
+        run: node scripts/mission-dispatch.mjs

@@ -1,18 +1,19 @@
 {
   "name":"council",
-  "version":"1.1.0",
+  "version":"1.2.0",
   "private":true,
   "type":"module",
-  "description":"Council Mission Control v1.0 — a calm evidence-grounded AI Chief of Staff for portfolio decisions and bounded mission handoff.",
+  "description":"Council Mission Control v1.1 — an evidence-grounded AI Chief of Staff with bounded automatic GitHub coding-agent dispatch.",
   "scripts":{
     "start":"node server.mjs",
-    "check":"node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check lib/mission-control.mjs && node --check lib/chief.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check api/mission-control.mjs && node --check scripts/build-pages.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check public/mission-control.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs && node --check tests/mission-control.mjs && node --check tests/mission-control-ui.mjs && node --check tests/chief.mjs",
+    "check":"node --check server.mjs && node --check lib/tools.mjs && node --check lib/council.mjs && node --check lib/mission-control.mjs && node --check lib/chief.mjs && node --check lib/mission-runner.mjs && node --check api/council.mjs && node --check api/status.mjs && node --check api/portfolio.mjs && node --check api/mission-control.mjs && node --check scripts/build-pages.mjs && node --check scripts/mission-dispatch.mjs && node --check scripts/mission-watch.mjs && node --check public/app.js && node --check public/app-v53.js && node --check public/founder-view.js && node --check public/mission-control.js && node --check tests/decision-quality.mjs && node --check tests/founder-view.mjs && node --check tests/mission-control.mjs && node --check tests/mission-control-ui.mjs && node --check tests/chief.mjs && node --check tests/mission-runner.mjs",
     "test:decision":"node tests/decision-quality.mjs",
     "test:founder":"node tests/founder-view.mjs",
     "test:mission":"node tests/mission-control.mjs",
     "test:mission-ui":"node tests/mission-control-ui.mjs",
     "test:chief":"node tests/chief.mjs",
-    "test":"npm run test:decision && npm run test:founder && npm run test:mission && npm run test:mission-ui && npm run test:chief",
+    "test:runner":"node tests/mission-runner.mjs",
+    "test":"npm run test:decision && npm run test:founder && npm run test:mission && npm run test:mission-ui && npm run test:chief && npm run test:runner",
     "build:pages":"node scripts/build-pages.mjs",
     "build":"npm run check"
   },

@@ -1,45 +1,26 @@
-# Mission Control v1.0 Chief of Staff handoff
+# Mission Control v1.1 automatic runner handoff
 
 ## Status
-Verified and accepted for merge.
+Ready for independent verification.
 
-## What changed
-Mission Control is now a **daily decision surface** rather than a dashboard.
+## Current step
+Run Council CI on `mission-control-v1.1-runner`, including runner contract tests and public-safe snapshot build.
 
-Default hierarchy:
-1. greeting;
-2. one Chief recommendation;
-3. explicit why-now / leverage factors / confidence;
-4. review, edit, approve or not-now controls;
-5. compact portfolio pulse and latest win;
-6. all core missions as small visual tiles;
-7. full project story only on demand.
+## Evidence
+- First manual runner trace already proved the desired execution sequence on PrüfPilot: approval → Scout → Builder → Verifier → PR → receipt.
+- v1.1 encodes that handoff in `lib/mission-runner.mjs`, `scripts/mission-dispatch.mjs` and `scripts/mission-watch.mjs`.
+- Intake now requires the GitHub event sender to equal the repository owner before any dispatch path exists.
 
-## Chief truth model
-- `.harness/roadmap.json` owns product direction.
-- `.harness/active-task.json` owns execution and next owner.
-- `decision_estimate` owns explicit 1–5 judgement inputs: impact, urgency, unlock value, effort and confidence.
-- `lib/chief.mjs` applies a deterministic, documented leverage heuristic and prefers an unblocked A0–A2 delegation when one exists.
+## Decisions
+- Use GitHub Copilot cloud agent as the first authenticated coding-agent runtime rather than inventing a second hosted agent service.
+- Keep the public browser read-only; GitHub Actions owns credentials.
+- Use a dedicated `MISSION_RUNNER_TOKEN`, with temporary fallback to existing `REPO_FACTORY_TOKEN` during migration.
+- Do not spend a coding-agent session for infrastructure smoke testing; use `RUNNER_MODE: dry-run` after merge.
 
-The verified public snapshot selected **PrüfPilot** as the strongest current delegation with a Chief score of **31.7** and found **5 delegatable core missions**.
-
-## Approval
-`REVIEW MISSION` opens the proposed mission contract. Michael may edit the mission text. `APPROVE & QUEUE` opens a pre-filled GitHub approval issue containing the exact mission, done criteria, constraints, forbidden actions, risk class and A0–A2 boundary.
-
-`.github/workflows/mission-intake.yml` validates and labels valid approval packets. It explicitly reports that the authenticated agent runner is **not connected yet** rather than pretending the static public page launched an agent.
-
-## Verification
-- `Check Council` run `33767292314`: success, including Chief tests and public-safe Pages snapshot build.
-- `harness-contract` run `33767292193`: success.
-- Snapshot: 18 projects · 7 core missions · 5 delegatable · recommendation PrüfPilot.
-- First harness attempt caught three legacy invariants removed by the AGENTS rewrite; the exact invariants were restored rather than weakening the checker.
-
-## Safety
-- no browser GitHub token;
-- no AI-provider credential in Pages;
-- private project data excluded;
-- A3/A4 remains behind explicit human approval;
-- Chief scores are inference, not objective truth.
+## Open risks
+- Copilot cloud-agent assignment is account/policy dependent and cannot be proven by static CI alone.
+- The watcher relies on GitHub issue/PR linkage and has a conservative fallback search; unusual agent PR metadata may require another reconciliation adapter.
+- Private-repo runner status remains outside the public Pages snapshot until a private owner view exists.
 
 ## Next owner
-Operator — merge PR #20, refresh GitHub Pages, verify the live v1.0 route, then let Michael judge visual delight and recommendation usefulness.
+Verifier — accept only if syntax, unit tests, harness invariants and the public Pages snapshot all pass. Operator then performs the no-agent dry-run preflight.
