@@ -1,28 +1,26 @@
 {
   "schema":"mikel-harness-task-v0.1",
   "task_id":"mission-control-v0.6-portfolio-map",
-  "status":"in_progress",
+  "status":"completed",
   "goal":"Make the portfolio beautiful and immediately legible by turning each core project into a roadmap-native visual journey: North Star → achieved → NOW → next biggest win → later.",
   "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","scripts/build-pages.mjs","docs/HARNESS_ROADMAP_SCHEMA.md","docs/MISSION_CONTROL_PORTFOLIO_MAP.md"],
-  "outputs":["roadmap-native core mission cards","portfolio orientation pulse","recent-win strip","ACHIEVED/NOW/NEXT/LATER journey rail","progressive detail",".harness/roadmap.json contract","core roadmap standardization"],
+  "outputs":["roadmap-native core mission cards","portfolio orientation pulse","recent-win strip","ACHIEVED/NOW/NEXT/LATER journey rail","progressive detail",".harness/roadmap.json contract","7/7 core roadmap standardization"],
   "constraints":["Keep all core missions visible together.","Keep secondary experiments accessible without equal visual weight.","Keep Mission Control read-only.","Keep GitHub Pages public-safe.","Never present derived roadmap guesses as durable truth."],
   "done_when":["Seven core missions have durable roadmap contracts.","Core projects are understandable without opening detail.","The next biggest win is obvious per project.","Recent wins are celebrated.","Secondary and quiet projects use progressive disclosure.","CI builds a public-safe snapshot and protects the information hierarchy."],
   "forbidden":["Private metadata publication","Autonomous consequential actions","Invented roadmap claims","Unbounded metric wall","Artificial top-three cap"],
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
-  "current_step":"verify_v0.6_in_ci",
+  "current_step":"verified_for_merge",
   "evidence":[
-    {"kind":"roadmap","project":"TrustReady","status":"merged"},
-    {"kind":"roadmap","project":"Digital Worker Factory","status":"merged"},
-    {"kind":"roadmap","project":"PrüfPilot","status":"merged"},
-    {"kind":"roadmap","project":"CareOS","status":"merged"},
-    {"kind":"roadmap","project":"GitLaw","status":"merged"},
-    {"kind":"roadmap","project":"Citizen Agents","status":"merged"},
-    {"kind":"roadmap","project":"Council / Mission Control","status":"branch"}
+    {"kind":"ci","workflow":"Check Council","run_id":33755541735,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33755541682,"status":"success"},
+    {"kind":"build","command":"npm run build:pages","status":"success","observation":"18 projects · 7 core missions · 7/7 roadmap-native"},
+    {"kind":"test","command":"npm run test:mission-ui","status":"success"},
+    {"kind":"roadmap_coverage","projects":["TrustReady","Digital Worker Factory","PrüfPilot","CareOS","GitLaw","Citizen Agents","Council / Mission Control"],"status":"7/7"}
   ],
   "failures":[],
   "uncertainties":["Public Pages intentionally still excludes private projects; the private owner view remains a later mission."],
-  "next_owner":"verifier",
-  "next_step":"Open the v0.6 PR, run Council CI and confirm the generated snapshot reports 7/7 core roadmap coverage."
+  "next_owner":"operator",
+  "next_step":"Merge PR #16 and verify the fresh GitHub Pages deployment serves v0.6."
 }

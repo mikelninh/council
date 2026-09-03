@@ -1,0 +1,24 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v0.6-portfolio-map",
+  "verdict":"accepted",
+  "context_sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","scripts/build-pages.mjs","docs/HARNESS_ROADMAP_SCHEMA.md","docs/MISSION_CONTROL_PORTFOLIO_MAP.md"],
+  "verification":{
+    "implementation_head":"50a25db982dcbe1ae5c97e21ceacde35551a96e9",
+    "check_council":{"run_id":33755541735,"conclusion":"success"},
+    "harness":{"run_id":33755541682,"conclusion":"success"},
+    "snapshot_build":"18 projects · 7 core missions · 7/7 roadmap-native"
+  },
+  "external_actions":[
+    {"kind":"merge_roadmap_contract","target":"TrustReady #19","risk_class":"A2"},
+    {"kind":"merge_roadmap_contract","target":"Digital Worker Factory #39","risk_class":"A2"},
+    {"kind":"merge_roadmap_contract","target":"PrüfPilot #13","risk_class":"A2"},
+    {"kind":"merge_roadmap_contract","target":"CareOS #63","risk_class":"A2"},
+    {"kind":"merge_roadmap_contract","target":"GitLaw #39","risk_class":"A2"},
+    {"kind":"merge_roadmap_contract","target":"Citizen Agents #134","risk_class":"A2"}
+  ],
+  "accepted_artifact":"Council PR #16",
+  "rollback_point":"d0ecdb59a43a6af5ab65952ed1b3f2987579f18a",
+  "next_owner":"operator",
+  "next_step":"Merge Council PR #16 and verify GitHub Pages."
+}
