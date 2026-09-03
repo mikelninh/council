@@ -1,12 +1,15 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run check",
-  "rewrites": [
-    { "source": "/", "destination": "/public/index.html" },
-    { "source": "/app.js", "destination": "/public/app-v53.js" },
-    { "source": "/app-core.js", "destination": "/public/app.js" },
-    { "source": "/founder-view.js", "destination": "/public/founder-view.js" },
-    { "source": "/founder.css", "destination": "/public/founder.css" },
-    { "source": "/styles.css", "destination": "/public/styles.css" }
+  "$schema":"https://openapi.vercel.sh/vercel.json",
+  "buildCommand":"npm run check",
+  "rewrites":[
+    {"source":"/","destination":"/public/index.html"},
+    {"source":"/mission-control","destination":"/public/mission-control.html"},
+    {"source":"/mission-control.js","destination":"/public/mission-control.js"},
+    {"source":"/mission-control.css","destination":"/public/mission-control.css"},
+    {"source":"/app.js","destination":"/public/app-v53.js"},
+    {"source":"/app-core.js","destination":"/public/app.js"},
+    {"source":"/founder-view.js","destination":"/public/founder-view.js"},
+    {"source":"/founder.css","destination":"/public/founder.css"},
+    {"source":"/styles.css","destination":"/public/styles.css"}
   ]
 }
