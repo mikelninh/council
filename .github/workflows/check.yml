@@ -16,6 +16,8 @@ jobs:
         run: npm run test:decision
       - name: Exercise compact founder-view contract
         run: npm run test:founder
+      - name: Exercise deterministic Mission Control state contract
+        run: npm run test:mission
 
   github-tool-smoke:
     if: github.event_name == 'pull_request'
@@ -29,3 +31,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node tests/github-smoke.mjs
+      - name: Build public-safe GitHub Pages snapshot
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_USERNAME: mikelninh
+          MISSION_CONTROL_REFRESH_URL: https://github.com/mikelninh/mikelninh.github.io/actions/workflows/mission-control.yml
+        run: npm run build:pages
+      - name: Verify generated cockpit artefacts
+        run: test -s dist-pages/mission-control/index.html && test -s dist-pages/mission-control/mission-control.json && test -s dist-pages/mission-control/mission-control.js

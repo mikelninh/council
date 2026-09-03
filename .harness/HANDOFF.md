@@ -1,31 +1,27 @@
-# Mission Control v0.2 handoff
+# Mission Control v0.3 handoff
 
 ## Status
 Verified and accepted for merge.
 
 ## Current step
-Merge PR #12.
+Merge Council PR #13, then wire the existing personal-site Pages workflow.
 
 ## Evidence
-- `Check Council` workflow `33745959915`: success.
-- `harness-contract` workflow `33745960014`: success.
-- Mission Control state derivation tests run inside the harness workflow.
-- Existing Council decision/founder tests remain part of the gate.
+- `Check Council` run `33749050809`: success, including the real public-safe snapshot build.
+- `harness-contract` run `33749050802`: success.
+- The first harness attempt correctly failed because v0.3 wording had accidentally removed two existing invariants; those invariants were restored rather than weakening the checker.
 
 ## What changed
-- Council gains a read-only `/api/mission-control` portfolio aggregator.
-- The dashboard surfaces **Needs me**, blockers, active work and untracked projects.
-- Priority projects are deep-inspected for `.harness/project.json` and `.harness/active-task.json`.
-- Private projects outside runtime GitHub scope are shown as hidden rather than silently omitted.
-- Council itself now uses Harness v0.1.
+- Static GitHub Pages snapshot builder.
+- Relative snapshot-first UI with live API fallback.
+- Public-safe privacy boundary: private repository details are excluded from Pages.
+- No browser GitHub credentials.
+- No Vercel requirement for the public cockpit.
 
 ## Decisions
-- Reuse Council rather than create another disconnected repository.
-- Keep v0.2 read-only; recommendations may be automated later, cross-repo actions may not.
-- Operational attention score is explicitly not a business-value score.
-
-## Remaining limitation
-Private repository visibility requires `GITHUB_TOKEN` in the Council runtime. Without it, Mission Control still works but warns and cannot claim full coverage.
+- Keep Council as the engine/source contract.
+- Use the already-enabled `mikelninh.github.io` Pages pipeline as the view host.
+- Preserve authenticated/private scope as a separate future lane instead of leaking it into a public static site.
 
 ## Next owner
-Operator — merge PR #12, then make Mission Control the default starting surface for portfolio work.
+Operator — merge PR #13, then deploy through personal-site PR #65 and verify the live `/mission-control/` route.

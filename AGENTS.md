@@ -13,6 +13,7 @@ Give Michael one evidence-first operating view across his portfolio: what is act
 - Decision runtime: `lib/council.mjs`, `api/council.mjs`
 - GitHub evidence tools: `lib/tools.mjs`
 - Mission Control aggregation: `lib/mission-control.mjs`, `api/mission-control.mjs`
+- GitHub Pages snapshot builder: `scripts/build-pages.mjs`, `docs/MISSION_CONTROL_GITHUB_NATIVE.md`
 - Founder UI: `public/`
 - Deterministic tests: `tests/`
 - Current work state: `.harness/`
@@ -37,11 +38,13 @@ Every substantial task defines goal, sources, outputs, constraints, done criteri
 
 ## Mission Control rules
 - Portfolio metadata is observed evidence; rankings are inference.
-- Private projects must never silently disappear. If GitHub scope cannot see them, show that limitation.
+- Private projects must never silently disappear. In an authenticated/private view they must surface as visible state or an explicit scope limitation; in public GitHub Pages they are deliberately excluded to prevent leakage.
 - `completed` work must not masquerade as active work.
 - A project requiring human review must surface in **Needs me**.
 - Missing `.harness/` state is visible as `untracked`, not guessed.
-- Mission Control is read-only in v0.2. It may recommend actions; it does not execute cross-repo writes.
+- Mission Control is read-only in v0.2 and remains read-only in v0.3. It may recommend actions; it does not execute cross-repo writes.
+- Public GitHub Pages may publish **public repository state only**. Never leak private repository names, task text, evidence, credentials or metadata into a static snapshot.
+- Browser code must never contain GitHub credentials. Refresh happens in GitHub Actions or the trusted runtime, not by shipping a token to the client.
 
 ## Verification
 Minimum checks:
@@ -50,6 +53,7 @@ Minimum checks:
 - `npm run test:mission`
 - `npm run test:decision`
 - `npm run test:founder`
+- `npm run build:pages` for GitHub-native release work
 
 Never claim a command passed unless it actually ran and the result is captured.
 
