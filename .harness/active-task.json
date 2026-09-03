@@ -1,7 +1,7 @@
 {
   "schema":"mikel-harness-task-v0.1",
   "task_id":"mission-control-v0.8-real-journeys",
-  "status":"in_progress",
+  "status":"completed",
   "goal":"Replace the generic ACHIEVED/NOW/NEXT/LATER roadmap skeleton with project-specific named milestone journeys that are compact, visual and sourced from each project's roadmap contract.",
   "sources":[".harness/roadmap.json","public/mission-control.js","public/mission-control.css","scripts/build-pages.mjs","docs/MISSION_CONTROL_REAL_JOURNEYS.md"],
   "outputs":["project-specific named journey rails","compact milestone labels in roadmap contracts","shorter cards","removed Achieved count badge","UI regression contract"],
@@ -11,10 +11,15 @@
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
-  "current_step":"merge_project_owned_visual_labels",
-  "evidence":[],
+  "current_step":"verified_for_merge",
+  "evidence":[
+    {"kind":"ci","workflow":"Check Council","run_id":33761242002,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33761242024,"status":"success"},
+    {"kind":"build","command":"npm run build:pages","status":"success","observation":"public-safe snapshot generated after project-owned visual labels landed"},
+    {"kind":"ui_contract","observation":"generic Achieved-count rail and duplicate NOW panel are forbidden by test"}
+  ],
   "failures":[],
-  "uncertainties":[],
-  "next_owner":"builder",
-  "next_step":"Merge compact visual labels into the six companion core repositories, then wire the Council parser and compact journey UI."
+  "uncertainties":["Final visual preference remains a human judgement after deployment."],
+  "next_owner":"operator",
+  "next_step":"Merge PR #18, refresh GitHub Pages, then verify the live v0.8 route."
 }
