@@ -1,7 +1,7 @@
 {
   "schema":"mikel-harness-task-v0.1",
   "task_id":"mission-control-v0.5-project-stories",
-  "status":"ready_for_review",
+  "status":"completed",
   "goal":"Make multiple concurrent projects understandable at a glance by showing each project's purpose, current state, current/next goal, recent achievements, roadmap and next biggest wins without returning to dashboard information overload.",
   "sources":["public/mission-control.html","public/mission-control.css","public/mission-control.js","scripts/build-pages.mjs","docs/MISSION_CONTROL_PROJECT_STORIES.md"],
   "outputs":["project story cards","in-motion and on-deck lanes","recent-win celebration strip","repository-derived roadmap summaries","recent commit achievements","next-big-win extraction","UI regression contract"],
@@ -11,10 +11,15 @@
   "risk_class":"A2",
   "approval_required":false,
   "max_retries":3,
-  "current_step":"awaiting_ci_verification",
-  "evidence":[{"kind":"branch","name":"mission-control-v0.5-project-stories","status":"created"}],
-  "failures":[],
-  "uncertainties":["Repository roadmap quality is uneven; cards must explicitly surface missing roadmap evidence instead of guessing."],
-  "next_owner":"verifier",
-  "next_step":"Run syntax, UI contract, harness, GitHub adapter and real Pages snapshot build before merge."
+  "current_step":"verified_for_merge",
+  "evidence":[
+    {"kind":"ci","workflow":"Check Council","run_id":33752487886,"status":"success"},
+    {"kind":"ci","workflow":"harness-contract","run_id":33752487657,"status":"success"},
+    {"kind":"build","command":"npm run build:pages","status":"success","observation":"18 project stories · 5 explicit roadmaps · 18 projects with recent wins"},
+    {"kind":"test","command":"npm run test:mission-ui","status":"success"}
+  ],
+  "failures":[{"kind":"ui_test","run_id":33752430902,"resolution":"Corrected an overly specific roadmap assertion to match the actual per-project brief access path; implementation and snapshot build were already passing."}],
+  "uncertainties":["Only 5 of 18 currently selected public projects expose an explicit roadmap section that the evidence parser can safely recognize; missing roadmap coverage is shown rather than guessed."],
+  "next_owner":"operator",
+  "next_step":"Merge PR #15 and verify the next GitHub Pages deployment serves the project-story experience."
 }

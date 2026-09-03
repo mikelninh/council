@@ -1,0 +1,16 @@
+{
+  "schema":"mikel-harness-receipt-v0.1",
+  "task_id":"mission-control-v0.5-project-stories",
+  "verdict":"accepted",
+  "verification":{
+    "head":"3f5c0480be91720b5412ef3e5c89a6befa6399c2",
+    "check_council":{"run_id":33752487886,"conclusion":"success"},
+    "harness":{"run_id":33752487657,"conclusion":"success"},
+    "pages_snapshot":{"project_stories":18,"explicit_roadmaps":5,"projects_with_recent_wins":18}
+  },
+  "failure_upgrades":["UI regression assertion corrected after it mismatched the implementation access path; roadmap rendering itself remained intact."],
+  "public_safety":{"private_details_published":false,"browser_secrets":false},
+  "rollback_point":"9e7e80730bb21ea213b01a05aeec591748ee8e80",
+  "next_owner":"operator",
+  "next_step":"Merge Council PR #15 and verify GitHub Pages deployment."
+}
